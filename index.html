@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Carnet de suivi lipœdème : repas anti-inflammatoires, activité physique, calories, équilibre, menus, courses et observations.">
+<meta name="theme-color" content="#0d7c7a">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:title" content="Carnet Lipœdème">
+<meta property="og:description" content="Repas anti-inflammatoires, activité douce et ressenti des jambes, jour après jour.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Carnet">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Carnet Lipœdème</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap">
+<style>
+/* Layout : en-tête lagon + onglets ; une colonne de lecture large, cartes seulement pour les zones de saisie */
+:root{
+  --bg:#f3f7f7; --surface:#ffffff; --ink:#15302f; --muted:#5a7271; --line:#d6e3e2;
+  --lagon:#0d7c7a; --lagon-soft:#d7eeec; --lagon-ink:#ffffff;
+  --vert:#2f8a4b; --vert-soft:#e0f1e5; --orange:#b7701a; --orange-soft:#f7ead6; --rouge:#b8433a; --rouge-soft:#f6e0dd;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1b1b; --surface:#162625; --ink:#e3efee; --muted:#93acaa; --line:#2a3f3e;
+  --lagon:#3fb3ae; --lagon-soft:#1c3a39; --lagon-ink:#08201f;
+  --vert:#5cc47b; --vert-soft:#1b3424; --orange:#e3a24d; --orange-soft:#3a2b16; --rouge:#ea7b70; --rouge-soft:#3d2120; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1b1b; --surface:#162625; --ink:#e3efee; --muted:#93acaa; --line:#2a3f3e;
+  --lagon:#3fb3ae; --lagon-soft:#1c3a39; --lagon-ink:#08201f;
+  --vert:#5cc47b; --vert-soft:#1b3424; --orange:#e3a24d; --orange-soft:#3a2b16; --rouge:#ea7b70; --rouge-soft:#3d2120; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+header{background:var(--lagon);color:var(--lagon-ink)}
+header .wrap{padding-block:22px 0}
+h1{font-family:var(--f-display);font-weight:700;font-size:1.9rem;margin:0;letter-spacing:-.01em}
+.sub{margin:2px 0 16px;opacity:.85}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{font:inherit;font-weight:700;border:0;background:transparent;color:inherit;padding:10px 16px;border-radius:10px 10px 0 0;cursor:pointer;opacity:.8;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1}
+nav button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+main .wrap{padding-block:22px 48px;display:grid;gap:22px}
+h2{font-family:var(--f-display);font-weight:700;font-size:1.35rem;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:500;font-size:1.1rem;margin:0}
+.muted{color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:22px}
+label{font-size:.85rem;color:var(--muted);display:grid;gap:4px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;min-width:0;width:100%}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;align-items:end}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:10px 16px;cursor:pointer;background:var(--lagon);color:var(--lagon-ink)}
+.btn.ghost{background:var(--lagon-soft);color:var(--ink)}
+.btn.small{padding:4px 10px;font-size:.85rem}
+.icon{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.1rem;padding:2px 8px;border-radius:6px}
+.icon:hover{color:var(--rouge)}
+.daynav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.daynav .date{font-family:var(--f-display);font-size:1.25rem;font-weight:700;text-transform:capitalize;min-width:0}
+ul.items{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ul.items li{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;border-radius:9px;background:var(--bg)}
+ul.items li .what{min-width:0;overflow-wrap:anywhere}
+.qty{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.v{background:var(--vert)} .o{background:var(--orange)} .r{background:var(--rouge)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.8rem;font-weight:700}
+.pill.v{background:var(--vert-soft);color:var(--vert)} .pill.o{background:var(--orange-soft);color:var(--orange)} .pill.r{background:var(--rouge-soft);color:var(--rouge)}
+.pill.l{background:var(--lagon-soft);color:var(--lagon)}
+.mealgroup{display:grid;gap:6px}
+.mealgroup h4{margin:6px 0 0;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.water{display:flex;gap:6px;flex-wrap:wrap}
+.glass{width:30px;height:38px;border:2px solid var(--lagon);border-radius:4px 4px 9px 9px;background:transparent;cursor:pointer;padding:0}
+.glass.on{background:var(--lagon)}
+.scale{display:flex;gap:4px;flex-wrap:wrap}
+.scale button{font:inherit;font-variant-numeric:tabular-nums;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.scale button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.empty{padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}
+/* Calendrier */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .dow{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center}
+.cal button{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;min-height:78px;padding:6px;text-align:left;cursor:pointer;display:grid;align-content:space-between;gap:4px;min-width:0}
+.cal button.out{opacity:.35}
+.cal button.today{border:2px solid var(--lagon)}
+.cal .n{font-weight:700;font-variant-numeric:tabular-nums}
+.cal .marks{display:flex;gap:3px;flex-wrap:wrap;align-items:center;font-size:.72rem;color:var(--muted)}
+.bar3{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+/* Récap */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.kpi b{display:block;font-family:var(--f-display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.kpi small{color:var(--muted)}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--lagon)}
+.chart{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+/* Repères */
+.reco{display:grid;gap:10px}
+.reco p{margin:0;max-width:68ch}
+.reco ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.foodcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.foodcol{border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.foodcol.v{background:var(--vert-soft)} .foodcol.o{background:var(--orange-soft)} .foodcol.r{background:var(--rouge-soft)}
+.foodcol h3{font-size:1rem}
+.foodcol.v h3{color:var(--vert)} .foodcol.o h3{color:var(--orange)} .foodcol.r h3{color:var(--rouge)}
+.foodcol ul{margin:0;padding-left:18px}
+.notice{padding:10px 14px;border-radius:10px;background:var(--orange-soft);color:var(--ink);font-size:.9rem}
+.sources a{color:var(--lagon)}
+/* Menus, nutriments, observations */
+.menuweek{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.menuday{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
+.menuday h3{font-size:1.15rem}
+.dish{display:grid;gap:4px;padding-top:10px;border-top:1px solid var(--line)}
+.dish .lab{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.dish .nm{font-weight:700}
+.dish .ing{font-size:.85rem;color:var(--muted)}
+.dish .row{justify-content:space-between}
+.nutri{display:flex;flex-wrap:wrap;gap:6px}
+.nchip{font-size:.82rem;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:var(--bg)}
+.nchip.on{background:var(--vert-soft);color:var(--vert);border-color:transparent;font-weight:700}
+.sens{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.sens button{font:inherit;font-size:.75rem;padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.sens button.on{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:700}
+.mx td,.mx th{text-align:center}
+.mx td:first-child,.mx th:first-child{text-align:left}
+.obs{padding:12px 14px;border-radius:10px;background:var(--bg);display:grid;gap:6px}
+.obs .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted)}
+.obs p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.obs audio{width:100%;max-width:420px}
+.src.n{background:var(--rouge-soft);color:var(--rouge)}
+.eq{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:620px){.eq{grid-template-columns:1fr}}
+.gauge{display:grid;justify-items:center;gap:4px;text-align:center}
+.pillars{display:grid;gap:10px}
+.pil{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center}
+.pil .nm{font-weight:700}
+.pil .bar{grid-column:1/-1;height:9px;border-radius:5px;background:var(--line);overflow:hidden}
+.pil .bar i{display:block;height:100%}
+.pil .tip{grid-column:1/-1;font-size:.85rem;color:var(--muted)}
+.scale-viz{display:grid;gap:6px;margin-bottom:6px}
+.scale-viz .ln{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:.88rem}
+.scale-viz .tr{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
+.scale-viz .tr i{display:block;height:100%}
+/* Courses */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:inherit;font-weight:700;border:0;background:var(--surface);color:var(--muted);padding:7px 14px;cursor:pointer}
+.seg button.on{background:var(--lagon);color:var(--lagon-ink)}
+.chk{display:inline-flex;flex-direction:row;align-items:center;gap:8px;font-size:.95rem;color:var(--ink)}
+.chk input{width:auto}
+.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.rayon h4{margin:0 0 6px;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.rayon ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.rayon li{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;background:var(--bg)}
+.rayon li input{width:20px;height:20px;accent-color:var(--lagon)}
+.rayon li.done .nm{text-decoration:line-through;color:var(--muted)}
+.rayon .nm{min-width:0;overflow-wrap:anywhere}
+.src{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:5px}
+.src.b{background:var(--vert-soft);color:var(--vert)} .src.m{background:var(--lagon-soft);color:var(--lagon)} .src.a{background:var(--orange-soft);color:var(--orange)}
+.garmin{display:grid;gap:8px;padding:12px;border-radius:10px;background:var(--lagon-soft);font-size:.9rem}
+.garmin ol{margin:0;padding-left:20px}
+@media (max-width:560px){#cForm{grid-template-columns:1fr 1fr!important}#cForm label:first-child{grid-column:1/-1}}
+@media (max-width:560px){.cal button{min-height:58px;padding:4px}.cal .marks .t{display:none}h1{font-size:1.5rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Carnet Lipœdème</h1>
+    <p class="sub">Repas anti-inflammatoires, activité douce et ressenti des jambes, jour après jour.</p>
+    <nav role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="jour" aria-selected="true">Ma journée</button>
+      <button role="tab" data-tab="cal" aria-selected="false">Calendrier</button>
+      <button role="tab" data-tab="recap" aria-selected="false">Récap</button>
+      <button role="tab" data-tab="menus" aria-selected="false">Menus</button>
+      <button role="tab" data-tab="courses" aria-selected="false">Courses</button>
+      <button role="tab" data-tab="obs" aria-selected="false">Observations</button>
+      <button role="tab" data-tab="reperes" aria-selected="false">Recommandations</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div id="status" class="notice" hidden></div>
+
+    <!-- MA JOURNÉE -->
+    <section id="tab-jour" class="grid2" style="display:grid">
+      <div style="grid-column:1/-1" class="daynav">
+        <button class="btn ghost small" id="prevDay" aria-label="Jour précédent">‹</button>
+        <span class="date" id="dayTitle"></span>
+        <button class="btn ghost small" id="nextDay" aria-label="Jour suivant">›</button>
+        <button class="btn ghost small" id="todayBtn">Aujourd'hui</button>
+        <input type="date" id="dayPick" style="width:auto" aria-label="Choisir une date">
+        <span id="dayScore"></span>
+      </div>
+
+      <div class="card">
+        <h2>Repas</h2>
+        <form id="mealForm" class="form">
+          <label>Repas<select id="mRepas"><option>Petit-déjeuner</option><option>Déjeuner</option><option>Collation</option><option>Dîner</option></select></label>
+          <label style="grid-column:span 2">Aliment<input id="mAliment" list="alimList" required placeholder="ex. sardines, brocolis…"></label>
+          <label>Quantité<input id="mQte" type="number" min="0" step="any" required placeholder="150"></label>
+          <label>Unité<select id="mUnite"><option>g</option><option>ml</option><option>portion</option><option>c. à soupe</option><option>pièce</option><option>bol</option></select></label>
+          <label style="grid-column:span 2">Catégorie<select id="mCat"></select></label>
+          <label>kcal (si connu)<input id="mKcal" type="number" min="0" step="1" placeholder="auto"></label>
+          <button class="btn" type="submit">Ajouter</button>
+        </form>
+        <datalist id="alimList"></datalist>
+        <div id="mealList"></div>
+      </div>
+
+      <div style="display:grid;gap:22px;align-content:start">
+        <div class="card">
+          <h2>Activité physique</h2>
+          <div id="planDay"></div>
+          <div class="row" style="padding:8px 10px;border-radius:9px;background:var(--bg)"><span><b>Bottes de pressothérapie</b> ce jour :</span>
+            <span class="row" style="gap:6px"><button class="btn ghost small" data-presso="40">40 min</button><button class="btn ghost small" data-presso="50">50 min</button><button class="btn ghost small" data-presso="60">60 min</button><button class="btn ghost small" data-presso="70">70 min</button></span></div>
+          <form id="actForm" class="form">
+            <label style="grid-column:span 2">Activité<select id="aType"></select></label>
+            <label>Durée (min)<input id="aMin" type="number" min="1" step="1" required placeholder="30"></label>
+            <label>Intensité<select id="aInt"><option>Douce</option><option selected>Modérée</option><option>Soutenue</option></select></label>
+            <label style="grid-column:span 2">Bas de compression<select id="aComp"><option value="oui">Portés</option><option value="non">Non portés</option><option value="na">Sans objet (dans l'eau)</option></select></label>
+            <button class="btn" type="submit">Ajouter</button>
+          </form>
+          <div id="actList"></div>
+          <details class="garmin">
+            <summary><b>Mes séances régulières</b></summary>
+            <div id="planList" style="display:grid;gap:6px"></div>
+            <form id="planForm" class="form">
+              <label>Jour<select id="pDow"><option value="1">Lundi</option><option value="2">Mardi</option><option value="3">Mercredi</option><option value="4">Jeudi</option><option value="5">Vendredi</option><option value="6">Samedi</option><option value="0">Dimanche</option></select></label>
+              <label>Début<input type="time" id="pStart" value="09:00"></label>
+              <label>Fin<input type="time" id="pEnd" value="10:00"></label>
+              <label>Activité<select id="pType"></select></label>
+              <button class="btn small" type="submit">Ajouter</button>
+            </form>
+          </details>
+          <details class="garmin">
+            <summary><b>Importer depuis ma montre Garmin</b></summary>
+            <ol>
+              <li>Sur un ordinateur, ouvrez <b>connect.garmin.com</b> et connectez-vous.</li>
+              <li>Menu <b>Activités › Toutes les activités</b>, faites défiler pour charger la période voulue.</li>
+              <li>Cliquez <b>Exporter au format CSV</b> (en haut à droite).</li>
+              <li>Choisissez ce fichier ci-dessous : chaque activité est rangée à sa date, sans doublon si vous réimportez.</li>
+            </ol>
+            <input type="file" id="garminFile" accept=".csv,text/csv" aria-label="Fichier CSV Garmin">
+            <span id="garminMsg" class="muted"></span>
+          </details>
+        </div>
+
+        <div class="card">
+          <h2>Ressenti et hydratation</h2>
+          <div><h3>Eau bue <span class="muted" id="waterTxt"></span></h3><p class="muted" style="margin:2px 0 8px;font-size:.85rem">Un verre = 25 cl. Touchez pour remplir.</p><div class="water" id="water"></div></div>
+          <div><h3>Douleur / lourdeur des jambes</h3><p class="muted" style="margin:2px 0 8px;font-size:.85rem">0 = aucune, 10 = très forte</p><div class="scale" id="pain"></div></div>
+          <label>Note du jour<textarea id="note" rows="2" placeholder="Jambes gonflées le soir, chaleur, drainage fait…"></textarea></label>
+        </div>
+
+        <div class="card">
+          <h2>Équilibre du jour</h2>
+          <div id="eqDay"></div>
+        </div>
+
+        <div class="card">
+          <h2>Thyroïde : micronutriments du jour</h2>
+          <p class="muted" style="margin:0;font-size:.85rem">Allumé quand un aliment noté en est une source, d'après la fiche de la diététicienne.</p>
+          <div class="nutri" id="nutriDay"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDRIER -->
+    <section id="tab-cal" hidden>
+      <div class="card">
+        <div class="daynav">
+          <button class="btn ghost small" id="prevMonth" aria-label="Mois précédent">‹</button>
+          <span class="date" id="monthTitle"></span>
+          <button class="btn ghost small" id="nextMonth" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="legend">
+          <span><i class="bar3" style="width:30px"><i class="v" style="width:60%"></i><i class="o" style="width:25%"></i><i class="r" style="width:15%"></i></i>Équilibre des aliments du jour</span>
+          <span><b style="color:var(--lagon)">35′</b> minutes d'activité</span>
+          <span><b style="color:var(--rouge)">6</b> douleur jambes</span>
+        </div>
+        <div class="cal" id="cal"></div>
+        <p class="muted" style="margin:0;font-size:.85rem">Touchez un jour pour l'ouvrir et le compléter.</p>
+      </div>
+    </section>
+
+    <!-- RÉCAP -->
+    <section id="tab-recap" hidden style="display:grid;gap:22px">
+      <div class="daynav">
+        <button class="btn ghost small" id="prevWeek" aria-label="Semaine précédente">‹</button>
+        <span class="date" id="weekTitle"></span>
+        <button class="btn ghost small" id="nextWeek" aria-label="Semaine suivante">›</button>
+      </div>
+      <div class="row" style="gap:14px">
+        <label style="width:auto">Poids (kg)<input type="number" id="poids" min="30" max="250" step="0.5" style="width:110px" placeholder="ex. 70"></label>
+        <label style="width:auto">Taille (cm)<input type="number" id="taille" min="120" max="210" step="1" style="width:110px" placeholder="ex. 162"></label>
+        <label style="width:auto">Âge<input type="number" id="age" min="18" max="110" step="1" style="width:90px" placeholder="65"></label>
+        <span class="muted" style="font-size:.85rem;max-width:40ch">Ces trois valeurs servent à estimer vos besoins et vos dépenses.</span>
+      </div>
+      <div class="card" id="eqWeekCard"><h2>Ma situation d'équilibre — semaine</h2><div id="eqWeek"></div></div>
+      <div class="kpis" id="kpis"></div>
+      <div class="card"><h3>Les bienfaits de ma semaine</h3><div class="grid2" id="bienfaits" style="gap:16px"></div>
+        <p class="muted" style="margin:0;font-size:.8rem">Calories : estimations (tables nutritionnelles moyennes ; pour l'activité, dépense selon l'intensité et le poids). Les chiffres de votre montre Garmin, quand ils sont importés, priment.</p></div>
+      <div class="grid2">
+        <div class="card"><h3>Activité par jour (minutes)</h3><div class="chart" id="actChart"></div></div>
+        <div class="card"><h3>Aliments par jour, selon la catégorie</h3><div class="chart" id="foodChart"></div>
+          <div class="legend"><span><i class="dot v"></i>à privilégier</span><span><i class="dot o"></i>avec modération</span><span><i class="dot r"></i>à limiter</span></div></div>
+      </div>
+      <div class="card"><h3>Quantités de la semaine par catégorie</h3><div class="tablewrap" id="catTable"></div></div>
+      <div class="card"><h3>Carnet de bord 7 jours</h3><p class="muted" style="margin:0;font-size:.85rem">Vos repas jour par jour et les sensations notées après chacun.</p><div class="tablewrap" id="carnet"></div></div>
+      <div class="card"><h3>Micronutriments thyroïde sur la semaine</h3><div class="tablewrap" id="nutriWeek"></div></div>
+      <div class="card"><h3>Tous les repas de la semaine</h3><div class="tablewrap" id="mealTable"></div></div>
+    </section>
+
+    <!-- MENUS -->
+    <section id="tab-menus" hidden style="display:grid;gap:22px">
+      <div class="card reco">
+        <h2>Semaine de menus anti-inflammatoires</h2>
+        <p>Une semaine type pour une personne, construite avec les aliments à favoriser et des sources des micronutriments de la thyroïde (iode, sélénium, zinc, fer, vitamine D). Les quantités sont indicatives.</p>
+        <p class="muted" style="margin:0;font-size:.9rem">« Noter » ajoute le repas et ses quantités à la journée ouverte dans « Ma journée » (actuellement : <b id="menuTarget"></b>). Vous pourrez ensuite ajuster ou supprimer un aliment.</p>
+      </div>
+      <div class="menuweek" id="menuWeek"></div>
+    </section>
+
+    <!-- COURSES -->
+    <section id="tab-courses" hidden style="display:grid;gap:22px">
+      <div class="daynav">
+        <div class="seg" role="group" aria-label="Période">
+          <button id="cWeek" class="on">Semaine</button><button id="cMonth">Mois</button>
+        </div>
+        <button class="btn ghost small" id="cPrev" aria-label="Période précédente">‹</button>
+        <span class="date" id="cTitle"></span>
+        <button class="btn ghost small" id="cNext" aria-label="Période suivante">›</button>
+        <span class="pill l" id="cCount"></span>
+      </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h2>Ma liste</h2><button class="btn ghost small" id="cClear">Décocher tout</button></div>
+        <form id="cForm" class="form" style="grid-template-columns:2fr 1fr 1fr auto">
+          <label>Ajouter un article<input id="cName" required placeholder="ex. citrons verts"></label>
+          <label>Quantité<input id="cQty" placeholder="1 kg"></label>
+          <label>Rayon<select id="cRayon"></select></label>
+          <button class="btn" type="submit">Ajouter</button>
+        </form>
+        <div class="row" style="gap:18px">
+          <label class="chk"><input type="checkbox" id="cIncBase" checked> Base anti-inflammatoire</label>
+          <label class="chk"><input type="checkbox" id="cIncMeals" checked> Aliments de mes repas notés</label>
+          <label class="chk"><input type="checkbox" id="cIncMenus"> Ingrédients des menus de la semaine</label>
+        </div>
+        <div class="legend"><span><span class="src b">base</span> quantités indicatives pour 1 personne (mois = 4 semaines), à ajuster</span><span><span class="src m">repas</span> cumul de vos saisies sur la période</span><span><span class="src a">ajout</span> vos articles</span><span><span class="src n">menus</span> ingrédients de la semaine de menus</span></div>
+        <div id="cList" class="shop"></div>
+      </div>
+    </section>
+
+    <!-- OBSERVATIONS -->
+    <section id="tab-obs" hidden style="display:grid;gap:22px">
+      <div class="card">
+        <h2>Nouvelle observation</h2>
+        <form id="oForm" style="display:grid;gap:12px">
+          <div class="form">
+            <label>Date<input type="date" id="oDate"></label>
+            <label>Heure<input type="time" id="oTime"></label>
+            <label style="grid-column:span 2">Sujet<select id="oTheme"><option>Jambes (gonflement, douleur)</option><option>Digestion</option><option>Énergie, fatigue</option><option>Sommeil</option><option>Peau, bleus</option><option>Thyroïde</option><option>Moral</option><option>Rendez-vous médical</option><option>Autre</option></select></label>
+          </div>
+          <label>Ce que j'observe<textarea id="oText" rows="4" placeholder="Tapez ou dictez votre observation…"></textarea></label>
+          <div class="row">
+            <button type="button" class="btn ghost" id="oMic" hidden>🎙 Dicter</button>
+            <span id="oMicState" class="muted" aria-live="polite"></span>
+          </div>
+          <div class="row" id="oAudioRow" hidden>
+            <label style="flex:1;min-width:220px">Joindre un enregistrement audio (mémo vocal du téléphone)<input type="file" id="oAudio" accept="audio/*"></label>
+            <span id="oAudioMsg" class="muted"></span>
+          </div>
+          <div><button class="btn" type="submit" id="oSave">Enregistrer l'observation</button></div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h2>Mes observations</h2>
+          <label style="width:auto">Filtrer<select id="oFilter" style="width:auto"><option value="">Tous les sujets</option></select></label></div>
+        <div id="oList" style="display:grid;gap:10px"></div>
+      </div>
+    </section>
+
+    <!-- REPÈRES -->
+    <section id="tab-reperes" hidden style="display:grid;gap:22px">
+      <div class="card reco">
+        <h2>Mes recommandations</h2>
+        <p class="muted">Synthèse des sources sur le lipœdème et des fiches de Claire Deligne, diététicienne.</p>
+        <h3>Le lipœdème en bref</h3>
+        <p>Le tissu graisseux du lipœdème résiste aux régimes et au sport intensif : le but n'est pas de « faire fondre » les jambes mais de réduire l'inflammation, la douleur et le gonflement, et de garder la mobilité. Le traitement conservateur associe alimentation, activité adaptée, compression, drainage lymphatique et soin de la peau.</p>
+        <p class="notice">Ces repères sont généraux. Les quantités et le type de régime (méditerranéen, pauvre en sucres, cétogène) se décident avec votre médecin ou une diététicienne, surtout à 65 ans et en cas de traitement en cours.</p>
+      </div>
+
+      <div class="card reco">
+        <h2>Assiette anti-inflammatoire</h2>
+        <p>Les sources convergent vers un modèle proche du régime méditerranéen : beaucoup de légumes, des fruits, des poissons gras, des légumineuses, de l'huile d'olive, des céréales complètes, et peu de produits ultra-transformés et de sucres. Les régimes pauvres en glucides ou cétogènes donnent des résultats prometteurs mais les études restent petites.</p>
+        <div class="foodcols">
+          <div class="foodcol v"><h3>À privilégier</h3><ul><li>Légumes verts, crucifères (brocoli, chou, épinards)</li><li>Fruits rouges, agrumes, ananas, pomme</li><li>Poissons gras : sardine, thon, saumon, maquereau</li><li>Légumineuses : lentilles, pois chiches</li><li>Huile d'olive, noix, graines de lin ou chia</li><li>Curcuma, gingembre, ail, herbes, thé vert</li><li>Eau, tisanes</li></ul></div>
+          <div class="foodcol o"><h3>Avec modération</h3><ul><li>Céréales complètes, patate douce, igname, taro</li><li>Volaille, œufs</li><li>Laitages nature, fromage</li><li>Fruits très sucrés, chocolat noir</li></ul></div>
+          <div class="foodcol r"><h3>À limiter</h3><ul><li>Viande rouge, charcuterie</li><li>Pain blanc, riz blanc, pâtes blanches</li><li>Sucreries, biscuits, plats industriels</li><li>Sodas, jus sucrés, alcool</li><li>Sel en excès (favorise la rétention d'eau)</li></ul></div>
+        </div>
+      </div>
+
+      <div class="card reco">
+        <h2>Les bases de l'alimentation anti-inflammatoire</h2>
+        <p class="muted" style="margin:0">D'après la fiche de Claire Deligne, diététicienne</p>
+        <p>Une alimentation qui privilégie les aliments non transformés et non industriels : végétaux (fruits, légumes, noix, graines), céréales complètes, matières grasses de qualité et poissons gras.</p>
+        <h3>Pourquoi ?</h3>
+        <p>L'inflammation dans le corps peut venir de déséquilibres :</p>
+        <ul>
+          <li><b>Stress oxydatif</b> : trop de radicaux libres (effort excessif, pollution, tabac, alcool, excès de fer, infections)</li>
+          <li><b>Déséquilibre acido-basique</b></li>
+          <li><b>Déséquilibre du microbiote</b> intestinal</li>
+          <li><b>Trop d'oméga 6 par rapport aux oméga 3</b> : les oméga 6 en excès sont pro-inflammatoires, les oméga 3 anti-inflammatoires. Le corps ne les fabrique pas, c'est l'alimentation qui les équilibre.</li>
+          <li><b>Excès de graisses et de sucres</b></li>
+        </ul>
+        <h3>Aliments à favoriser</h3>
+        <div class="tablewrap"><table>
+          <thead><tr><th>Aliments</th><th>Pourquoi</th></tr></thead>
+          <tbody>
+            <tr><td>Saumon, maquereau, sardines</td><td>Oméga 3 (EPA, DHA), iode, vitamine D</td></tr>
+            <tr><td>Légumes</td><td>Fibres, polyphénols, vitamines, minéraux</td></tr>
+            <tr><td>Myrtilles, mûres, framboises</td><td>Riches en polyphénols</td></tr>
+            <tr><td>Noix, amandes, noisettes, graines de lin, sésame, courge</td><td>Acides gras insaturés, fibres, minéraux</td></tr>
+            <tr><td>Riz complet, riz noir, quinoa, sarrasin, avoine</td><td>Fibres, minéraux, vitamines</td></tr>
+            <tr><td>Œufs, tofu, poulet plein air, dinde</td><td>Protéines</td></tr>
+            <tr><td>Haricots mungo, lentilles</td><td>Protéines végétales, fibres, minéraux</td></tr>
+            <tr><td>Huiles d'olive, colza, noix, coco, lait de coco, avocat</td><td>Graisses de bonne qualité</td></tr>
+            <tr><td>Curcuma, gingembre, piment de Cayenne</td><td>Épices anti-inflammatoires</td></tr>
+            <tr><td>Ail, oignon, persil, thym, basilic</td><td>Aromates</td></tr>
+            <tr><td>Champignons</td><td>&nbsp;</td></tr>
+            <tr><td>Eau, thé vert, thé blanc, thé noir</td><td>Boissons</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="card reco">
+        <h2>Soutenir sa thyroïde : les micronutriments</h2>
+        <p class="muted" style="margin:0">D'après la fiche de Claire Deligne, diététicienne</p>
+        <p>Ces éléments aident à convertir les hormones thyroïdiennes et à faire entrer la T3 dans les cellules. Leur suivi apparaît chaque jour dans « Ma journée » et sur la semaine dans « Récap ».</p>
+        <div class="tablewrap" id="nutriRef"></div>
+        <p class="muted" style="font-size:.85rem">Sélénium et molybdène sont cités dans la fiche sans liste d'aliments ; les sources indiquées pour eux sont des repères généraux. Les compléments (iode, vitamine D…) se décident avec votre médecin, surtout en cas de traitement thyroïdien.</p>
+      </div>
+
+      <div class="card reco">
+        <h2>Lait et flocons d'avoine : oui, avec des repères</h2>
+        <div class="tablewrap"><table>
+          <thead><tr><th></th><th>Flocons d'avoine</th><th>Lait</th></tr></thead>
+          <tbody>
+            <tr><th>Autorisé ?</th><td><span class="pill v">Oui</span> Dans la liste des aliments à favoriser de la diététicienne : fibres, minéraux, et source de tyrosine, de fer et de molybdène.</td><td><span class="pill o">Oui, avec modération</span> L'alimentation anti-inflammatoire n'est pas un régime sans lactose. Les laitages entiers nature apportent de l'iode et de la vitamine D, mais il n'y a pas de consensus sur le lipœdème.</td></tr>
+            <tr><th>Combien ?</th><td>30 à 40 g de flocons crus par jour (3 à 4 cuillères à soupe bombées), soit ≈ 110 à 150 kcal.</td><td>Un bol par jour (150 à 200 ml), ou à remplacer par un yaourt nature ou du fromage blanc. Le lait de coco ou d'amande sans sucre peut prendre le relais.</td></tr>
+            <tr><th>Quand ?</th><td>Au petit-déjeuner, en porridge avec des fruits rouges et quelques noix : énergie qui dure jusqu'au déjeuner. Possible aussi en collation.</td><td>Au petit-déjeuner avec les flocons, ou en collation.</td></tr>
+            <tr><th>Si vous prenez un traitement pour la thyroïde</th><td colspan="2">La lévothyroxine se prend à jeun, 30 minutes à 1 heure avant le petit-déjeuner. Le calcium (lait, laitages) et le fer en diminuent l'absorption, et une étude montre qu'un verre de lait pris avec le comprimé la réduit nettement. Prenez donc le comprimé au lever, attendez, puis le porridge. Demandez à votre pharmacien le délai exact qui convient à votre traitement.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="muted" style="font-size:.85rem">Pour savoir si le lait vous convient, notez vos sensations après le petit-déjeuner dans « Ma journée » (ballonnements, lourdeur…). Le carnet de bord 7 jours du « Récap » montre alors si une gêne revient les jours avec lait.</p>
+      </div>
+
+      <div class="card reco">
+        <h2>Bottes de pressothérapie</h2>
+        <p>La compression pneumatique (bottes ou appareil à pression) fait partie des traitements conservateurs reconnus du lipœdème : elle aide à réduire le gonflement et peut assouplir les tissus. Vos séances du soir de 40 à 70 minutes se notent en un geste dans « Ma journée ».</p>
+        <ul>
+          <li>Le soir, jambes surélevées, est un bon moment : la journée debout a chargé les jambes.</li>
+          <li>Les séances en cabinet durent souvent une trentaine de minutes, 2 à 3 fois par semaine. Des séances plus longues à domicile sont courantes, mais faites valider la durée et la pression par votre médecin ou votre kiné.</li>
+          <li>À éviter sans avis médical : problèmes cardiaques, hypertension non traitée, phlébite ou thrombose, insuffisance rénale ou respiratoire, artérite sévère.</li>
+          <li>Buvez un verre d'eau après la séance et arrêtez en cas de douleur, de fourmillements ou de peau qui change de couleur.</li>
+        </ul>
+      </div>
+
+      <div class="card reco">
+        <h2>Bouger sans brusquer les jambes</h2>
+        <p>Les activités douces pour les articulations sont recommandées. L'eau est la meilleure option : sa pression agit comme un drainage naturel des jambes, et c'est la seule activité qui se pratique sans compression. Sur terre ferme, portez vos bas de compression pendant l'effort. Évitez les sports à impacts (course, sauts).</p>
+        <ul>
+          <li><b>En premier :</b> aquagym, marche dans l'eau jusqu'à la poitrine, natation, aquabike — idéal dans le lagon ou en piscine</li>
+          <li><b>Aussi :</b> marche, marche nordique, vélo, yoga, Pilates</li>
+          <li><b>Renforcement :</b> exercices avec élastiques, 2 fois par semaine</li>
+          <li><b>Repère général pour les plus de 65 ans (OMS) :</b> environ 150 minutes d'activité modérée par semaine, plus du renforcement musculaire et des exercices d'équilibre — à adapter à votre état</li>
+          <li><b>Au quotidien :</b> marcher un peu plusieurs fois par jour, éviter de rester longtemps assise, surélever les jambes le soir</li>
+        </ul>
+      </div>
+
+      <div class="card sources">
+        <h3>Sources consultées</h3>
+        <ul style="margin:0;padding-left:20px;display:grid;gap:4px">
+          <li><a href="https://www.lipedema.org/treatment" target="_blank" rel="noopener">Lipedema Foundation — Treating Lipedema</a></li>
+          <li><a href="https://ofa.de/en/knowledge/therapy/cdp/lipedema-and-sport/" target="_blank" rel="noopener">ofa Bamberg — Lipedema and exercise</a></li>
+          <li><a href="https://lipoedema.co.uk/best-exercises-for-lipoedema/" target="_blank" rel="noopener">Lipoedema UK — Physical activity</a></li>
+          <li><a href="https://iris.unina.it/retrieve/83bcb9dc-9754-4d9a-b7b8-b80296130289/s13679-024-00579-8.pdf" target="_blank" rel="noopener">Consensus italien SISMeS–SIF 2024 sur l'exercice et le lipœdème</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/39408242/" target="_blank" rel="noopener">Amato et al. 2024 — Méta-analyse sur les régimes cétogènes</a></li>
+          <li><a href="https://kerkoapp.lipedema.org/bibliography/V64AGLRN" target="_blank" rel="noopener">de Oliveira et al. 2025 — Revue systématique des interventions diététiques</a></li>
+          <li><a href="https://www.vidal.fr/maladies/metabolisme-diabete/hypothyroidie/medicaments.html" target="_blank" rel="noopener">Vidal — Médicaments de l'hypothyroïdie</a></li>
+          <li><a href="https://www.lequotidiendupharmacien.fr/medicament-parapharmacie/medicament/pas-de-lait-avec-la-levothyroxine-cest-prouve" target="_blank" rel="noopener">Le Quotidien du pharmacien — Pas de lait avec la lévothyroxine</a></li>
+          <li><a href="https://www.elsan.care/fr/pathologie-et-traitement/maladies-vasculaires/pressotherapie-definition-deroulement-suites" target="_blank" rel="noopener">Elsan — Pressothérapie : déroulement et contre-indications</a></li>
+          <li>Claire Deligne, diététicienne — fiches « Alimentation anti-inflammatoire » et « Soutenir sa thyroïde » (vos documents)</li>
+          <li><a href="https://dubocalalassiette.fr/blog/alimentation-anti-inflammatoire-lipoedeme/" target="_blank" rel="noopener">Du bocal à l'assiette — Alimentation anti-inflammatoire et lipœdème</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+const CATS=[
+  {id:"leg",n:"Légumes",c:"v"},{id:"fru",n:"Fruits",c:"v"},{id:"poi",n:"Poisson gras / fruits de mer",c:"v"},
+  {id:"lgm",n:"Légumineuses",c:"v"},{id:"gra",n:"Huile d'olive, noix, graines",c:"v"},{id:"epi",n:"Épices, herbes, thé vert",c:"v"},
+  {id:"boi",n:"Eau, tisane, café nature",c:"v"},
+  {id:"cer",n:"Céréales complètes, tubercules",c:"o"},{id:"vol",n:"Volaille, œufs",c:"o"},{id:"lai",n:"Laitages, fromage",c:"o"},
+  {id:"vro",n:"Viande rouge, charcuterie",c:"r"},{id:"raf",n:"Pain, riz, pâtes blancs",c:"r"},{id:"suc",n:"Sucré, biscuits, plats industriels",c:"r"},
+  {id:"sod",n:"Sodas, jus sucrés, alcool",c:"r"}
+];
+const CATMAP=Object.fromEntries(CATS.map(c=>[c.id,c]));
+const SUGG={"brocolis":"leg","épinards":"leg","salade verte":"leg","chou":"leg","courgette":"leg","tomates":"leg","carottes":"leg","fruits rouges":"fru","pomme":"fru","papaye":"fru","ananas":"fru","orange":"fru","banane":"fru","sardines":"poi","thon":"poi","saumon":"poi","maquereau":"poi","crevettes":"poi","lentilles":"lgm","pois chiches":"lgm","haricots rouges":"lgm","huile d'olive":"gra","noix":"gra","amandes":"gra","graines de chia":"gra","graines de lin":"gra","avocat":"gra","curcuma":"epi","gingembre":"epi","thé vert":"epi","eau":"boi","tisane":"boi","café":"boi","flocons d'avoine":"cer","riz complet":"cer","pain complet":"cer","patate douce":"cer","igname":"cer","taro":"cer","quinoa":"cer","poulet":"vol","œufs":"vol","yaourt nature":"lai","fromage":"lai","lait":"lai","bœuf":"vro","porc":"vro","jambon":"vro","saucisson":"vro","corned-beef":"vro","pain blanc":"raf","baguette":"raf","riz blanc":"raf","pâtes":"raf","gâteau":"suc","biscuits":"suc","chips":"suc","confiture":"suc","plat préparé":"suc","soda":"sod","jus de fruit":"sod","vin":"sod","bière":"sod"};
+const ACTS=[["aquagym","Aquagym / marche dans l'eau",true],["natation","Natation",true],["aquabike","Aquabike",true],["marche","Marche",false],["nordique","Marche nordique",false],["velo","Vélo",false],["yoga","Yoga",false],["pilates","Pilates",false],["renfo","Renforcement (élastiques)",false],["equilibre","Exercices d'équilibre",false],["presso","Bottes de pressothérapie",false],["drainage","Drainage lymphatique",false],["autre","Autre",false]];
+const ACTMAP=Object.fromEntries(ACTS.map(a=>[a[0],{n:a[1],eau:a[2]}]));
+const GOAL_WEEK=150, GLASSES=8;
+const norm=s=>String(s||"").toLowerCase().replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[̀-ͯ]/g,"");
+Object.assign(SUGG,{"myrtilles":"fru","mûres":"fru","framboises":"fru","fraises":"fru","kiwi":"fru","mangue":"fru","noisettes":"gra","graines de sésame":"gra","graines de courge":"gra","noix du brésil":"gra","noix de cajou":"gra","huile de colza":"gra","huile de noix":"gra","huile de coco":"gra","lait de coco":"gra","riz noir":"cer","sarrasin":"cer","flocons de sarrasin":"cer","pommes de terre":"cer","tofu":"lgm","haricots mungo":"lgm","haricots blancs":"lgm","dinde":"vol","fromage blanc":"lai","champignons":"leg","cresson":"leg","algues":"leg","potiron":"leg","haricots verts":"leg","oignon":"leg","ail":"leg","piment de cayenne":"epi","persil":"epi","thym":"epi","basilic":"epi","cannelle":"epi","thé blanc":"epi","thé noir":"epi","cabillaud":"poi","poisson du lagon":"poi","huîtres":"poi","moules":"poi","palourdes":"poi","foie":"vro","boudin":"vro"});
+const NUTRI=[
+ {id:"iode",n:"Iode",b:"≈ 150 µg/j",src:"Algues, cabillaud, huîtres, sel marin iodé, pomme de terre, yaourt nature entier, œufs, haricots blancs, crevettes ; épinards, cresson, oignon, navet, radis, carotte ; fraises, ananas, kiwi, agrumes ; noix du Brésil",kw:["algue","cabillaud","huitre","sel iode","pomme de terre","pommes de terre","yaourt","oeuf","haricots blancs","crevette","epinard","cresson","oignon","navet","radis","carotte","fraise","ananas","kiwi","orange","citron","pamplemousse","mandarine","agrume","noix du bresil"]},
+ {id:"tyr",n:"Tyrosine",b:"1 à 2 g/j",src:"Œufs, volaille, crustacés, parmesan, emmental, edam, gouda, bacon, foies, flocons d'avoine trempés, lentilles, graines de courge, amandes, noix de pécan",kw:["oeuf","volaille","poulet","dinde","crevette","crabe","langouste","crustace","parmesan","emmental","edam","gouda","bacon","foie","avoine","lentille","graines de courge","amande","pecan"]},
+ {id:"vd",n:"Vitamine D",b:"≈ 600 UI/j",src:"D3 : huile de foie de morue (en gélules plutôt qu'en bouteille), saumon, sardines, fromage blanc entier, jaune d'œuf. D2 : avocat, champignons",kw:["foie de morue","saumon","sardine","fromage blanc","oeuf","avocat","champignon"]},
+ {id:"va",n:"Vitamine A",b:"650 µg/j (femmes)",src:"Vitamine A : foie de bœuf, œufs, beurre. Provitamine A : patate douce, carottes, épinards, fruits orange",kw:["foie","oeuf","beurre","patate douce","carotte","epinard","papaye","mangue","abricot","orange","potiron","citrouille","melon"]},
+ {id:"vb",n:"Vitamines B",b:"B1, B6, B9, B12",src:"B1 : graines de tournesol, noisettes, petit épeautre, levure de bière. B6 : foie, blanc de poulet, saumon, abats, pois chiches, banane. B9 : foie, légumineuses, châtaigne, épinards, laitue. B12 : foie, huîtres et crustacés, poissons gras",kw:["tournesol","noisette","epeautre","levure","foie","poulet","saumon","abat","pois chiche","banane","lentille","haricot","legumineuse","chataigne","epinard","laitue","salade","huitre","crustace","crevette","sardine","maquereau","thon"],cats:["poi","lgm"]},
+ {id:"mg",n:"Magnésium",b:"360 mg/j (femmes)",src:"Graines de courge, laitue de mer, haricots blancs (180 g cuits), épinards cuits, tofu (60 g), noix du Brésil (20 g), volaille, riz complet, framboises (200 g), chocolat noir 70 % (10 g)",kw:["graines de courge","laitue de mer","algue","haricots blancs","epinard","tofu","noix du bresil","volaille","poulet","dinde","riz complet","framboise","chocolat noir"]},
+ {id:"zn",n:"Zinc",b:"9,3 mg/j (femmes)",src:"Huîtres (100 g = 20 mg), foie de veau, bœuf, œufs, haricots blancs, poulet, fromages à pâte dure, noix de cajou, pécan",kw:["huitre","foie","boeuf","oeuf","haricots blancs","poulet","fromage","emmental","parmesan","gouda","cajou","pecan"]},
+ {id:"fe",n:"Fer",b:"",src:"Héminique (animal) : boudin, abats, viande rouge, palourdes et moules, œufs. Non héminique (végétal) : flocons d'avoine, épinards, choux de Bruxelles, lentilles, riz complet",kw:["boudin","abat","boeuf","viande rouge","palourde","moule","oeuf","avoine","epinard","chou de bruxelles","choux de bruxelles","lentille","riz complet"]},
+ {id:"se",n:"Sélénium",b:"",src:"Repère général : noix du Brésil, poissons, fruits de mer, œufs",kw:["noix du bresil","oeuf"],cats:["poi"]},
+ {id:"mo",n:"Molybdène",b:"",src:"Repère général : légumineuses, céréales complètes",kw:["lentille","pois chiche","haricot","avoine","riz complet","sarrasin","quinoa"],cats:["lgm"]}
+];
+function nutriOf(meals){const on=new Set();meals.forEach(m=>{const a=norm(m.aliment);NUTRI.forEach(n=>{if(n.kw.some(k=>a.includes(k))||(n.cats||[]).includes(m.cat))on.add(n.id)})});return on}
+const SENS=["Bien","Ballonnements","Somnolence","Lourdeur","Reflux","Faim vite revenue"];
+const RKEYS={pd:"Petit-déjeuner",de:"Déjeuner",co:"Collation",di:"Dîner"};
+const M=(n,ings)=>({n,ings:ings.map(([a,q,u,c])=>({aliment:a,qte:q,unite:u,cat:c}))});
+const MENUS=[
+ {j:"Lundi",pd:M("Porridge d'avoine, fruits rouges et noix",[["Flocons d'avoine",40,"g","cer"],["Lait de coco",100,"ml","gra"],["Fruits rouges",100,"g","fru"],["Noix",15,"g","gra"]]),
+  de:M("Salade de lentilles, sardines et carottes râpées",[["Lentilles cuites",150,"g","lgm"],["Sardines",90,"g","poi"],["Carottes",100,"g","leg"],["Huile d'olive",1,"c. à soupe","gra"]]),
+  co:M("Yaourt nature et graines de courge",[["Yaourt nature",125,"g","lai"],["Graines de courge",10,"g","gra"]]),
+  di:M("Poisson du lagon au curcuma, haricots verts, patate douce",[["Poisson du lagon",130,"g","poi"],["Haricots verts",200,"g","leg"],["Patate douce",150,"g","cer"],["Curcuma",1,"pincée","epi"]])},
+ {j:"Mardi",pd:M("Œufs brouillés aux épinards, pain complet",[["Œufs",2,"pièce","vol"],["Épinards",80,"g","leg"],["Pain complet",40,"g","cer"]]),
+  de:M("Poulet coco-gingembre, riz complet, brocolis",[["Poulet",120,"g","vol"],["Lait de coco",80,"ml","gra"],["Gingembre",5,"g","epi"],["Riz complet cuit",150,"g","cer"],["Brocolis",150,"g","leg"]]),
+  co:M("Papaye et amandes",[["Papaye",150,"g","fru"],["Amandes",15,"g","gra"]]),
+  di:M("Soupe potiron, lentilles et champignons",[["Lentilles cuites",120,"g","lgm"],["Potiron",150,"g","leg"],["Champignons",100,"g","leg"],["Oignon",50,"g","leg"]])},
+ {j:"Mercredi",pd:M("Fromage blanc, kiwi et graines de lin",[["Fromage blanc",150,"g","lai"],["Kiwi",2,"pièce","fru"],["Graines de lin",10,"g","gra"]]),
+  de:M("Saumon, quinoa, avocat et salade",[["Saumon",120,"g","poi"],["Quinoa cuit",150,"g","cer"],["Avocat",0.5,"pièce","gra"],["Salade verte",80,"g","leg"]]),
+  co:M("Ananas et noix du Brésil",[["Ananas",120,"g","fru"],["Noix du Brésil",2,"pièce","gra"]]),
+  di:M("Omelette champignons-cresson, igname",[["Œufs",2,"pièce","vol"],["Champignons",100,"g","leg"],["Cresson",50,"g","leg"],["Igname",150,"g","cer"]])},
+ {j:"Jeudi",pd:M("Porridge de sarrasin, banane et cannelle",[["Flocons de sarrasin",40,"g","cer"],["Lait de coco",100,"ml","gra"],["Banane",1,"pièce","fru"],["Cannelle",1,"pincée","epi"]]),
+  de:M("Crevettes ail-persil, haricots mungo, courgettes",[["Crevettes",120,"g","poi"],["Haricots mungo cuits",150,"g","lgm"],["Courgette",150,"g","leg"],["Ail",1,"pièce","leg"]]),
+  co:M("Framboises et noisettes",[["Framboises",150,"g","fru"],["Noisettes",15,"g","gra"]]),
+  di:M("Dinde, taro et chou sauté au gingembre",[["Dinde",120,"g","vol"],["Taro",150,"g","cer"],["Chou",200,"g","leg"],["Gingembre",5,"g","epi"]])},
+ {j:"Vendredi",pd:M("Yaourt, fraises et flocons d'avoine",[["Yaourt nature",125,"g","lai"],["Fraises",120,"g","fru"],["Flocons d'avoine",30,"g","cer"]]),
+  de:M("Maquereau, pommes de terre vapeur, salade de chou",[["Maquereau",120,"g","poi"],["Pommes de terre",150,"g","cer"],["Chou",120,"g","leg"],["Huile de colza",1,"c. à soupe","gra"]]),
+  co:M("Pomme et amandes",[["Pomme",1,"pièce","fru"],["Amandes",15,"g","gra"]]),
+  di:M("Curry de pois chiches aux épinards, riz complet",[["Pois chiches cuits",120,"g","lgm"],["Épinards",120,"g","leg"],["Lait de coco",80,"ml","gra"],["Curcuma",1,"pincée","epi"],["Riz complet cuit",130,"g","cer"]])},
+ {j:"Samedi",pd:M("Œufs à la coque, avocat, pain complet",[["Œufs",2,"pièce","vol"],["Avocat",0.5,"pièce","gra"],["Pain complet",40,"g","cer"]]),
+  de:M("Thon grillé, tomates au basilic, sarrasin",[["Thon",120,"g","poi"],["Tomates",150,"g","leg"],["Basilic",1,"pincée","epi"],["Sarrasin cuit",150,"g","cer"]]),
+  co:M("Mangue et graines de courge",[["Mangue",120,"g","fru"],["Graines de courge",10,"g","gra"]]),
+  di:M("Tofu sauté aux légumes et algues, riz noir",[["Tofu",120,"g","lgm"],["Légumes sautés",200,"g","leg"],["Algues",5,"g","leg"],["Riz noir cuit",130,"g","cer"]])},
+ {j:"Dimanche",pd:M("Pancakes avoine-banane, fruits rouges",[["Flocons d'avoine",40,"g","cer"],["Œufs",1,"pièce","vol"],["Banane",1,"pièce","fru"],["Fruits rouges",80,"g","fru"]]),
+  de:M("Poulet rôti aux herbes, légumes du four, patate douce",[["Poulet",130,"g","vol"],["Carottes",150,"g","leg"],["Courgette",100,"g","leg"],["Patate douce",150,"g","cer"],["Huile d'olive",1,"c. à soupe","gra"]]),
+  co:M("Fromage blanc et kiwi",[["Fromage blanc",120,"g","lai"],["Kiwi",1,"pièce","fru"]]),
+  di:M("Cabillaud vapeur, brocolis, quinoa",[["Cabillaud",130,"g","poi"],["Brocolis",150,"g","leg"],["Quinoa cuit",130,"g","cer"]])}
+];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const key=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const fromKey=k=>{const [y,m,d]=k.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const monday=d=>{const x=new Date(d);const w=(x.getDay()+6)%7;x.setDate(x.getDate()-w);x.setHours(0,0,0,0);return x};
+const fmtLong=d=>d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+const fmtShort=d=>d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"});
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+
+let days={}; let cur=new Date(); cur.setHours(0,0,0,0);
+let calMonth=new Date(cur.getFullYear(),cur.getMonth(),1);
+let weekStart=monday(cur);
+let store=null; // {save(k,data), del(k), saveCourses(c)}
+let courses={checks:{},extras:{},incBase:true,incMeals:true};
+let cMode="semaine";
+const blank=()=>({meals:[],acts:[],eau:0,douleur:null,note:"",sens:{}});
+let obs={};
+const getDay=k=>days[k]||blank();
+
+/* ---------- Persistance ---------- */
+const queues={};
+function persist(k){
+  const data=days[k];
+  const empty=!data||(!data.meals.length&&!data.acts.length&&!data.eau&&data.douleur==null&&!data.note&&!Object.values(data.sens||{}).some(a=>a.length));
+  queues[k]=(queues[k]||Promise.resolve()).then(()=>store?(empty?store.del(k):store.save(k,data)):null).catch(e=>showStatus("L'enregistrement n'a pas abouti ("+(e&&e.code||"erreur")+"). Réessayez dans un instant."));
+}
+function showStatus(t){const s=$("#status");s.textContent=t;s.hidden=!t}
+function localStore(){
+  const LK="carnet-lipoedeme",LC="carnet-courses";
+  try{days=JSON.parse(localStorage.getItem(LK)||"{}")||{}}catch(e){days={}}
+  try{courses={...courses,...(JSON.parse(localStorage.getItem(LC)||"{}")||{})}}catch(e){}
+  const w=()=>{try{localStorage.setItem(LK,JSON.stringify(days))}catch(e){}};
+  try{const pp=JSON.parse(localStorage.getItem("carnet-profil")||"null");if(pp)profil={...profil,...pp}}catch(e){}
+  const LO="carnet-obs";try{obs=JSON.parse(localStorage.getItem(LO)||"{}")||{}}catch(e){obs={}}
+  const wo=()=>{try{localStorage.setItem(LO,JSON.stringify(obs))}catch(e){}};
+  return{save:async()=>w(),del:async()=>w(),saveCourses:async c=>{try{localStorage.setItem(LC,JSON.stringify(c))}catch(e){}},saveObs:async()=>wo(),delObs:async()=>wo(),saveProfil:async c=>{try{localStorage.setItem("carnet-profil",JSON.stringify(c))}catch(e){}}};
+}
+let cQ=Promise.resolve();
+function persistCourses(){const c=JSON.parse(JSON.stringify(courses));cQ=cQ.then(()=>store&&store.saveCourses(c)).catch(e=>showStatus("La liste de courses n'a pas été enregistrée ("+(e&&e.code||"erreur")+")."))}
+async function initStore(){
+  let timer=setTimeout(()=>showStatus("Connexion au carnet en cours… vos données peuvent mettre un moment à apparaître."),10000);
+  try{
+    if(!window.claude||!claude.use){throw 0}
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    const id=user?await user.id():null;
+    if(!db||!id) throw 0;
+    const col=db.collection("data/users/"+id);
+    store={save:(k,d)=>col.doc(k).set(JSON.parse(JSON.stringify(d))),del:k=>col.doc(k).delete(),saveCourses:c=>col.doc("courses").set(c),saveObs:(id,o)=>col.doc(id).set(o),saveProfil:c=>col.doc("profil").set(c),delObs:id=>col.doc(id).delete()};
+    col.onSnapshot(snap=>{
+      if(!snap.metadata.fromCache){clearTimeout(timer);showStatus("")}
+      const next={},nextObs={};snap.docs.forEach(d=>{const v=d.data();
+        if(d.id==="courses"){courses={...courses,...v,checks:{...(v.checks||{})},extras:{...(v.extras||{})}};return}
+        if(d.id.startsWith("obs-")){nextObs[d.id]={...v};return}
+        if(d.id==="profil"){profil={...profil,...v,plan:[...(v.plan||profil.plan)]};return}
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(d.id))return;
+        next[d.id]={...blank(),...v,meals:[...(v.meals||[])],acts:[...(v.acts||[])]}});
+      days=next;obs=nextObs;renderAll();
+    },e=>{clearTimeout(timer);showStatus("Le carnet en ligne est indisponible pour le moment. Rechargez la page plus tard.")});
+  }catch(e){
+    clearTimeout(timer);
+    store=localStore();
+    showStatus("Vos saisies sont gardées dans ce navigateur, sur cet appareil.");
+    renderAll();
+  }
+}
+
+/* ---------- Onglets ---------- */
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+function showTab(t){
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  ["jour","cal","recap","menus","courses","obs","reperes"].forEach(x=>{$("#tab-"+x).hidden=x!==t});
+  try{localStorage.setItem("carnet-tab",t)}catch(e){}
+  renderAll();
+}
+
+/* ---------- Journée ---------- */
+$("#mCat").innerHTML=["v","o","r"].map(c=>`<optgroup label="${{v:"À privilégier",o:"Avec modération",r:"À limiter"}[c]}">`+CATS.filter(x=>x.c===c).map(x=>`<option value="${x.id}">${x.n}</option>`).join("")+"</optgroup>").join("");
+$("#alimList").innerHTML=Object.keys(SUGG).map(s=>`<option value="${esc(s)}">`).join("");
+$("#mAliment").addEventListener("input",e=>{const c=SUGG[e.target.value.trim().toLowerCase()];if(c)$("#mCat").value=c});
+$("#aType").innerHTML=ACTS.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join("");
+$("#aType").addEventListener("change",e=>{$("#aComp").value=(ACTMAP[e.target.value].eau||e.target.value==="presso")?"na":"oui"});
+$("#aType").dispatchEvent(new Event("change"));
+
+function mutate(fn){const k=key(cur);const d=structuredClone(getDay(k));fn(d);days[k]=d;persist(k);renderAll()}
+$("#mealForm").addEventListener("submit",e=>{e.preventDefault();
+  const a=$("#mAliment").value.trim();const q=parseFloat($("#mQte").value);if(!a||!(q>=0))return;
+  const kc=$("#mKcal").value;const item={id:uid(),repas:$("#mRepas").value,aliment:a,qte:q,unite:$("#mUnite").value,cat:$("#mCat").value};if(kc!=="")item.kcal=+kc;
+  mutate(d=>d.meals.push(item));
+  $("#mAliment").value="";$("#mQte").value="";$("#mKcal").value="";$("#mAliment").focus();
+});
+$("#actForm").addEventListener("submit",e=>{e.preventDefault();
+  const m=parseInt($("#aMin").value,10);if(!(m>0))return;
+  mutate(d=>d.acts.push({id:uid(),type:$("#aType").value,min:m,intensite:$("#aInt").value,compression:$("#aComp").value}));
+  $("#aMin").value="";
+});
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-del]");if(b){const [kind,id]=b.dataset.del.split(":");mutate(d=>{d[kind]=d[kind].filter(x=>x.id!==id)});return}
+  const g=e.target.closest("[data-glass]");if(g){const n=+g.dataset.glass;mutate(d=>{d.eau=d.eau===n?n-1:n});return}
+  const p=e.target.closest("[data-pain]");if(p){const n=+p.dataset.pain;mutate(d=>{d.douleur=d.douleur===n?null:n});return}
+  const sv=e.target.closest("[data-sens]");if(sv){const [r,x]=sv.dataset.sens.split("|");mutate(d=>{d.sens=d.sens||{};const a=d.sens[r]||[];d.sens[r]=a.includes(x)?a.filter(y=>y!==x):[...a,x]});return}
+  const c=e.target.closest("[data-open]");if(c){cur=fromKey(c.dataset.open);showTab("jour")}
+});
+let noteT;$("#note").addEventListener("input",e=>{clearTimeout(noteT);const v=e.target.value;noteT=setTimeout(()=>{const k=key(cur);const d=structuredClone(getDay(k));d.note=v;days[k]=d;persist(k)},800)});
+$("#prevDay").onclick=()=>{cur=addDays(cur,-1);renderAll()};
+$("#nextDay").onclick=()=>{cur=addDays(cur,1);renderAll()};
+$("#todayBtn").onclick=()=>{cur=new Date();cur.setHours(0,0,0,0);renderAll()};
+$("#dayPick").onchange=e=>{if(e.target.value){cur=fromKey(e.target.value);renderAll()}};
+
+function score(d){const n=d.meals.length;if(!n)return null;const v=d.meals.filter(m=>CATMAP[m.cat]?.c==="v").length;return Math.round(v/n*100)}
+function renderDay(){
+  const k=key(cur),d=getDay(k);
+  $("#dayTitle").textContent=fmtLong(cur);$("#dayPick").value=k;
+  const s=score(d);$("#dayScore").innerHTML=s==null?"":`<span class="pill ${s>=60?"v":s>=40?"o":"r"}">${s} % d'aliments à privilégier</span>`;
+  const order=["Petit-déjeuner","Déjeuner","Collation","Dîner"];
+  $("#mealList").innerHTML=d.meals.length?order.filter(r=>d.meals.some(m=>m.repas===r)).map(r=>`<div class="mealgroup"><h4>${r}</h4><div class="sens" aria-label="Sensations après ${r}">${SENS.map(x=>`<button data-sens="${r}|${x}" class="${(d.sens?.[r]||[]).includes(x)?"on":""}">${x}</button>`).join("")}</div><ul class="items">${d.meals.filter(m=>m.repas===r).map(m=>{const c=CATMAP[m.cat]||{c:"o",n:"?"};return`<li><i class="dot ${c.c}" title="${esc(c.n)}"></i><span class="what">${esc(m.aliment)} <span class="muted" style="font-size:.8rem">· ${esc(CATBEN[m.cat]||c.n)}</span></span><span class="qty">${m.qte} ${esc(m.unite)}${(()=>{const k=kcalOf(m);return k==null?(sampler?` · <button class="btn ghost small" data-kprop="${m.id}">Proposer les kcal</button>`:' · <span title="Calories inconnues : indiquez-les dans le champ kcal">? kcal</span>'):` · ${k} kcal`})()}</span><button class="icon" data-del="meals:${m.id}" aria-label="Supprimer ${esc(m.aliment)}">×</button></li>`}).join("")}</ul></div>`).join("")+(()=>{const ks=d.meals.map(kcalOf);const t=ks.reduce((a,b)=>a+(b||0),0);const u=ks.filter(x=>x==null).length;return`<p style="margin:0" class="muted">Total du jour : <b style="color:var(--ink)">≈ ${t} kcal</b>${u?` (${u} aliment${u>1?"s":""} sans valeur)${sampler&&u>1?` <button class="btn ghost small" data-kpropall="1">Proposer toutes les valeurs manquantes</button>`:""}`:""}</p><div id="kpropBox"></div>`})():`<div class="empty">Aucun repas noté pour ce jour. Commencez par le petit-déjeuner : choisissez un aliment dans la liste ou tapez le vôtre, la catégorie se remplit seule pour les aliments connus.</div>`;
+  const tot=d.acts.reduce((a,x)=>a+x.min,0);
+  $("#actList").innerHTML=d.acts.length?`<ul class="items">${d.acts.map(a=>{const t=ACTMAP[a.type]||{n:a.type};const comp=a.compression==="oui"?'<span class="pill v">compression</span>':a.compression==="non"?'<span class="pill o">sans compression</span>':(a.compression==="na"&&ACTMAP[a.type]?.eau)?'<span class="pill l">dans l\'eau</span>':'';const src=a.source==="garmin"?' <span class="src m">Garmin</span>':'';return`<li><i class="dot" style="background:var(--lagon)"></i><span class="what">${esc(t.n)} <span class="muted" style="font-size:.8rem">· ${esc(a.intensite)}</span> ${comp}${src}</span><span class="qty">${a.heure&&a.heure!=="soir"?fmtH(a.heure)+" · ":""}${a.min} min${(()=>{const k=actKcal(a);return k==null?"":` · ${k} kcal`})()}</span><button class="icon" data-del="acts:${a.id}" aria-label="Supprimer">×</button><span class="muted" style="grid-column:2/-1;font-size:.82rem;color:var(--vert)">${esc(ACTBEN[a.type]||"")}</span></li>`}).join("")}</ul><p style="margin:0" class="muted">Total du jour : <b style="color:var(--ink)">${tot} min</b>${(()=>{const ks=d.acts.map(actKcal);if(ks.every(x=>x==null))return profil.poids?"":" · indiquez votre poids dans « Récap » pour estimer les calories";return` · <b style="color:var(--ink)">≈ ${ks.reduce((a,b)=>a+(b||0),0)} kcal dépensées</b>`})()}</p>`:`<div class="empty">Pas encore d'activité ce jour. Une marche de 20 minutes ou une séance d'aquagym compte.</div>`;
+  $("#water").innerHTML=Array.from({length:GLASSES},(_,i)=>`<button class="glass ${i<d.eau?"on":""}" data-glass="${i+1}" aria-label="${i+1} verre${i?"s":""}"></button>`).join("");
+  $("#waterTxt").textContent=`— ${(d.eau*0.25).toLocaleString("fr-FR")} L`;
+  $("#pain").innerHTML=Array.from({length:11},(_,i)=>`<button class="${d.douleur===i?"on":""}" data-pain="${i}">${i}</button>`).join("");
+  if(document.activeElement!==$("#note"))$("#note").value=d.note||"";
+  const on=nutriOf(d.meals);$("#nutriDay").innerHTML=NUTRI.map(n=>`<span class="nchip ${on.has(n.id)?"on":""}" title="${esc(n.src)}">${on.has(n.id)?"✓ ":""}${n.n}</span>`).join("");
+}
+
+/* ---------- Calendrier ---------- */
+$("#prevMonth").onclick=()=>{calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()-1,1);renderCal()};
+$("#nextMonth").onclick=()=>{calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+1,1);renderCal()};
+function renderCal(){
+  $("#monthTitle").textContent=calMonth.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+  const start=monday(calMonth);const todayK=key(new Date());
+  let h=["lun","mar","mer","jeu","ven","sam","dim"].map(x=>`<div class="dow">${x}</div>`).join("");
+  for(let i=0;i<42;i++){
+    const dt=addDays(start,i);if(i===35&&dt.getMonth()!==calMonth.getMonth())break;
+    const k=key(dt),d=days[k];let marks="";
+    if(d){
+      const n=d.meals.length,cv=d.meals.filter(m=>CATMAP[m.cat]?.c==="v").length,co=d.meals.filter(m=>CATMAP[m.cat]?.c==="o").length,cr=n-cv-co;
+      const bar=n?`<div class="bar3" title="${cv} à privilégier, ${co} modération, ${cr} à limiter"><i class="v" style="width:${cv/n*100}%"></i><i class="o" style="width:${co/n*100}%"></i><i class="r" style="width:${cr/n*100}%"></i></div>`:"";
+      const m=d.acts.reduce((a,x)=>a+x.min,0);
+      marks=`${bar}<div class="marks">${m?`<b style="color:var(--lagon)">${m}′</b>`:""}${d.douleur!=null?`<b style="color:var(--rouge)" title="douleur">${d.douleur}</b>`:""}${n?`<span class="t">${n} alim.</span>`:""}</div>`;
+    }
+    const pl=plansFor(dt);if(pl.length){const dn=d?pl.filter(p=>d.acts.some(a=>a.id===planId(k,p))).length:0;marks+=`<div class="marks"><span style="color:var(--lagon);font-weight:700">${pl.map(p=>(ACTMAP[p.type]?.n||p.type).split(" ")[0]+" "+fmtH(p.start)).join(", ")}</span>${dn?" ✓":""}</div>`}
+    h+=`<button data-open="${k}" class="${dt.getMonth()!==calMonth.getMonth()?"out":""} ${k===todayK?"today":""}" aria-label="${fmtLong(dt)}"><span class="n">${dt.getDate()}</span><span>${marks}</span></button>`;
+  }
+  $("#cal").innerHTML=h;
+}
+
+/* ---------- Récap ---------- */
+$("#prevWeek").onclick=()=>{weekStart=addDays(weekStart,-7);renderAll()};
+$("#nextWeek").onclick=()=>{weekStart=addDays(weekStart,7);renderAll()};
+function svgBars(series,max,goalLine){
+  // series: [{label, parts:[{v,color}]}]
+  const W=420,H=200,L=34,B=28,T=12,R=8,cw=(W-L-R)/series.length,bw=Math.min(34,cw*.6);
+  const top=Math.max(max,1);const nice=top<=5?5:top<=10?10:Math.ceil(top/20)*20;
+  const y=v=>T+(H-T-B)*(1-v/nice);
+  let g="";for(let i=0;i<=4;i++){const v=nice*i/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${Math.round(v)}</text>`}
+  let bars="";series.forEach((s,i)=>{let acc=0;const x=L+cw*i+(cw-bw)/2;
+    s.parts.forEach(p=>{if(!p.v)return;bars+=`<rect x="${x}" y="${y(acc+p.v)}" width="${bw}" height="${y(acc)-y(acc+p.v)}" fill="${p.color}" rx="3"/>`;acc+=p.v});
+    bars+=`<text x="${x+bw/2}" y="${H-10}" text-anchor="middle" font-size="11" fill="var(--muted)">${s.label}</text>`;
+    if(acc)bars+=`<text x="${x+bw/2}" y="${y(acc)-4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">${acc}</text>`});
+  const gl=goalLine!=null&&goalLine<=nice?`<line x1="${L}" x2="${W-R}" y1="${y(goalLine)}" y2="${y(goalLine)}" stroke="var(--orange)" stroke-dasharray="5 4"/><text x="${W-R}" y="${y(goalLine)-5}" text-anchor="end" font-size="11" fill="var(--orange)">repère ${goalLine} min/j</text>`:"";
+  return`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:320px;display:block" role="img">${g}${gl}${bars}</svg>`;
+}
+function renderRecap(){
+  const ds=Array.from({length:7},(_,i)=>addDays(weekStart,i));
+  $("#weekTitle").textContent="Semaine du "+ds[0].toLocaleDateString("fr-FR",{day:"numeric",month:"long"})+" au "+ds[6].toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+  const dd=ds.map(d=>getDay(key(d)));
+  const mins=dd.map(d=>d.acts.reduce((a,x)=>a+x.min,0));const totMin=mins.reduce((a,b)=>a+b,0);
+  const renfo=dd.reduce((a,d)=>a+d.acts.filter(x=>x.type==="renfo").length,0);
+  const eauDays=dd.filter(d=>d.eau>0);const eauMoy=eauDays.length?eauDays.reduce((a,d)=>a+d.eau,0)/eauDays.length*0.25:0;
+  const allM=dd.flatMap(d=>d.meals);const pv=allM.length?Math.round(allM.filter(m=>CATMAP[m.cat]?.c==="v").length/allM.length*100):null;
+  const pains=dd.filter(d=>d.douleur!=null).map(d=>d.douleur);const painMoy=pains.length?(pains.reduce((a,b)=>a+b,0)/pains.length):null;
+  const poisson=allM.filter(m=>m.cat==="poi").length;
+  const kIn=dd.map(d=>d.meals.reduce((a,m)=>a+(kcalOf(m)||0),0));const daysIn=kIn.filter(x=>x>0).length;const kInMoy=daysIn?Math.round(kIn.reduce((a,b)=>a+b,0)/daysIn):null;
+  const allA=dd.flatMap(d=>d.acts);const kOutL=allA.map(actKcal);const kOut=kOutL.some(x=>x!=null)?kOutL.reduce((a,b)=>a+(b||0),0):null;
+  const pct=v=>Math.min(100,Math.round(v));
+  $("#kpis").innerHTML=`
+   <div class="kpi"><small>Activité</small><b>${totMin} min</b><small>repère ${GOAL_WEEK} min/sem.</small><div class="meter"><i style="width:${pct(totMin/GOAL_WEEK*100)}%"></i></div></div>
+   <div class="kpi"><small>Renforcement</small><b>${renfo} / 2</b><small>séances cette semaine</small><div class="meter"><i style="width:${pct(renfo/2*100)}%"></i></div></div>
+   <div class="kpi"><small>Aliments à privilégier</small><b>${pv==null?"–":pv+" %"}</b><small>${allM.length} aliments notés</small><div class="meter"><i style="width:${pv||0}%;background:var(--vert)"></i></div></div>
+   <div class="kpi"><small>Poisson / fruits de mer</small><b>${poisson}</b><small>fois cette semaine</small></div>
+   <div class="kpi"><small>Eau, moyenne</small><b>${eauMoy?eauMoy.toLocaleString("fr-FR",{maximumFractionDigits:1})+" L":"–"}</b><small>par jour renseigné</small><div class="meter"><i style="width:${pct(eauMoy/1.5*100)}%"></i></div></div>
+   <div class="kpi"><small>Calories mangées, moyenne</small><b>${kInMoy==null?"–":"≈ "+kInMoy}</b><small>kcal par jour renseigné</small></div>
+   <div class="kpi"><small>Calories dépensées en activité</small><b>${kOut==null?"–":"≈ "+kOut}</b><small>${kOut==null?"indiquez votre poids ci-dessus":"kcal sur la semaine"}</small></div>
+   <div class="kpi"><small>Douleur jambes, moyenne</small><b>${painMoy==null?"–":painMoy.toLocaleString("fr-FR",{maximumFractionDigits:1})+" /10"}</b><small>${pains.length} jour(s) noté(s)</small></div>`;
+  const lbl=ds.map(d=>d.toLocaleDateString("fr-FR",{weekday:"short"}).replace(".",""));
+  { const byT={};allA.forEach(a=>{const b=byT[a.type]||(byT[a.type]={n:0,min:0,k:0});b.n++;b.min+=a.min;b.k+=actKcal(a)||0});
+    const byC={};allM.forEach(m=>{byC[m.cat]=(byC[m.cat]||0)+1});
+    const nutW=new Set();dd.forEach(d=>nutriOf(d.meals).forEach(x=>nutW.add(x)));
+    const actH=Object.keys(byT).length?`<ul class="items">${Object.entries(byT).sort((a,b)=>b[1].min-a[1].min).map(([t,b])=>`<li style="grid-template-columns:1fr auto"><span class="what"><b>${esc(ACTMAP[t]?.n||t)}</b> · ${b.n} séance${b.n>1?"s":""}, ${b.min} min${b.k?` · ≈ ${b.k} kcal`:""}<br><span style="color:var(--vert);font-size:.85rem">${esc(ACTBEN[t]||"")}</span></span></li>`).join("")}</ul>`:'<div class="empty">Aucune activité cette semaine.</div>';
+    const good=CATS.filter(c=>c.c!=="r"&&byC[c.id]),bad=CATS.filter(c=>c.c==="r"&&byC[c.id]);
+    const foodH=allM.length?`<ul class="items">${good.map(c=>`<li style="grid-template-columns:auto 1fr auto"><i class="dot ${c.c}"></i><span class="what"><b>${esc(c.n)}</b><br><span style="color:var(--vert);font-size:.85rem">${esc(CATBEN[c.id])}</span></span><span class="qty">${byC[c.id]}×</span></li>`).join("")}${bad.map(c=>`<li style="grid-template-columns:auto 1fr auto"><i class="dot r"></i><span class="what"><b>${esc(c.n)}</b><br><span style="color:var(--rouge);font-size:.85rem">${esc(CATBEN[c.id])}</span></span><span class="qty">${byC[c.id]}×</span></li>`).join("")}</ul><p style="margin:0;font-size:.9rem">Thyroïde : <b>${nutW.size}/${NUTRI.length}</b> micronutriments couverts cette semaine${nutW.size<NUTRI.length?` — manquent : ${NUTRI.filter(n=>!nutW.has(n.id)).map(n=>n.n).join(", ")}`:""}.</p>`:'<div class="empty">Aucun repas noté cette semaine.</div>';
+    $("#bienfaits").innerHTML=`<div style="display:grid;gap:8px;min-width:0"><h3>Dans l'activité physique</h3>${actH}</div><div style="display:grid;gap:8px;min-width:0"><h3>Dans l'alimentation</h3>${foodH}</div>`; }
+  $("#actChart").innerHTML=svgBars(mins.map((m,i)=>({label:lbl[i],parts:[{v:m,color:"var(--lagon)"}]})),Math.max(...mins,30),Math.round(GOAL_WEEK/7));
+  const fs=dd.map((d,i)=>{const c=x=>d.meals.filter(m=>CATMAP[m.cat]?.c===x).length;return{label:lbl[i],parts:[{v:c("v"),color:"var(--vert)"},{v:c("o"),color:"var(--orange)"},{v:c("r"),color:"var(--rouge)"}]}});
+  $("#foodChart").innerHTML=svgBars(fs,Math.max(...dd.map(d=>d.meals.length),5),null);
+  // Quantités par catégorie
+  const agg={};allM.forEach(m=>{const a=agg[m.cat]||(agg[m.cat]={n:0,q:{}});a.n++;a.q[m.unite]=(a.q[m.unite]||0)+m.qte});
+  const rows=CATS.filter(c=>agg[c.id]);
+  $("#catTable").innerHTML=rows.length?`<table><thead><tr><th>Catégorie</th><th>Fois</th><th>Quantités cumulées</th></tr></thead><tbody>${rows.map(c=>`<tr><td><i class="dot ${c.c}"></i> ${esc(c.n)}</td><td class="num">${agg[c.id].n}</td><td class="num">${Object.entries(agg[c.id].q).map(([u,q])=>`${Math.round(q*10)/10} ${esc(u)}`).join(" · ")}</td></tr>`).join("")}</tbody></table>`:`<div class="empty">Aucun repas noté cette semaine. Les quantités par catégorie apparaîtront ici dès vos premières saisies.</div>`;
+  const order=["Petit-déjeuner","Collation","Déjeuner","Dîner"];
+  $("#carnet").innerHTML=`<table style="min-width:760px"><thead><tr><th></th>${ds.map((d,i)=>`<th>Jour ${i+1}<br><span style="text-transform:none;letter-spacing:0">${fmtShort(d)}</span></th>`).join("")}</tr></thead><tbody>${order.map(r=>`<tr><th>${r}</th>${dd.map(d=>{const ms=d.meals.filter(m=>m.repas===r);const se=d.sens?.[r]||[];return`<td>${ms.map(m=>`<div><i class="dot ${CATMAP[m.cat]?.c||"o"}"></i> ${esc(m.aliment)} <span class="muted">${m.qte} ${esc(m.unite)}</span></div>`).join("")}${se.length?`<div style="margin-top:4px">${se.map(x=>`<span class="pill ${x==="Bien"?"v":"o"}">${x}</span>`).join(" ")}</div>`:""}</td>`}).join("")}</tr>`).join("")}</tbody></table>`;
+  const nd=dd.map(d=>nutriOf(d.meals));
+  $("#nutriWeek").innerHTML=`<table class="mx"><thead><tr><th>Micronutriment</th>${lbl.map(l=>`<th>${l}</th>`).join("")}<th>Jours</th></tr></thead><tbody>${NUTRI.map(n=>{const c=nd.filter(x=>x.has(n.id)).length;return`<tr><td>${n.n}</td>${nd.map(x=>`<td>${x.has(n.id)?'<i class="dot v" title="présent"></i>':'<span class="muted">·</span>'}</td>`).join("")}<td class="num"><b>${c}</b>/7</td></tr>`}).join("")}</tbody></table>`;
+  const mr=ds.flatMap((d,i)=>dd[i].meals.map(m=>({d,m})));
+  $("#mealTable").innerHTML=mr.length?`<table><thead><tr><th>Jour</th><th>Repas</th><th>Aliment</th><th>Quantité</th></tr></thead><tbody>${mr.map(({d,m})=>`<tr><td class="num">${fmtShort(d)}</td><td>${esc(m.repas)}</td><td><i class="dot ${CATMAP[m.cat]?.c||"o"}"></i> ${esc(m.aliment)}</td><td class="num">${m.qte} ${esc(m.unite)}</td></tr>`).join("")}</tbody></table>`:`<div class="empty">La liste détaillée des repas de la semaine s'affichera ici.</div>`;
+}
+
+/* ---------- Courses ---------- */
+const RAYONS=["Fruits et légumes","Poissonnerie","Boucherie, volaille, œufs","Crèmerie","Épicerie","Boissons","Autre"];
+const CAT2RAY={leg:0,fru:0,poi:1,vro:2,vol:2,lai:3,lgm:4,gra:4,epi:4,cer:4,raf:4,suc:4,boi:5,sod:5};
+// Base pour 1 personne et 1 semaine — [nom, quantité, unité, rayon]
+const BASE=[
+  ["Légumes verts variés (brocoli, courgette, haricots)",2,"kg",0],["Salade, épinards, chou",1,"kg",0],["Tomates, carottes, poivrons",1,"kg",0],
+  ["Oignons, ail",500,"g",0],["Gingembre frais",100,"g",0],["Fruits de saison (papaye, pomme, agrumes)",2,"kg",0],["Fruits rouges surgelés",300,"g",0],
+  ["Citrons",4,"pièce",0],["Avocats",2,"pièce",0],
+  ["Sardines ou maquereaux en boîte",3,"boîte",1],["Poisson frais (thon, saumon, poisson du lagon)",400,"g",1],
+  ["Poulet",400,"g",2],["Œufs",6,"pièce",2],
+  ["Yaourt nature",4,"pot",3],
+  ["Lentilles ou pois chiches (secs)",400,"g",4],["Flocons d'avoine",400,"g",4],["Riz complet ou quinoa",400,"g",4],
+  ["Patate douce, igname ou taro",1,"kg",0],["Noix ou amandes",150,"g",4],["Graines de lin ou de chia",100,"g",4],
+  ["Huile d'olive",25,"cl",4],["Curcuma, cannelle, herbes",1,"lot",4],["Thé vert, tisanes",1,"boîte",5]
+];
+function cPeriod(){
+  if(cMode==="semaine"){const s=weekStart,e=addDays(s,6);return{id:"S"+key(s),start:s,end:e,mult:1,
+    title:"Semaine du "+s.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})+" au "+e.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}}
+  const s=new Date(calMonth),e=new Date(s.getFullYear(),s.getMonth()+1,0);
+  return{id:"M"+key(s).slice(0,7),start:s,end:e,mult:4,title:s.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})};
+}
+const fmtQ=(q,u)=>{if(u==="g"&&q>=1000)return (Math.round(q/100)/10).toLocaleString("fr-FR")+" kg";if(u==="cl"&&q>=100)return (Math.round(q/10)/10).toLocaleString("fr-FR")+" L";return (Math.round(q*10)/10).toLocaleString("fr-FR")+" "+u};
+$("#cRayon").innerHTML=RAYONS.map((r,i)=>`<option value="${i}">${r}</option>`).join("");
+$("#cWeek").onclick=()=>{cMode="semaine";$("#cWeek").classList.add("on");$("#cMonth").classList.remove("on");renderCourses()};
+$("#cMonth").onclick=()=>{cMode="mois";$("#cMonth").classList.add("on");$("#cWeek").classList.remove("on");renderCourses()};
+$("#cPrev").onclick=()=>{if(cMode==="semaine")weekStart=addDays(weekStart,-7);else calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()-1,1);renderCourses()};
+$("#cNext").onclick=()=>{if(cMode==="semaine")weekStart=addDays(weekStart,7);else calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+1,1);renderCourses()};
+$("#cIncBase").onchange=e=>{courses.incBase=e.target.checked;persistCourses();renderCourses()};
+$("#cIncMeals").onchange=e=>{courses.incMeals=e.target.checked;persistCourses();renderCourses()};
+$("#cIncMenus").onchange=e=>{courses.incMenus=e.target.checked;persistCourses();renderCourses()};
+$("#cForm").addEventListener("submit",e=>{e.preventDefault();const n=$("#cName").value.trim();if(!n)return;const p=cPeriod();
+  courses.extras[p.id]=[...(courses.extras[p.id]||[]),{id:uid(),nom:n,qte:$("#cQty").value.trim(),rayon:+$("#cRayon").value}];
+  $("#cName").value="";$("#cQty").value="";persistCourses();renderCourses();$("#cName").focus()});
+$("#cClear").onclick=()=>{const p=cPeriod();courses.checks[p.id]={};persistCourses();renderCourses()};
+document.addEventListener("change",e=>{const c=e.target.closest("[data-chk]");if(!c)return;const p=cPeriod();
+  const m={...(courses.checks[p.id]||{})};if(c.checked)m[c.dataset.chk]=true;else delete m[c.dataset.chk];courses.checks[p.id]=m;persistCourses();renderCourses()});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-cdel]");if(!b)return;const p=cPeriod();
+  courses.extras[p.id]=(courses.extras[p.id]||[]).filter(x=>x.id!==b.dataset.cdel);persistCourses();renderCourses()});
+function renderCourses(){
+  const p=cPeriod();$("#cTitle").textContent=p.title;
+  $("#cIncBase").checked=courses.incBase!==false;$("#cIncMeals").checked=courses.incMeals!==false;$("#cIncMenus").checked=!!courses.incMenus;
+  const items=[];
+  if(courses.incBase!==false)BASE.forEach(([n,q,u,r],i)=>items.push({k:"b"+i,nom:n,qte:fmtQ(q*p.mult,u),rayon:r,src:"b"}));
+  if(courses.incMeals!==false){
+    const agg={};for(let d=new Date(p.start);d<=p.end;d=addDays(d,1)){(days[key(d)]?.meals||[]).forEach(m=>{
+      if(m.cat==="boi"&&/^(eau|tisane|café)/i.test(m.aliment))return;
+      const nk=m.aliment.trim().toLowerCase();const a=agg[nk]||(agg[nk]={nom:m.aliment.trim(),cat:m.cat,q:{},n:0});a.n++;a.q[m.unite]=(a.q[m.unite]||0)+m.qte})}
+    Object.entries(agg).sort((a,b)=>a[1].nom.localeCompare(b[1].nom,"fr")).forEach(([nk,a])=>items.push({k:"m"+nk,nom:a.nom,qte:Object.entries(a.q).map(([u,q])=>fmtQ(q,u)).join(" + "),rayon:CAT2RAY[a.cat]??6,src:"m",bad:CATMAP[a.cat]?.c==="r"}));
+  }
+  if(courses.incMenus){const ag={};MENUS.forEach(dm=>Object.keys(RKEYS).forEach(rk=>dm[rk].ings.forEach(g=>{const k=norm(g.aliment)+"|"+g.unite;const a=ag[k]||(ag[k]={nom:g.aliment,u:g.unite,q:0,cat:g.cat});a.q+=g.qte})));
+    Object.entries(ag).sort((a,b)=>a[1].nom.localeCompare(b[1].nom,"fr")).forEach(([k,a])=>items.push({k:"n"+k,nom:a.nom,qte:fmtQ(a.q*p.mult,a.u),rayon:CAT2RAY[a.cat]??6,src:"n"}))}
+  (courses.extras[p.id]||[]).forEach(x=>items.push({k:"a"+x.id,id:x.id,nom:x.nom,qte:x.qte,rayon:x.rayon,src:"a"}));
+  const chk=courses.checks[p.id]||{};const done=items.filter(i=>chk[i.k]).length;
+  $("#cCount").textContent=items.length?`${done} / ${items.length} dans le panier`:"";
+  const lbl={b:"base",m:"repas",a:"ajout",n:"menus"};
+  $("#cList").innerHTML=items.length?RAYONS.map((r,ri)=>{const its=items.filter(i=>i.rayon===ri);if(!its.length)return"";
+    return`<div class="rayon"><h4>${r}</h4><ul>${its.map(i=>`<li class="${chk[i.k]?"done":""}"><input type="checkbox" id="c-${esc(i.k).replace(/[^a-zA-Z0-9_-]/g,"_")}" data-chk="${esc(i.k)}" ${chk[i.k]?"checked":""} aria-label="${esc(i.nom)}"><span class="nm">${esc(i.nom)} <span class="src ${i.src}">${lbl[i.src]}</span>${i.bad?' <span class="src a" title="catégorie à limiter">à limiter</span>':""}</span><span class="qty">${esc(i.qte||"")}</span>${i.src==="a"?`<button class="icon" data-cdel="${i.id}" aria-label="Retirer ${esc(i.nom)}">×</button>`:"<span></span>"}</li>`).join("")}</ul></div>`}).join(""):`<div class="empty">La liste est vide. Cochez « Base anti-inflammatoire » pour partir d'une liste type, ou ajoutez vos articles ci-dessus.</div>`;
+}
+
+/* ---------- Import Garmin ---------- */
+function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
+  if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===","||c===";"){r.push(f);f=""}else if(c==="\n"){r.push(f);rows.push(r);r=[];f=""}else if(c!=="\r")f+=c}
+  if(f||r.length){r.push(f);rows.push(r)}return rows.filter(x=>x.some(v=>v.trim()))}
+function mapGarmin(t){t=(t||"").toLowerCase();
+  if(/aqua|eau|water/.test(t))return"aquagym";if(/nata|swim|piscine|pool|open water/.test(t))return"natation";
+  if(/nordi/.test(t))return"nordique";if(/v[ée]lo|cycl|bike|bik/.test(t))return"velo";if(/yoga/.test(t))return"yoga";if(/pilates/.test(t))return"pilates";
+  if(/muscu|strength|renfo|force/.test(t))return"renfo";if(/marche|walk|rando|hik/.test(t))return"marche";if(/[ée]quilibre|balance/.test(t))return"equilibre";return"autre"}
+function parseDur(s){s=(s||"").trim();if(!s)return 0;const p=s.split(":").map(x=>parseFloat(x.replace(",",".")));
+  if(p.length===3)return Math.round(p[0]*60+p[1]+p[2]/60);if(p.length===2)return Math.round(p[0]+p[1]/60);return Math.round(p[0]||0)}
+$("#garminFile").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;const msg=$("#garminMsg");
+  try{
+    const rows=parseCSV(await f.text());if(rows.length<2)throw new Error("fichier vide");
+    const h=rows[0].map(x=>x.trim().toLowerCase());
+    const ix=re=>h.findIndex(x=>re.test(x));
+    const iType=ix(/type d.activit|activity type|^type/),iDate=ix(/^date/),iDur=ix(/^dur[ée]e$|^time$|^temps$|dur[ée]e|^time/),iTit=ix(/titre|title/),iCal=ix(/calories/);
+    if(iDate<0||iDur<0)throw new Error("colonnes Date ou Durée introuvables");
+    let added=0,skipped=0;const touched=new Set();
+    rows.slice(1).forEach(r=>{
+      const ds=(r[iDate]||"").trim();const m=ds.match(/(\d{4})-(\d{2})-(\d{2})/)||ds.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(!m){skipped++;return}
+      const k=m[1].length===4?`${m[1]}-${m[2]}-${m[3]}`:`${m[3]}-${m[2]}-${m[1]}`;
+      const min=parseDur(r[iDur]);if(!min){skipped++;return}
+      const label=[r[iType],r[iTit]].filter(Boolean).join(" ");const type=mapGarmin(label);
+      const gid="g"+ds.replace(/\D/g,"").slice(0,14);
+      const d=structuredClone(days[k]||blank());if(d.acts.some(a=>a.id===gid)){skipped++;return}
+      d.acts.push({id:gid,type,min,intensite:"Modérée",compression:ACTMAP[type].eau?"na":"?",source:"garmin",titre:(r[iTit]||r[iType]||"").trim(),calories:iCal>=0?(r[iCal]||"").trim():""});
+      days[k]=d;touched.add(k);added++});
+    touched.forEach(k=>persist(k));
+    msg.textContent=`${added} activité(s) importée(s)${skipped?`, ${skipped} ignorée(s) (déjà présentes ou incomplètes)`:""}.`;
+    renderAll();
+  }catch(err){msg.textContent="Import impossible : "+(err.message||"format non reconnu")+". Vérifiez qu'il s'agit bien de l'export CSV de Garmin Connect."}
+  e.target.value="";
+});
+
+/* ---------- Calories et bienfaits ---------- */
+const KCAL={"flocons d'avoine":370,"flocons de sarrasin":350,"avoine":370,"lait de coco":190,"fruits rouges":45,"myrtilles":57,"mures":43,"framboises":50,"fraises":33,"noix du bresil":660,"noix de cajou":590,"noix de pecan":690,"noix":650,"amandes":580,"noisettes":630,"graines de courge":560,"graines de lin":530,"graines de chia":490,"graines de sesame":570,
+"lentilles cuites":115,"lentilles":115,"pois chiches cuits":140,"pois chiches":140,"haricots mungo cuits":105,"haricots mungo":105,"haricots rouges":125,"haricots blancs":110,"tofu":120,
+"sardines":210,"sardine":210,"maquereau":230,"saumon":200,"thon":130,"cabillaud":82,"poisson du lagon":100,"poisson":100,"crevettes":100,"huitres":70,"moules":90,"palourdes":75,
+"poulet":165,"dinde":135,"oeufs":145,"oeuf":145,"boeuf":220,"porc":250,"jambon":120,"saucisson":420,"corned-beef":220,"foie":135,"boudin":330,"bacon":450,
+"yaourt nature":60,"yaourt":60,"fromage blanc":75,"lait":47,"fromage":380,"beurre":740,
+"carottes":40,"carotte":40,"haricots verts":30,"epinards":25,"brocolis":35,"potiron":26,"champignons":22,"oignon":40,"salade verte":15,"salade":15,"cresson":20,"courgette":17,"chou":25,"tomates":18,"tomate":18,"legumes sautes":50,"legumes":35,"algues":30,"ail":130,"avocat":160,
+"patate douce":85,"igname":115,"taro":110,"pommes de terre":80,"pomme de terre":80,"riz complet cuit":125,"riz complet":125,"riz noir cuit":130,"riz noir":130,"quinoa cuit":120,"quinoa":120,"sarrasin cuit":100,"sarrasin":100,"pain complet":250,
+"pain blanc":270,"baguette":270,"riz blanc":130,"pates":150,
+"papaye":43,"ananas":50,"kiwi":60,"banane":90,"pomme":52,"mangue":60,"orange":47,
+"huile d'olive":900,"huile de colza":900,"huile de noix":900,"huile de coco":900,"huile":900,
+"chocolat noir":580,"gateau":400,"biscuits":480,"chips":540,"confiture":250,"plat prepare":150,
+"soda":42,"jus de fruit":45,"vin":85,"biere":45,"eau":0,"tisane":0,"the vert":1,"the":1,"cafe":2,"curcuma":0,"gingembre":80,"cannelle":0,"basilic":0,"persil":0,"thym":0,"piment de cayenne":0};
+const KKEYS=Object.keys(KCAL).sort((a,b)=>b.length-a.length);
+const PIECE={"oeuf":55,"oeufs":55,"kiwi":75,"banane":120,"pomme":150,"orange":150,"avocat":200,"noix du bresil":5,"ail":5,"mangue":300,"citron":100};
+const UNITG={"g":1,"ml":1,"portion":150,"bol":250,"pot":125,"boîte":100,"pincée":0.5};
+function kcalOf(m){
+  if(m.kcal!=null&&m.kcal!=="")return +m.kcal;
+  const a=norm(m.aliment);const per=(profil.kcalPerso||{})[a];
+  if(per){let g;if(m.unite==="pièce")g=(per.piece||100)*m.qte;else if(m.unite==="c. à soupe")g=m.qte*(per.k>=800?10:15);else g=m.qte*(UNITG[m.unite]??100);return Math.round(per.k*g/100)}
+  const k=KCAL[a]!=null?a:KKEYS.find(x=>a.includes(x));if(k==null)return null;
+  let g;if(m.unite==="pièce")g=(PIECE[k]||PIECE[KKEYS.find(x=>PIECE[x]&&a.includes(x))]||100)*m.qte;
+  else if(m.unite==="c. à soupe")g=m.qte*(KCAL[k]>=800?10:15);
+  else g=m.qte*(UNITG[m.unite]??100);
+  return Math.round(KCAL[k]*g/100);
+}
+const MET={aquagym:5.5,natation:6,aquabike:6,marche:3.5,nordique:4.8,velo:4,yoga:2.5,pilates:3,renfo:3.5,equilibre:2.5,drainage:1,presso:1,autre:3.5};
+const INTF={"Douce":0.8,"Modérée":1,"Soutenue":1.25};
+let profil={poids:null,plan:[{dow:1,start:"12:15",end:"13:00",type:"aquabike"},{dow:2,start:"19:00",end:"20:00",type:"aquabike"},{dow:4,start:"19:00",end:"20:00",type:"aquabike"}]};
+function actKcal(a){if(a.calories&&!isNaN(parseFloat(String(a.calories).replace(/\s/g,"").replace(",","."))))return Math.round(parseFloat(String(a.calories).replace(/\s/g,"").replace(",",".")));
+  if(!profil.poids)return null;return Math.round((MET[a.type]||3.5)*(INTF[a.intensite]||1)*profil.poids*a.min/60)}
+const ACTBEN={aquagym:"La pression de l'eau draine les jambes, cardio doux, articulations portées",aquabike:"La pression de l'eau draine les jambes pendant le pédalage, cardio doux, sans compression",natation:"Drainage par l'eau, tout le corps travaille sans impact",marche:"Active la pompe du mollet et la circulation lymphatique",nordique:"Bras et jambes travaillent, doux pour les articulations",velo:"Muscle les jambes et stimule le retour veineux",yoga:"Respiration profonde qui aide la lymphe, souplesse, détente",pilates:"Gainage, posture et mobilité",renfo:"Garde la masse musculaire et protège les articulations",equilibre:"Prévient les chutes",drainage:"Aide à évacuer la lymphe, soulage la lourdeur",presso:"Compression progressive qui pousse la lymphe vers le haut, jambes plus légères le soir",autre:"Bouger aide la circulation"};
+const CATBEN={leg:"fibres, vitamines, minéraux, polyphénols",fru:"antioxydants, polyphénols, vitamine C",poi:"oméga 3 anti-inflammatoires, iode, vitamine D",lgm:"protéines végétales, fibres, minéraux",gra:"bons acides gras, fibres, minéraux",epi:"composés anti-inflammatoires",boi:"hydratation",cer:"fibres, énergie durable",vol:"protéines, tyrosine",lai:"calcium, protéines",vro:"à limiter : pro-inflammatoire en excès",raf:"à limiter : sucres rapides",suc:"à limiter : sucres et graisses industriels",sod:"à limiter : sucres, alcool"};
+const DOWN=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+const hm=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
+const fmtH=t=>t.replace(":","h");
+function plansFor(dt){return (profil.plan||[]).map((p,i)=>({...p,i})).filter(p=>p.dow===dt.getDay())}
+function planId(k,p){return "plan-"+k+"-"+p.type+"-"+p.start.replace(":","")}
+let pQ=Promise.resolve();
+function persistProfil(){const c=JSON.parse(JSON.stringify(profil));pQ=pQ.then(()=>store&&store.saveProfil(c)).catch(()=>showStatus("Les réglages n'ont pas été enregistrés."))}
+$("#pType").innerHTML=ACTS.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join("");$("#pType").value="aquabike";
+$("#planForm").addEventListener("submit",e=>{e.preventDefault();const st=$("#pStart").value,en=$("#pEnd").value;if(!st||!en||hm(en)<=hm(st))return;
+  profil.plan=[...(profil.plan||[]),{dow:+$("#pDow").value,start:st,end:en,type:$("#pType").value}].sort((a,b)=>((a.dow+6)%7)-((b.dow+6)%7)||hm(a.start)-hm(b.start));persistProfil();renderAll()});
+let poidsT;$("#poids").addEventListener("input",e=>{clearTimeout(poidsT);const v=parseFloat(e.target.value);poidsT=setTimeout(()=>{profil.poids=v>0?v:null;persistProfil();renderAll()},700)});
+document.addEventListener("click",e=>{
+  const ps=e.target.closest("[data-presso]");if(ps){const m=+ps.dataset.presso;mutate(d=>d.acts.push({id:uid(),type:"presso",min:m,intensite:"Douce",compression:"na",heure:"soir"}));return}
+  const pd=e.target.closest("[data-plandone]");if(pd){const p=profil.plan[+pd.dataset.plandone];if(!p)return;const k=key(cur);const id=planId(k,p);
+    mutate(d=>{if(!d.acts.some(a=>a.id===id))d.acts.push({id,type:p.type,min:hm(p.end)-hm(p.start),intensite:"Modérée",compression:ACTMAP[p.type].eau?"na":"oui",heure:p.start})});return}
+  const pr=e.target.closest("[data-plandel]");if(pr){profil.plan=profil.plan.filter((_,i)=>i!==+pr.dataset.plandel);persistProfil();renderAll()}
+});
+function renderPlans(){
+  $("#planList").innerHTML=(profil.plan||[]).length?(profil.plan).map((p,i)=>`<div class="row" style="justify-content:space-between;background:var(--surface);padding:6px 10px;border-radius:8px"><span><b style="text-transform:capitalize">${DOWN[p.dow]}</b> ${fmtH(p.start)} – ${fmtH(p.end)} · ${esc(ACTMAP[p.type]?.n||p.type)}</span><button class="icon" data-plandel="${i}" aria-label="Retirer cette séance">×</button></div>`).join(""):'<span class="muted">Aucune séance régulière.</span>';
+  const k=key(cur),d=getDay(k);const ps=plansFor(cur);
+  $("#planDay").innerHTML=ps.length?`<div style="display:grid;gap:6px">${ps.map(p=>{const done=d.acts.some(a=>a.id===planId(k,p));return`<div class="row" style="justify-content:space-between;padding:8px 10px;border-radius:9px;border:1px dashed var(--lagon)"><span><b>${esc(ACTMAP[p.type]?.n||p.type)}</b> · ${fmtH(p.start)} – ${fmtH(p.end)} <span class="muted">(${hm(p.end)-hm(p.start)} min)</span></span>${done?'<span class="pill v">Fait ✓</span>':`<button class="btn small" data-plandone="${p.i}">J'y suis allée</button>`}</div>`}).join("")}</div>`:"";
+}
+
+/* ---------- Calories proposées (tables nutritionnelles) ---------- */
+let sampler=null;
+(async()=>{try{sampler=window.claude&&claude.use?await claude.use("sample"):null}catch(e){sampler=null}if(sampler)renderAll()})();
+async function proposeKcal(items){
+  const box=$("#kpropBox");if(!box||!sampler||!items.length)return;
+  box.innerHTML='<div class="notice">Recherche des valeurs dans les tables nutritionnelles…</div>';
+  const list=items.map(m=>`- ${m.aliment} (${m.qte} ${m.unite})`).join("\n");
+  const prompt=`Tu es diététicien. Pour chaque aliment ci-dessous, donne l'apport énergétique moyen pour 100 g (ou 100 ml) tel qu'on le trouve dans les tables de composition de référence (Ciqual de l'Anses en priorité, sinon USDA FoodData Central), pour l'aliment tel que consommé (cuit s'il se mange cuit). Si l'unité est « pièce », donne aussi le poids moyen d'une pièce en grammes. N'invente pas : si l'aliment est trop vague, mets "incertain": true et ta meilleure estimation.
+Aliments :
+${list}
+Réponds uniquement en JSON : {"aliments":[{"nom":"tel que fourni","kcal_100g":nombre,"poids_piece_g":nombre ou null,"source":"Ciqual" ou "USDA" ou "estimation","precision":"ex. cuit, nature","incertain":bool}]}`;
+  try{
+    const r=await sampler.json(prompt,{modelTier:"quick"});
+    const out=(r&&r.aliments)||[];
+    window.__kprop=items.map((m,i)=>{const o=out.find(x=>norm(x.nom)===norm(m.aliment))||out[i]||{};return{m,o}}).filter(x=>x.o&&isFinite(x.o.kcal_100g));
+    if(!window.__kprop.length){box.innerHTML='<div class="notice">Aucune valeur trouvée. Indiquez les kcal à la main dans le champ « kcal ».</div>';return}
+    box.innerHTML=`<div class="card" style="background:var(--bg)"><h3>Valeurs proposées</h3><ul class="items">${window.__kprop.map(({m,o},i)=>{const g=m.unite==="pièce"?(o.poids_piece_g||100)*m.qte:m.unite==="c. à soupe"?m.qte*(o.kcal_100g>=800?10:15):m.qte*(UNITG[m.unite]??100);const tot=Math.round(o.kcal_100g*g/100);
+      return`<li style="grid-template-columns:1fr auto auto"><span class="what"><b>${esc(m.aliment)}</b> · ${Math.round(o.kcal_100g)} kcal/100 g${o.poids_piece_g&&m.unite==="pièce"?` · pièce ≈ ${Math.round(o.poids_piece_g)} g`:""}<br><span class="muted" style="font-size:.82rem">Source : ${esc(o.source||"estimation")}${o.precision?" · "+esc(o.precision):""}${o.incertain?' · <b style="color:var(--orange)">à vérifier</b>':""}</span></span><span class="qty">≈ ${tot} kcal</span><button class="btn small" data-kuse="${i}">Utiliser</button></li>`}).join("")}</ul>${window.__kprop.length>1?'<div><button class="btn small" data-kuse="all">Utiliser toutes</button></div>':""}<p class="muted" style="margin:0;font-size:.8rem">Valeurs moyennes issues des tables de référence, proposées par Claude. Une fois validée, la valeur est retenue pour cet aliment.</p></div>`;
+  }catch(e){box.innerHTML=`<div class="notice">${e&&e.code==="not_granted"?"Vous avez refusé l'accès : indiquez les kcal à la main.":e&&e.code==="rate_limited"?"Trop de demandes d'un coup : réessayez dans une minute.":"La recherche n'a pas abouti. Réessayez ou indiquez les kcal à la main."}</div>`}
+}
+function useKcal(list){
+  profil.kcalPerso={...(profil.kcalPerso||{})};
+  list.forEach(({m,o})=>{profil.kcalPerso[norm(m.aliment)]={k:Math.round(o.kcal_100g),piece:o.poids_piece_g?Math.round(o.poids_piece_g):null,src:o.source||"estimation"}});
+  persistProfil();renderAll();
+}
+document.addEventListener("click",e=>{
+  const p1=e.target.closest("[data-kprop]");if(p1){const m=getDay(key(cur)).meals.find(x=>x.id===p1.dataset.kprop);if(m)proposeKcal([m]);return}
+  const pa=e.target.closest("[data-kpropall]");if(pa){proposeKcal(getDay(key(cur)).meals.filter(m=>kcalOf(m)==null));return}
+  const u=e.target.closest("[data-kuse]");if(u&&window.__kprop){useKcal(u.dataset.kuse==="all"?window.__kprop:[window.__kprop[+u.dataset.kuse]]);return}
+});
+
+/* ---------- Situation d'équilibre ---------- */
+function bmr(){const p=profil;if(!p.poids||!p.taille)return null;const age=p.age||65;return Math.round(10*p.poids+6.25*p.taille-5*age-161)}
+function balance(ds){
+  const n=ds.length,dd=ds.map(d=>getDay(key(d)));const P=[];
+  const filled=dd.filter(d=>d.meals.length);
+  // Énergie
+  const b=bmr();const kIn=filled.map(d=>d.meals.reduce((a,m)=>a+(kcalOf(m)||0),0));
+  if(!b){P.push({id:"en",n:"Énergie",score:null,val:"à compléter",tip:"Indiquez poids, taille et âge dans « Récap » pour comparer apports et dépenses."})}
+  else if(!filled.length){P.push({id:"en",n:"Énergie",score:null,val:"pas de repas notés",tip:"Notez vos repas pour voir l'équilibre entre ce que vous mangez et ce que vous dépensez."})}
+  else{const out=filled.map(d=>Math.round(b*1.2)+d.acts.reduce((a,x)=>a+(actKcal(x)||0),0));
+    const inA=Math.round(kIn.reduce((a,c)=>a+c,0)/filled.length),outA=Math.round(out.reduce((a,c)=>a+c,0)/filled.length);const diff=inA-outA,pc=Math.round(diff/outA*100);
+    const score=Math.max(0,Math.round(100-Math.max(0,Math.abs(pc)-10)*4));
+    P.push({id:"en",n:"Énergie",score,inA,outA,diff,pc,val:`${pc>0?"+":""}${pc} %`,tip:Math.abs(pc)<=10?"Apports et dépenses sont proches : situation équilibrée.":pc>10?"Vous mangez plus que vous ne dépensez. Réduisez d'abord les aliments à limiter et les portions de féculents.":"Vous mangez nettement moins que vos besoins estimés : attention à la fatigue et à la fonte musculaire, gardez des protéines à chaque repas."+(filled.length<n?" (Calculé sur les jours où des repas sont notés.)":"")})}
+  // Assiette
+  const allM=dd.flatMap(d=>d.meals);
+  if(allM.length){const pv=Math.round(allM.filter(m=>CATMAP[m.cat]?.c==="v").length/allM.length*100);const pr=Math.round(allM.filter(m=>CATMAP[m.cat]?.c==="r").length/allM.length*100);
+    P.push({id:"as",n:"Assiette anti-inflammatoire",score:Math.min(100,Math.round(pv/70*100)),val:`${pv} % à privilégier`,tip:pv>=70?"Très bonne assiette.":pr>15?`${pr} % d'aliments à limiter : c'est le premier levier.`:"Ajoutez légumes, poisson gras ou légumineuses à un repas de plus."})}
+  else P.push({id:"as",n:"Assiette anti-inflammatoire",score:null,val:"pas de repas notés",tip:"Notez vos repas pour mesurer la part d'aliments anti-inflammatoires."});
+  // Activité
+  const mins=dd.reduce((a,d)=>a+d.acts.filter(x=>x.type!=="presso"&&x.type!=="drainage").reduce((s,x)=>s+x.min,0),0);const goal=Math.round(GOAL_WEEK*n/7);
+  P.push({id:"ac",n:"Activité physique",score:Math.min(100,Math.round(mins/goal*100)),val:`${mins} / ${goal} min`,tip:mins>=goal?"Objectif atteint.":`Encore ${goal-mins} min : une séance d'aquabike ou une marche suffit.`});
+  // Hydratation
+  const eau=dd.reduce((a,d)=>a+d.eau,0)*0.25,eg=1.5*n;
+  P.push({id:"hy",n:"Hydratation",score:Math.min(100,Math.round(eau/eg*100)),val:`${eau.toLocaleString("fr-FR")} / ${eg.toLocaleString("fr-FR")} L`,tip:eau>=eg?"Bien hydratée.":"Un grand verre d'eau à chaque repas et après chaque séance."});
+  // Thyroïde
+  const nut=new Set();dd.forEach(d=>nutriOf(d.meals).forEach(x=>nut.add(x)));
+  P.push({id:"th",n:"Micronutriments thyroïde",score:allM.length?Math.round(nut.size/NUTRI.length*100):null,val:`${nut.size} / ${NUTRI.length}`,tip:allM.length?(nut.size===NUTRI.length?"Tous couverts.":"Manquent : "+NUTRI.filter(x=>!nut.has(x.id)).map(x=>x.n).join(", ")+"."):"Notez vos repas pour suivre ces micronutriments."});
+  // Soins des jambes
+  const soins=dd.reduce((a,d)=>a+d.acts.filter(x=>ACTMAP[x.type]?.eau||x.type==="presso"||x.type==="drainage").length,0);const sg=n>=7?4:1;
+  P.push({id:"so",n:"Soins des jambes (eau, bottes, drainage)",score:Math.min(100,Math.round(soins/sg*100)),val:`${soins} / ${sg} séance${sg>1?"s":""}`,tip:soins>=sg?"Les jambes sont bien prises en charge.":"Une séance d'aquabike ou de bottes ce soir compterait."});
+  const sc=P.filter(x=>x.score!=null);const g=sc.length?Math.round(sc.reduce((a,x)=>a+x.score,0)/sc.length):null;
+  return{P,g};
+}
+const tone=v=>v==null?"var(--line)":v>=75?"var(--vert)":v>=50?"var(--orange)":"var(--rouge)";
+const toneTxt=v=>v==null?"À compléter":v>=75?"Bon équilibre":v>=50?"À ajuster":"Déséquilibré";
+function gaugeSVG(v){const r=70,c=Math.PI*r,f=v==null?0:v/100;return`<svg viewBox="0 0 180 104" width="180" role="img" aria-label="Score d'équilibre ${v??"inconnu"} sur 100"><path d="M20 94 A70 70 0 0 1 160 94" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round"/><path d="M20 94 A70 70 0 0 1 160 94" fill="none" stroke="${tone(v)}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${c*f} ${c}"/><text x="90" y="82" text-anchor="middle" font-size="34" font-weight="700" fill="var(--ink)" style="font-family:var(--f-display)">${v??"–"}</text><text x="90" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">sur 100</text></svg>`}
+function eqHTML(res,label){
+  const en=res.P.find(x=>x.id==="en");const mx=en&&en.inA!=null?Math.max(en.inA,en.outA):0;
+  const scaleViz=en&&en.inA!=null?`<div class="scale-viz"><div class="ln"><span>Apports</span><span class="tr"><i style="width:${en.inA/mx*100}%;background:var(--orange)"></i></span><b class="qty">${en.inA} kcal</b></div><div class="ln"><span>Dépenses</span><span class="tr"><i style="width:${en.outA/mx*100}%;background:var(--lagon)"></i></span><b class="qty">${en.outA} kcal</b></div><div class="muted" style="font-size:.8rem">${label} · dépenses = métabolisme de base × 1,2 + activité</div></div>`:"";
+  return`<div class="eq"><div class="gauge">${gaugeSVG(res.g)}<span class="pill" style="background:${tone(res.g)};color:var(--surface)">${toneTxt(res.g)}</span></div><div style="display:grid;gap:12px;min-width:0">${scaleViz}<div class="pillars">${res.P.map(x=>`<div class="pil"><span class="nm">${esc(x.n)}</span><span class="qty">${esc(x.val)}</span><span class="bar"><i style="width:${x.score??0}%;background:${tone(x.score)}"></i></span><span class="tip">${esc(x.tip)}</span></div>`).join("")}</div></div></div>`;
+}
+function renderEqDay(){$("#eqDay").innerHTML=eqHTML(balance([cur]),"Moyenne du jour")}
+function renderEqWeek(){$("#eqWeek").innerHTML=eqHTML(balance(Array.from({length:7},(_,i)=>addDays(weekStart,i))),"Moyenne par jour avec repas notés")+'<p class="muted" style="margin:6px 0 0;font-size:.8rem">Estimations (formule de Mifflin-St Jeor pour le métabolisme de base). Le lipœdème ne répond pas aux régimes très restrictifs : l\'objectif est un équilibre durable, à valider avec votre médecin ou votre diététicienne.</p>'}
+let tailleT,ageT;
+$("#taille").addEventListener("input",e=>{clearTimeout(tailleT);const v=parseFloat(e.target.value);tailleT=setTimeout(()=>{profil.taille=v>0?v:null;persistProfil();renderAll()},700)});
+$("#age").addEventListener("input",e=>{clearTimeout(ageT);const v=parseFloat(e.target.value);ageT=setTimeout(()=>{profil.age=v>0?v:null;persistProfil();renderAll()},700)});
+
+/* ---------- Menus ---------- */
+function renderMenus(){
+  $("#menuTarget").textContent=fmtLong(cur);
+  $("#menuWeek").innerHTML=MENUS.map((dm,di)=>`<div class="menuday"><h3>${dm.j}</h3>${Object.entries(RKEYS).map(([rk,rn])=>{const m=dm[rk];const kc=m.ings.reduce((a,g)=>a+(kcalOf(g)||0),0);const ben=[...new Set(m.ings.map(g=>CATMAP[g.cat]?.c==="v"?g.cat:null).filter(Boolean))].map(c=>CATBEN[c].split(",")[0]).slice(0,3).join(" · ");
+    return`<div class="dish"><span class="lab">${rn}</span><span class="nm">${esc(m.n)}</span><span class="ing">${m.ings.map(g=>`${esc(g.aliment)} ${g.qte} ${esc(g.unite)}`).join(", ")}</span><span class="ing" style="color:var(--vert)">${esc(ben)}</span><div class="row"><span class="qty">≈ ${kc} kcal</span><button class="btn ghost small" data-menu="${di}|${rk}">Noter</button></div></div>`}).join("")}</div>`).join("");
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-menu]");if(!b)return;const [di,rk]=b.dataset.menu.split("|");const m=MENUS[+di][rk];
+  mutate(d=>m.ings.forEach(g=>d.meals.push({id:uid(),repas:RKEYS[rk],aliment:g.aliment,qte:g.qte,unite:g.unite,cat:g.cat})));
+  b.textContent="Noté ✓";setTimeout(()=>{b.textContent="Noter"},1800)});
+
+/* ---------- Recommandations : table thyroïde ---------- */
+$("#nutriRef").innerHTML=`<table><thead><tr><th>Élément</th><th>Besoin</th><th>Où le trouver</th></tr></thead><tbody>${NUTRI.map(n=>`<tr><td><b>${n.n}</b></td><td class="num">${esc(n.b)||"–"}</td><td>${esc(n.src)}</td></tr>`).join("")}</tbody></table>`;
+
+/* ---------- Observations ---------- */
+const THEMES=[...$("#oTheme").options].map(o=>o.value);
+$("#oFilter").innerHTML+=THEMES.map(t=>`<option>${esc(t)}</option>`).join("");
+function resetObsForm(){const n=new Date();$("#oDate").value=key(n);$("#oTime").value=pad(n.getHours())+":"+pad(n.getMinutes())}
+resetObsForm();
+let dict=null,assets=null;
+(async()=>{
+  try{dict=window.claude&&claude.use?await claude.use("dictation"):null}catch(e){dict=null}
+  if(dict){$("#oMic").hidden=false;
+    dict.onPartial(({text})=>{$("#oMicState").textContent="… "+text});
+    dict.onFinal(({text})=>{const t=$("#oText");t.value=(t.value&&!/\s$/.test(t.value)?t.value+" ":t.value)+text;$("#oMicState").textContent="J'écoute…"});
+    dict.onState(({state})=>{const on=state==="listening";$("#oMic").textContent=on?"■ Arrêter la dictée":"🎙 Dicter";$("#oMic").dataset.on=on?"1":"";if(!on)$("#oMicState").textContent=""});
+  }
+  try{assets=window.claude&&claude.use?await claude.use("assets"):null}catch(e){assets=null}
+  if(assets)$("#oAudioRow").hidden=false;
+})();
+$("#oMic").addEventListener("click",()=>{if(!dict)return;
+  if($("#oMic").dataset.on){dict.stop().catch(()=>{});return}
+  $("#oMicState").textContent="J'écoute…";
+  dict.start().catch(e=>{$("#oMicState").textContent=e&&e.code==="not_granted"?"Micro refusé : vous pouvez taper votre observation.":"La dictée n'a pas démarré. Réessayez."})});
+$("#oForm").addEventListener("submit",async e=>{e.preventDefault();
+  const text=$("#oText").value.trim();const f=$("#oAudio").files&&$("#oAudio").files[0];
+  if(!text&&!f){$("#oMicState").textContent="Écrivez, dictez ou joignez un audio avant d'enregistrer.";return}
+  const btn=$("#oSave");btn.disabled=true;btn.textContent="Enregistrement…";
+  const o={date:$("#oDate").value||key(new Date()),heure:$("#oTime").value||"",theme:$("#oTheme").value,texte:text,cree:Date.now()};
+  try{
+    if(f&&assets){$("#oAudioMsg").textContent="Envoi de l'audio…";const r=await assets.upload(f);o.audioId=r.id;o.audioUrl=r.url;o.audioNom=f.name}
+    const id="obs-"+uid();obs[id]=o;await store.saveObs(id,o);
+    $("#oText").value="";$("#oAudio").value="";$("#oAudioMsg").textContent="";resetObsForm();renderObs();
+  }catch(err){$("#oAudioMsg").textContent="L'enregistrement a échoué ("+(err&&err.code||"erreur")+"). Réessayez."}
+  btn.disabled=false;btn.textContent="Enregistrer l'observation";
+});
+$("#oFilter").onchange=()=>renderObs();
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-odel]");if(!b)return;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Confirmer la suppression";setTimeout(()=>{if(b.isConnected){b.dataset.confirm="";b.textContent="Supprimer"}},4000);return}
+  const id=b.dataset.odel;const o=obs[id];delete obs[id];renderObs();
+  try{await store.delObs(id);if(o&&o.audioId&&assets)await assets.delete(o.audioId).catch(()=>{})}catch(err){showStatus("La suppression n'a pas abouti.")}});
+function renderObs(){
+  const f=$("#oFilter").value;
+  const list=Object.entries(obs).filter(([,o])=>!f||o.theme===f).sort((a,b)=>(b[1].date+b[1].heure).localeCompare(a[1].date+a[1].heure)||b[1].cree-a[1].cree);
+  $("#oList").innerHTML=list.length?list.map(([id,o])=>`<article class="obs"><div class="meta"><b style="color:var(--ink)">${esc(fmtLong(fromKey(o.date)))}</b>${o.heure?`<span>${esc(fmtH(o.heure))}</span>`:""}<span class="pill l">${esc(o.theme)}</span></div>${o.texte?`<p>${esc(o.texte)}</p>`:""}${o.audioUrl?`<audio controls preload="none" src="${esc(o.audioUrl)}"></audio>`:""}<div><button class="btn ghost small" data-odel="${id}">Supprimer</button></div></article>`).join(""):`<div class="empty">Aucune observation${f?" pour ce sujet":""}. Notez ce que vous remarquez : jambes plus légères après l'aquabike, ballonnements après un repas, fatigue, questions pour votre médecin… Vous pouvez dicter au lieu de taper.</div>`;
+}
+
+function renderAll(){
+  if(!$("#tab-jour").hidden)renderDay();
+  if(!$("#tab-cal").hidden)renderCal();
+  if(!$("#tab-recap").hidden){renderRecap()}
+  if(!$("#tab-courses").hidden)renderCourses();
+  if(!$("#tab-menus").hidden)renderMenus();
+  if(!$("#tab-obs").hidden)renderObs();
+  if(!$("#tab-jour").hidden)renderPlans();
+  if(document.activeElement!==$("#poids"))$("#poids").value=profil.poids||"";
+  if(document.activeElement!==$("#taille"))$("#taille").value=profil.taille||"";
+  if(document.activeElement!==$("#age"))$("#age").value=profil.age||"";
+  if(!$("#tab-jour").hidden)renderEqDay();
+  if(!$("#tab-recap").hidden)renderEqWeek();
+}
+let t0="jour";try{t0=localStorage.getItem("carnet-tab")||"jour"}catch(e){}
+showTab(["jour","cal","recap","menus","courses","obs","reperes"].includes(t0)?t0:"jour");
+initStore();
+})();
+</script>
+
+</body>
+</html>
