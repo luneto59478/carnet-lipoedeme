@@ -349,7 +349,8 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
         <span class="pill l" id="cCount"></span>
       </div>
       <div class="card">
-        <div class="row" style="justify-content:space-between"><h2>Ma liste</h2><button class="btn ghost small" id="cClear">Décocher tout</button></div>
+        <div class="row" style="justify-content:space-between"><h2>Ma liste</h2><div class="row" style="gap:6px"><button class="btn small" id="cShare">Partager</button><button class="btn ghost small" id="cTxt">Télécharger</button><button class="btn ghost small" id="cPrint">Imprimer / PDF</button><button class="btn ghost small" id="cClear">Décocher tout</button></div></div>
+        <p class="muted" id="cExpMsg" style="margin:0;font-size:.85rem" aria-live="polite"></p>
         <form id="cForm" class="form" style="grid-template-columns:2fr 1fr 1fr auto">
           <label>Ajouter un article<input id="cName" required placeholder="ex. citrons verts"></label>
           <label>Quantité<input id="cQty" placeholder="1 kg"></label>
@@ -841,9 +842,34 @@ function renderCourses(){
   const chk=courses.checks[p.id]||{};const done=items.filter(i=>chk[i.k]).length;
   $("#cCount").textContent=items.length?`${done} / ${items.length} dans le panier`:"";
   const lbl={b:"base",m:"repas",a:"ajout",n:"menus"};
+  window.__cItems={p,items,chk};
   $("#cList").innerHTML=items.length?RAYONS.map((r,ri)=>{const its=items.filter(i=>i.rayon===ri);if(!its.length)return"";
     return`<div class="rayon"><h4>${r}</h4><ul>${its.map(i=>`<li class="${chk[i.k]?"done":""}"><input type="checkbox" id="c-${esc(i.k).replace(/[^a-zA-Z0-9_-]/g,"_")}" data-chk="${esc(i.k)}" ${chk[i.k]?"checked":""} aria-label="${esc(i.nom)}"><span class="nm">${esc(i.nom)} <span class="src ${i.src}">${lbl[i.src]}</span>${i.bad?' <span class="src a" title="catégorie à limiter">à limiter</span>':""}</span><span class="qty">${esc(i.qte||"")}</span>${i.src==="a"?`<button class="icon" data-cdel="${i.id}" aria-label="Retirer ${esc(i.nom)}">×</button>`:"<span></span>"}</li>`).join("")}</ul></div>`}).join(""):`<div class="empty">La liste est vide. Cochez « Base anti-inflammatoire » pour partir d'une liste type, ou ajoutez vos articles ci-dessus.</div>`;
 }
+
+/* ---------- Export des courses ---------- */
+function coursesText(){
+  const {p,items,chk}=window.__cItems||{};if(!items||!items.length)return null;
+  const rest=items.filter(i=>!chk[i.k]);
+  const lines=["Liste de courses — "+p.title,""];
+  RAYONS.forEach((r,ri)=>{const its=items.filter(i=>i.rayon===ri);if(!its.length)return;
+    lines.push(r.toUpperCase());its.forEach(i=>lines.push((chk[i.k]?"☑ ":"☐ ")+i.nom+(i.qte?" — "+i.qte:"")));lines.push("")});
+  lines.push(rest.length+" article"+(rest.length>1?"s":"")+" à acheter sur "+items.length);
+  return lines.join("\n");
+}
+function cMsg(t){$("#cExpMsg").textContent=t;clearTimeout(cMsg.t);cMsg.t=setTimeout(()=>$("#cExpMsg").textContent="",4000)}
+$("#cShare").onclick=async()=>{const t=coursesText();if(!t)return cMsg("La liste est vide.");
+  if(navigator.share){try{await navigator.share({title:"Liste de courses",text:t});return}catch(e){if(e&&e.name==="AbortError")return}}
+  try{await navigator.clipboard.writeText(t);cMsg("Liste copiée : collez-la dans un message ou une note.")}catch(e){cMsg("Partage impossible ici : utilisez « Télécharger ».")}};
+$("#cTxt").onclick=()=>{const t=coursesText();if(!t)return cMsg("La liste est vide.");
+  const {p}=window.__cItems;const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/plain;charset=utf-8"}));
+  a.download="courses-"+p.id.slice(1)+".txt";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)};
+$("#cPrint").onclick=()=>{const c=window.__cItems;if(!c||!c.items.length)return cMsg("La liste est vide.");
+  const {p,items,chk}=c;const body=RAYONS.map((r,ri)=>{const its=items.filter(i=>i.rayon===ri);if(!its.length)return"";
+    return`<h2>${esc(r)}</h2><ul>${its.map(i=>`<li class="${chk[i.k]?"ok":""}"><span class="b">${chk[i.k]?"☑":"☐"}</span>${esc(i.nom)}<span class="q">${esc(i.qte||"")}</span></li>`).join("")}</ul>`}).join("");
+  const html=`<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Courses — ${esc(p.title)}</title><style>body{font:14px/1.4 system-ui,sans-serif;color:#222;margin:24px;columns:2;column-gap:32px}h1{column-span:all;font-size:20px;margin:0 0 12px}h2{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#0b6e75;margin:14px 0 4px;break-after:avoid}ul{list-style:none;margin:0;padding:0;break-inside:avoid}li{display:flex;gap:8px;padding:3px 0;border-bottom:1px solid #eee}.q{margin-left:auto;color:#555;white-space:nowrap}.ok{color:#999;text-decoration:line-through}.b{width:1.1em}@media(max-width:600px){body{columns:1}}</style></head><body><h1>Liste de courses — ${esc(p.title)}</h1>${body}<script>onload=()=>setTimeout(()=>print(),300)<\/script></body></html>`;
+  const w=window.open("","_blank");if(!w){cMsg("Autorisez les fenêtres pour imprimer, ou utilisez « Télécharger ».");return}
+  w.document.open();w.document.write(html);w.document.close()};
 
 /* ---------- Import Garmin ---------- */
 function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
