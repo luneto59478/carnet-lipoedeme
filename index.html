@@ -82,9 +82,9 @@ ul.items li .what{min-width:0;overflow-wrap:anywhere}
 .scale button{font:inherit;font-variant-numeric:tabular-nums;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 .scale button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .empty{padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}
-.photobox{display:grid;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.photobox{display:grid;gap:8px;margin:12px 0;padding:10px 12px;border-radius:10px;background:var(--bg)}
 .photobox h3{margin:0;font-size:1rem}
-.phgroup h4{margin:4px 0 6px;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.mealgroup .photos{margin-top:6px}
 .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
 .ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--line)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
@@ -233,17 +233,16 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
           <button class="btn" type="submit">Ajouter</button>
         </form>
         <datalist id="alimList"></datalist>
-        <div id="mealList"></div>
         <div class="photobox">
-          <h3>📷 Photos de mes repas</h3>
+          <h3>📷 Photo d'un repas</h3>
           <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:flex-start">
             <select id="pRepas" style="width:auto" aria-label="Repas de la photo"><option>Petit-déjeuner</option><option>Déjeuner</option><option>Collation</option><option>Dîner</option></select>
             <label class="btn" for="pFile" style="cursor:pointer">📷 Ajouter une photo</label>
             <input type="file" id="pFile" accept="image/*" multiple hidden>
           </div>
           <p id="pMsg" class="muted" style="margin:0;font-size:.85rem" aria-live="polite"></p>
-          <div id="photoList"></div>
         </div>
+        <div id="mealList"></div>
         <dialog id="pView"><img id="pBig" alt=""><div class="bar"><span id="pCap"></span><button class="btn ghost small" id="pClose" type="button">Fermer</button></div></dialog>
       </div>
 
@@ -718,7 +717,8 @@ function renderDay(){
   $("#dayTitle").textContent=fmtLong(cur);$("#dayPick").value=k;
   const s=score(d);$("#dayScore").innerHTML=s==null?"":`<span class="pill ${s>=60?"v":s>=40?"o":"r"}">${s} % d'aliments à privilégier</span>`;
   const order=["Petit-déjeuner","Déjeuner","Collation","Dîner"];
-  $("#mealList").innerHTML=d.meals.length?order.filter(r=>d.meals.some(m=>m.repas===r)).map(r=>`<div class="mealgroup"><h4>${r}</h4><div class="sens" aria-label="Sensations après ${r}">${SENS.map(x=>`<button data-sens="${r}|${x}" class="${(d.sens?.[r]||[]).includes(x)?"on":""}">${x}</button>`).join("")}</div><ul class="items">${d.meals.filter(m=>m.repas===r).map(m=>{const c=CATMAP[m.cat]||{c:"o",n:"?"};return`<li><i class="dot ${c.c}" title="${esc(c.n)}"></i><span class="what">${esc(m.aliment)} <span class="muted" style="font-size:.8rem">· ${esc(CATBEN[m.cat]||c.n)}</span></span><span class="qty">${m.qte} ${esc(m.unite)}${(()=>{const k=kcalOf(m);return k==null?(sampler?` · <button class="btn ghost small" data-kprop="${m.id}">Proposer les kcal</button>`:' · <span title="Calories inconnues : indiquez-les dans le champ kcal">? kcal</span>'):` · ${k} kcal`})()}</span><button class="icon" data-del="meals:${m.id}" aria-label="Supprimer ${esc(m.aliment)}">×</button></li>`}).join("")}</ul></div>`).join("")+(()=>{const ks=d.meals.map(kcalOf);const t=ks.reduce((a,b)=>a+(b||0),0);const u=ks.filter(x=>x==null).length;return`<p style="margin:0" class="muted">Total du jour : <b style="color:var(--ink)">≈ ${t} kcal</b>${u?` (${u} aliment${u>1?"s":""} sans valeur)${sampler&&u>1?` <button class="btn ghost small" data-kpropall="1">Proposer toutes les valeurs manquantes</button>`:""}`:""}</p><div id="kpropBox"></div>`})():`<div class="empty">Aucun repas noté pour ce jour. Commencez par le petit-déjeuner : choisissez un aliment dans la liste ou tapez le vôtre, la catégorie se remplit seule pour les aliments connus.</div>`;
+  const ph=phCache.k===k?phCache.items:[];
+  $("#mealList").innerHTML=(d.meals.length||ph.length)?order.filter(r=>d.meals.some(m=>m.repas===r)||ph.some(p=>p.repas===r)).map(r=>`<div class="mealgroup"><h4>${r}</h4><div class="sens" aria-label="Sensations après ${r}">${SENS.map(x=>`<button data-sens="${r}|${x}" class="${(d.sens?.[r]||[]).includes(x)?"on":""}">${x}</button>`).join("")}</div><ul class="items">${d.meals.filter(m=>m.repas===r).map(m=>{const c=CATMAP[m.cat]||{c:"o",n:"?"};return`<li><i class="dot ${c.c}" title="${esc(c.n)}"></i><span class="what">${esc(m.aliment)} <span class="muted" style="font-size:.8rem">· ${esc(CATBEN[m.cat]||c.n)}</span></span><span class="qty">${m.qte} ${esc(m.unite)}${(()=>{const k=kcalOf(m);return k==null?(sampler?` · <button class="btn ghost small" data-kprop="${m.id}">Proposer les kcal</button>`:' · <span title="Calories inconnues : indiquez-les dans le champ kcal">? kcal</span>'):` · ${k} kcal`})()}</span><button class="icon" data-del="meals:${m.id}" aria-label="Supprimer ${esc(m.aliment)}">×</button></li>`}).join("")}</ul>${phHTML(ph.filter(p=>p.repas===r),r)}</div>`).join("")+(()=>{if(!d.meals.length)return"";const ks=d.meals.map(kcalOf);const t=ks.reduce((a,b)=>a+(b||0),0);const u=ks.filter(x=>x==null).length;return`<p style="margin:0" class="muted">Total du jour : <b style="color:var(--ink)">≈ ${t} kcal</b>${u?` (${u} aliment${u>1?"s":""} sans valeur)${sampler&&u>1?` <button class="btn ghost small" data-kpropall="1">Proposer toutes les valeurs manquantes</button>`:""}`:""}</p><div id="kpropBox"></div>`})():`<div class="empty">Aucun repas noté pour ce jour. Ajoutez une photo de votre assiette ou commencez par le petit-déjeuner : choisissez un aliment dans la liste ou tapez le vôtre, la catégorie se remplit seule pour les aliments connus.</div>`;
   const tot=d.acts.reduce((a,x)=>a+x.min,0);
   $("#actList").innerHTML=d.acts.length?`<ul class="items">${d.acts.map(a=>{const t=ACTMAP[a.type]||{n:a.type};const comp=a.compression==="oui"?'<span class="pill v">compression</span>':a.compression==="non"?'<span class="pill o">sans compression</span>':(a.compression==="na"&&ACTMAP[a.type]?.eau)?'<span class="pill l">dans l\'eau</span>':'';const src=a.source==="garmin"?' <span class="src m">Garmin</span>':'';return`<li><i class="dot" style="background:var(--lagon)"></i><span class="what">${esc(t.n)} <span class="muted" style="font-size:.8rem">· ${esc(a.intensite)}</span> ${comp}${src}</span><span class="qty">${a.heure&&a.heure!=="soir"?fmtH(a.heure)+" · ":""}${a.min} min${(()=>{const k=actKcal(a);return k==null?"":` · ${k} kcal`})()}</span><button class="icon" data-del="acts:${a.id}" aria-label="Supprimer">×</button><span class="muted" style="grid-column:2/-1;font-size:.82rem;color:var(--vert)">${esc(ACTBEN[a.type]||"")}</span></li>`}).join("")}</ul><p style="margin:0" class="muted">Total du jour : <b style="color:var(--ink)">${tot} min</b>${(()=>{const ks=d.acts.map(actKcal);if(ks.every(x=>x==null))return profil.poids?"":" · indiquez votre poids dans « Récap » pour estimer les calories";return` · <b style="color:var(--ink)">≈ ${ks.reduce((a,b)=>a+(b||0),0)} kcal dépensées</b>`})()}</p>`:`<div class="empty">Pas encore d'activité ce jour. Une marche de 20 minutes ou une séance d'aquagym compte.</div>`;
   $("#water").innerHTML=Array.from({length:GLASSES},(_,i)=>`<button class="glass ${i<d.eau?"on":""}" data-glass="${i+1}" aria-label="${i+1} verre${i?"s":""}"></button>`).join("");
@@ -755,17 +755,15 @@ function shrink(file){return new Promise(res=>{
   img.onerror=()=>{URL.revokeObjectURL(url);res(file)};img.src=url})}
 function loadPhotos(force){
   const k=key(cur);
-  if(!force&&phCache.k===k){drawPhotos();return}
+  if(!force&&phCache.k===k)return;
   PDB.byDate(k).then(list=>{if(key(cur)!==k)return;
     phCache.items.forEach(i=>URL.revokeObjectURL(i.url));
     phCache={k,items:(list||[]).sort((a,b)=>a.cree-b.cree).map(p=>({...p,url:URL.createObjectURL(new Blob([p.buf],{type:p.type||"image/jpeg"}))}))};
-    drawPhotos();
-  }).catch(()=>{$("#photoList").innerHTML='<div class="empty">Les photos ne peuvent pas être gardées dans ce navigateur (navigation privée ?).</div>'});
+    if(!$("#tab-jour").hidden)renderDay();
+  }).catch(()=>{if(!loadPhotos.warned){loadPhotos.warned=1;pMsg("Les photos ne peuvent pas être gardées dans ce navigateur (navigation privée ?).")}});
 }
-function drawPhotos(){
-  const it=phCache.items;const hm=t=>{const d=new Date(t);return pad(d.getHours())+"h"+pad(d.getMinutes())};
-  $("#photoList").innerHTML=it.length?PH_ORDER.filter(r=>it.some(p=>p.repas===r)).map(r=>`<div class="phgroup"><h4>${r}</h4><div class="photos">${it.filter(p=>p.repas===r).map(p=>`<div class="ph"><img src="${p.url}" alt="Photo du ${esc(r.toLowerCase())}" data-pview="${p.id}" loading="lazy"><span class="t">${hm(p.cree)}</span><button class="pdel" data-pdel="${p.id}" aria-label="Supprimer la photo">×</button></div>`).join("")}</div></div>`).join(""):'<div class="empty">Aucune photo pour ce jour. Choisissez le repas, puis « Ajouter une photo » : vous pourrez prendre la photo ou la choisir dans votre galerie.</div>';
-}
+function phHTML(list,r){const hm=t=>{const d=new Date(t);return pad(d.getHours())+"h"+pad(d.getMinutes())};
+  return list.length?`<div class="photos">${list.map(p=>`<div class="ph"><img src="${p.url}" alt="Photo du ${esc(r.toLowerCase())}" data-pview="${p.id}" loading="lazy"><span class="t">${hm(p.cree)}</span><button class="pdel" data-pdel="${p.id}" aria-label="Supprimer la photo">×</button></div>`).join("")}</div>`:""}
 $("#pFile").addEventListener("change",async e=>{
   const files=[...(e.target.files||[])].filter(f=>/^image\//.test(f.type)||!f.type);e.target.value="";
   if(!files.length)return;
