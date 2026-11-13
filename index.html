@@ -82,6 +82,19 @@ ul.items li .what{min-width:0;overflow-wrap:anywhere}
 .scale button{font:inherit;font-variant-numeric:tabular-nums;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 .scale button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .empty{padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}
+.photobox{display:grid;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.photobox h3{margin:0;font-size:1rem}
+.phgroup h4{margin:4px 0 6px;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--line)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.ph .t{position:absolute;left:0;right:0;bottom:0;padding:2px 6px;font-size:.72rem;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.ph .pdel{position:absolute;top:4px;right:4px;border:0;border-radius:8px;padding:2px 7px;font-size:.8rem;cursor:pointer;background:rgba(255,255,255,.92);color:#15302f}
+.ph .pdel[data-confirm="1"]{background:var(--rouge);color:#fff}
+#pView{border:0;padding:0;border-radius:14px;max-width:96vw;max-height:94vh;background:#000}
+#pView::backdrop{background:rgba(0,0,0,.75)}
+#pView img{display:block;max-width:96vw;max-height:84vh;object-fit:contain}
+#pView .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;color:#fff;font-size:.9rem}
 /* Calendrier */
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
 .cal .dow{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center}
@@ -221,6 +234,17 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
         </form>
         <datalist id="alimList"></datalist>
         <div id="mealList"></div>
+        <div class="photobox">
+          <h3>📷 Photos de mes repas</h3>
+          <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:flex-start">
+            <select id="pRepas" style="width:auto" aria-label="Repas de la photo"><option>Petit-déjeuner</option><option>Déjeuner</option><option>Collation</option><option>Dîner</option></select>
+            <label class="btn" for="pFile" style="cursor:pointer">📷 Ajouter une photo</label>
+            <input type="file" id="pFile" accept="image/*" multiple hidden>
+          </div>
+          <p id="pMsg" class="muted" style="margin:0;font-size:.85rem" aria-live="polite"></p>
+          <div id="photoList"></div>
+        </div>
+        <dialog id="pView"><img id="pBig" alt=""><div class="bar"><span id="pCap"></span><button class="btn ghost small" id="pClose" type="button">Fermer</button></div></dialog>
       </div>
 
       <div style="display:grid;gap:22px;align-content:start">
@@ -702,7 +726,69 @@ function renderDay(){
   $("#pain").innerHTML=Array.from({length:11},(_,i)=>`<button class="${d.douleur===i?"on":""}" data-pain="${i}">${i}</button>`).join("");
   if(document.activeElement!==$("#note"))$("#note").value=d.note||"";
   const on=nutriOf(d.meals);$("#nutriDay").innerHTML=NUTRI.map(n=>`<span class="nchip ${on.has(n.id)?"on":""}" title="${esc(n.src)}">${on.has(n.id)?"✓ ":""}${n.n}</span>`).join("");
+  loadPhotos();
 }
+
+/* ---------- Photos des repas (gardées dans ce navigateur, base IndexedDB « carnet-photos ») ---------- */
+const PDB=(()=>{let p=null;
+  const open=()=>p||(p=new Promise((res,rej)=>{if(!window.indexedDB)return rej(new Error("indisponible"));
+    const r=indexedDB.open("carnet-photos",1);
+    r.onupgradeneeded=()=>{const s=r.result.createObjectStore("photos",{keyPath:"id"});s.createIndex("date","date")};
+    r.onsuccess=()=>res(r.result);r.onerror=()=>{p=null;rej(r.error)}}));
+  const run=(mode,fn)=>open().then(db=>new Promise((res,rej)=>{const t=db.transaction("photos",mode);const q=fn(t.objectStore("photos"));
+    t.oncomplete=()=>res(q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)}));
+  return{add:ph=>run("readwrite",s=>s.put(ph)),del:id=>run("readwrite",s=>s.delete(id)),byDate:d=>run("readonly",s=>s.index("date").getAll(d))};
+})();
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{})}catch(e){}
+const PH_ORDER=["Petit-déjeuner","Déjeuner","Collation","Dîner"];
+$("#pRepas").value=(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();return m<630?"Petit-déjeuner":m<870?"Déjeuner":m<1080?"Collation":"Dîner"})();
+$("#mRepas").addEventListener("change",e=>{$("#pRepas").value=e.target.value});
+let phCache={k:null,items:[]};
+function pMsg(t){$("#pMsg").textContent=t;clearTimeout(pMsg.t);if(t)pMsg.t=setTimeout(()=>$("#pMsg").textContent="",5000)}
+// Réduit la photo (1600 px max, JPEG) pour qu'elle prenne peu de place sur le téléphone
+function shrink(file){return new Promise(res=>{
+  const url=URL.createObjectURL(file);const img=new Image();
+  img.onload=()=>{try{const M=1600,s=Math.min(1,M/Math.max(img.naturalWidth,img.naturalHeight));
+      const c=document.createElement("canvas");c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+      c.toBlob(b=>res(b&&b.size<file.size?b:file),"image/jpeg",0.82)}catch(e){URL.revokeObjectURL(url);res(file)}};
+  img.onerror=()=>{URL.revokeObjectURL(url);res(file)};img.src=url})}
+function loadPhotos(force){
+  const k=key(cur);
+  if(!force&&phCache.k===k){drawPhotos();return}
+  PDB.byDate(k).then(list=>{if(key(cur)!==k)return;
+    phCache.items.forEach(i=>URL.revokeObjectURL(i.url));
+    phCache={k,items:(list||[]).sort((a,b)=>a.cree-b.cree).map(p=>({...p,url:URL.createObjectURL(new Blob([p.buf],{type:p.type||"image/jpeg"}))}))};
+    drawPhotos();
+  }).catch(()=>{$("#photoList").innerHTML='<div class="empty">Les photos ne peuvent pas être gardées dans ce navigateur (navigation privée ?).</div>'});
+}
+function drawPhotos(){
+  const it=phCache.items;const hm=t=>{const d=new Date(t);return pad(d.getHours())+"h"+pad(d.getMinutes())};
+  $("#photoList").innerHTML=it.length?PH_ORDER.filter(r=>it.some(p=>p.repas===r)).map(r=>`<div class="phgroup"><h4>${r}</h4><div class="photos">${it.filter(p=>p.repas===r).map(p=>`<div class="ph"><img src="${p.url}" alt="Photo du ${esc(r.toLowerCase())}" data-pview="${p.id}" loading="lazy"><span class="t">${hm(p.cree)}</span><button class="pdel" data-pdel="${p.id}" aria-label="Supprimer la photo">×</button></div>`).join("")}</div></div>`).join(""):'<div class="empty">Aucune photo pour ce jour. Choisissez le repas, puis « Ajouter une photo » : vous pourrez prendre la photo ou la choisir dans votre galerie.</div>';
+}
+$("#pFile").addEventListener("change",async e=>{
+  const files=[...(e.target.files||[])].filter(f=>/^image\//.test(f.type)||!f.type);e.target.value="";
+  if(!files.length)return;
+  const k=key(cur),repas=$("#pRepas").value;let ok=0;
+  pMsg(files.length>1?"Enregistrement des photos…":"Enregistrement de la photo…");
+  for(const f of files){
+    try{const b=await shrink(f);await PDB.add({id:"ph-"+uid(),date:k,repas,cree:Date.now(),type:b.type||"image/jpeg",buf:await b.arrayBuffer()});ok++}
+    catch(err){pMsg(err&&err.name==="QuotaExceededError"?"Le téléphone n'a plus de place pour les photos. Supprimez-en quelques-unes.":"Une photo n'a pas pu être enregistrée. Réessayez.");loadPhotos(true);return}
+  }
+  pMsg(ok>1?ok+" photos ajoutées au "+repas.toLowerCase()+".":"Photo ajoutée au "+repas.toLowerCase()+".");
+  loadPhotos(true);
+});
+document.addEventListener("click",e=>{
+  const v=e.target.closest("[data-pview]");
+  if(v){const p=phCache.items.find(x=>x.id===v.dataset.pview);if(!p)return;const d=new Date(p.cree);
+    $("#pBig").src=p.url;$("#pBig").alt="Photo du "+p.repas.toLowerCase();$("#pCap").textContent=p.repas+" · "+fmtLong(fromKey(p.date))+" · "+pad(d.getHours())+"h"+pad(d.getMinutes());
+    const dlg=$("#pView");if(dlg.showModal)dlg.showModal();else window.open(p.url,"_blank");return}
+  const b=e.target.closest("[data-pdel]");
+  if(b){if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Supprimer ?";setTimeout(()=>{if(b.isConnected){b.dataset.confirm="";b.textContent="×"}},4000);return}
+    PDB.del(b.dataset.pdel).then(()=>{pMsg("Photo supprimée.");loadPhotos(true)}).catch(()=>pMsg("La suppression n'a pas abouti."))}
+});
+$("#pClose").onclick=()=>$("#pView").close();
+$("#pView").addEventListener("click",e=>{if(e.target.id==="pView")$("#pView").close()});
 
 /* ---------- Calendrier ---------- */
 $("#prevMonth").onclick=()=>{calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()-1,1);renderCal()};
