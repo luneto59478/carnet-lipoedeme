@@ -91,6 +91,17 @@ ul.items li .what{min-width:0;overflow-wrap:anywhere}
 .ph .t{position:absolute;left:0;right:0;bottom:0;padding:2px 6px;font-size:.72rem;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
 .ph .pdel{position:absolute;top:4px;right:4px;border:0;border-radius:8px;padding:2px 7px;font-size:.8rem;cursor:pointer;background:rgba(255,255,255,.92);color:#15302f}
 .ph .pdel[data-confirm="1"]{background:var(--rouge);color:#fff}
+.phw{display:grid;gap:4px;align-content:start}
+.pia{border:0;border-radius:8px;padding:5px 4px;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--vert);color:#fff}
+.pia.done{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:500}
+.iabox{margin-top:8px;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);display:grid;gap:8px}
+.iabox h5{margin:0;font-size:.95rem}
+.iarow{display:grid;grid-template-columns:auto 1fr;gap:6px 8px;align-items:center;padding:8px;border-radius:9px;background:var(--surface)}
+.iarow.off{opacity:.5}
+.iarow input[type=checkbox]{width:22px;height:22px}
+.iarow .sub{grid-column:2;display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:6px}
+.iarow .sub2{grid-column:2}
+.iarow label{font-size:.75rem;color:var(--muted);display:grid;gap:2px}
 #pView{border:0;padding:0;border-radius:14px;max-width:96vw;max-height:94vh;background:#000}
 #pView::backdrop{background:rgba(0,0,0,.75)}
 #pView img{display:block;max-width:96vw;max-height:84vh;object-fit:contain}
@@ -763,7 +774,7 @@ function loadPhotos(force){
   }).catch(()=>{if(!loadPhotos.warned){loadPhotos.warned=1;pMsg("Les photos ne peuvent pas être gardées dans ce navigateur (navigation privée ?).")}});
 }
 function phHTML(list,r){const hm=t=>{const d=new Date(t);return pad(d.getHours())+"h"+pad(d.getMinutes())};
-  return list.length?`<div class="photos">${list.map(p=>`<div class="ph"><img src="${p.url}" alt="Photo du ${esc(r.toLowerCase())}" data-pview="${p.id}" loading="lazy"><span class="t">${hm(p.cree)}</span><button class="pdel" data-pdel="${p.id}" aria-label="Supprimer la photo">×</button></div>`).join("")}</div>`:""}
+  return list.length?`<div class="photos">${list.map(p=>`<div class="phw"><div class="ph"><img src="${p.url}" alt="Photo du ${esc(r.toLowerCase())}" data-pview="${p.id}" loading="lazy"><span class="t">${hm(p.cree)}</span><button class="pdel" data-pdel="${p.id}" aria-label="Supprimer la photo">×</button></div><button class="pia${p.analyse?" done":""}" data-pia="${p.id}" aria-label="Reconnaître les aliments de cette photo">${p.analyse?"✓ analysée":"🔍 Analyser"}</button></div>`).join("")}</div>${iaState&&list.some(p=>p.id===iaState.pid)?iaHTML():""}`:""}
 $("#pFile").addEventListener("change",async e=>{
   const files=[...(e.target.files||[])].filter(f=>/^image\//.test(f.type)||!f.type);e.target.value="";
   if(!files.length)return;
@@ -786,6 +797,65 @@ document.addEventListener("click",e=>{
     PDB.del(b.dataset.pdel).then(()=>{pMsg("Photo supprimée.");loadPhotos(true)}).catch(()=>pMsg("La suppression n'a pas abouti."))}
 });
 $("#pClose").onclick=()=>$("#pView").close();
+
+/* ---------- Reconnaissance des aliments sur une photo (service /api/analyse-repas sur Vercel) ---------- */
+let iaState=null; // {pid, repas, etat:"code"|"attente"|"ok"|"erreur", items, msg}
+const IA_CODE="carnet-code-ia";
+const getCode=()=>{try{return localStorage.getItem(IA_CODE)||""}catch(e){return ""}};
+function iaShow(st){iaState=st;renderDay()}
+function iaHTML(){const st=iaState;const opt=(arr,v)=>arr.map(x=>`<option value="${esc(x[0])}"${x[0]===v?" selected":""}>${esc(x[1])}</option>`).join("");
+  const head=`<h5>🔍 Aliments reconnus — ${esc(st.repas.toLowerCase())}</h5>`;
+  if(st.etat==="code")return`<div class="iabox">${head}<p class="muted" style="margin:0;font-size:.85rem">${st.msg?`<b style="color:var(--rouge)">${esc(st.msg)}</b><br>`:""}Indiquez votre code d'accès personnel (celui enregistré dans Vercel). Il sera gardé sur ce téléphone.</p><div class="row" style="gap:6px"><input id="iaCode" type="password" autocomplete="off" placeholder="Code d'accès" style="flex:1;min-width:140px"><button class="btn small" data-iago="1">Valider</button><button class="btn ghost small" data-iastop="1">Annuler</button></div></div>`;
+  if(st.etat==="attente")return`<div class="iabox">${head}<p style="margin:0">Analyse de la photo en cours… (quelques secondes)</p></div>`;
+  if(st.etat==="erreur")return`<div class="iabox">${head}<p style="margin:0">${esc(st.msg)}</p><div class="row" style="gap:6px"><button class="btn small" data-pia="${st.pid}">Réessayer</button><button class="btn ghost small" data-iastop="1">Fermer</button></div></div>`;
+  const n=st.items.filter(x=>x.on).length;
+  return`<div class="iabox">${head}<p class="muted" style="margin:0;font-size:.82rem">Vérifiez et corrigez si besoin (les quantités sont estimées), décochez ce qui est faux, puis ajoutez au repas.</p>${st.items.map((x,i)=>`<div class="iarow${x.on?"":" off"}" data-iarow="${i}"><input type="checkbox" data-ia="${i}" data-f="on"${x.on?" checked":""} aria-label="Garder ${esc(x.aliment)}"><input data-ia="${i}" data-f="aliment" value="${esc(x.aliment)}" aria-label="Aliment">
+    <div class="sub"><label>Quantité<input type="number" min="0" step="any" data-ia="${i}" data-f="qte" value="${x.qte}"></label><label>Unité<select data-ia="${i}" data-f="unite">${opt(["g","ml","portion","c. à soupe","pièce","bol"].map(u=>[u,u]),x.unite)}</select></label><label>kcal<input type="number" min="0" step="1" data-ia="${i}" data-f="kcal" value="${x.kcal}"></label></div>
+    <div class="sub2"><label>Catégorie${x.incertain?' <b style="color:var(--orange,#b86b00)">· à vérifier</b>':""}<select data-ia="${i}" data-f="cat">${opt(CATS.map(c=>[c.id,c.n]),x.cat)}</select></label></div></div>`).join("")}${st.msg?`<p class="muted" style="margin:0;font-size:.85rem">ℹ️ ${esc(st.msg)}</p>`:""}<div class="row" style="gap:6px"><button class="btn" data-iaadd="1" id="iaAddBtn"${n?"":" disabled"}>Ajouter au repas (${n})</button><button class="btn ghost small" data-iastop="1">Annuler</button></div></div>`}
+// Prépare une image plus petite (1024 px) pour l'analyse, en base64
+function toB64(p){return new Promise(res=>{const blob=new Blob([p.buf],{type:p.type||"image/jpeg"});const url=URL.createObjectURL(blob);const img=new Image();
+  const brut=()=>{const fr=new FileReader();fr.onload=()=>res({data:String(fr.result).split(",")[1],type:blob.type});fr.readAsDataURL(blob)};
+  img.onload=()=>{try{const M=1024,s=Math.min(1,M/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement("canvas");c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);res({data:c.toDataURL("image/jpeg",0.85).split(",")[1],type:"image/jpeg"})}catch(e){URL.revokeObjectURL(url);brut()}};
+  img.onerror=()=>{URL.revokeObjectURL(url);brut()};img.src=url})}
+async function iaAnalyse(pid){
+  const p=phCache.items.find(x=>x.id===pid);if(!p)return;
+  const code=getCode();if(!code){iaShow({pid,repas:p.repas,etat:"code"});return}
+  iaShow({pid,repas:p.repas,etat:"attente"});
+  const fail=msg=>{if(iaState&&iaState.pid===pid)iaShow({pid,repas:p.repas,etat:"erreur",msg})};
+  try{
+    const img=await toB64(p);
+    const r=await fetch("/api/analyse-repas",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,image:img.data,type:img.type,repas:p.repas,categories:CATS.map(c=>({id:c.id,n:c.n}))})});
+    const j=await r.json().catch(()=>null);
+    if(!iaState||iaState.pid!==pid)return;
+    if(r.status===401){try{localStorage.removeItem(IA_CODE)}catch(e){}iaShow({pid,repas:p.repas,etat:"code",msg:"Code incorrect."});return}
+    if(r.status===404||r.status===405&&!j)return fail("Le service d'analyse n'est pas encore installé sur Vercel (fichier api/analyse-repas.js).");
+    if(!r.ok){const e=j&&j.erreur;return fail(e==="config"?"Le service n'est pas configuré : vérifiez ANTHROPIC_API_KEY et CARNET_CODE dans Vercel.":e==="cle"?"La clé API est refusée : vérifiez-la dans Vercel.":e==="credit"?"Le crédit du compte Anthropic est épuisé : rechargez-le sur console.anthropic.com.":e==="occupe"?"Le service est très demandé : réessayez dans une minute.":"L'analyse n'a pas abouti. Réessayez.")}
+    const items=(j.aliments||[]).map(a=>({...a,on:true,unite0:a.unite,kpu:a.qte>0?a.kcal/a.qte:null}));
+    if(!items.length)return fail(j.remarque||"Aucun aliment reconnu sur cette photo.");
+    iaShow({pid,repas:p.repas,etat:"ok",items,msg:j.remarque||""});
+  }catch(e){fail("Pas de connexion Internet ? L'analyse n'a pas pu partir. Réessayez.")}
+}
+function iaField(e){const t=e.target.closest("[data-ia]");if(!t||!iaState||!iaState.items)return;const it=iaState.items[+t.dataset.ia];if(!it)return;const f=t.dataset.f;
+  if(f==="on"){it.on=t.checked;t.closest(".iarow").classList.toggle("off",!t.checked);const n=iaState.items.filter(x=>x.on).length;const b=$("#iaAddBtn");if(b){b.textContent="Ajouter au repas ("+n+")";b.disabled=!n}}
+  else if(f==="qte"||f==="kcal"){it[f]=t.value===""?"":+t.value;
+    if(f==="kcal")it.kcalMain=true;
+    else if(!it.kcalMain&&it.kpu!=null&&it.unite===it.unite0&&t.value!==""){it.kcal=Math.round(it.kpu*it.qte);const k=t.closest(".iarow").querySelector('[data-f="kcal"]');if(k)k.value=it.kcal}}
+  else it[f]=t.value}
+document.addEventListener("input",iaField);document.addEventListener("change",iaField);
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-pia]");if(a){iaAnalyse(a.dataset.pia);return}
+  if(e.target.closest("[data-iastop]")){iaShow(null);return}
+  if(e.target.closest("[data-iago]")){const v=($("#iaCode")&&$("#iaCode").value||"").trim();if(!v)return;try{localStorage.setItem(IA_CODE,v)}catch(err){}iaAnalyse(iaState.pid);return}
+  if(e.target.closest("[data-iaadd]")&&iaState&&iaState.items){
+    const st=iaState,p=phCache.items.find(x=>x.id===st.pid);if(!p||p.date!==key(cur))return iaShow(null);
+    const keep=st.items.filter(x=>x.on&&String(x.aliment).trim()&&+x.qte>0);if(!keep.length)return;
+    iaState=null;
+    mutate(d=>keep.forEach(x=>{const it={id:uid(),repas:st.repas,aliment:String(x.aliment).trim(),qte:+x.qte,unite:x.unite,cat:CATMAP[x.cat]?x.cat:"leg",photo:p.id};if(x.kcal!==""&&x.kcal!=null)it.kcal=+x.kcal;d.meals.push(it)}));
+    const {url,...rec}=p;PDB.add({...rec,analyse:Date.now()}).then(()=>loadPhotos(true)).catch(()=>{});
+    pMsg(keep.length+(keep.length>1?" aliments ajoutés au ":" aliment ajouté au ")+st.repas.toLowerCase()+".");
+  }
+});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="iaCode"){e.preventDefault();$("[data-iago]").click()}});
 $("#pView").addEventListener("click",e=>{if(e.target.id==="pView")$("#pView").close()});
 
 /* ---------- Calendrier ---------- */
