@@ -178,6 +178,8 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ideas{display:flex;flex-wrap:wrap;gap:6px}
 .idea{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:5px 11px;font-size:.84rem;cursor:pointer}
 .idea:hover,.idea:focus-visible{border-color:var(--vert);color:var(--vert)}
+.idea.assoc{border-radius:10px;text-align:left}
+.idea.ask{background:var(--vert);color:#fff;border-color:var(--vert)}
 .advnote{margin:0;font-size:.85rem;color:var(--muted)}
 .pil{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center}
 .pil .nm{font-weight:700}
@@ -452,6 +454,11 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
       </div>
 
       <div class="card reco">
+        <h2>Bien absorber le fer : les bonnes associations</h2>
+        <p>Le fer <b>héminique</b> (lié à l'hème, le pigment rouge du sang et des muscles) vient des poissons, fruits de mer, volaille et viandes : il est bien absorbé. Le fer <b>non héminique</b> vient surtout des plantes (lentilles, haricots, graines, avoine, épinards, chocolat noir) : il est moins bien absorbé, sauf avec de la <b>vitamine C</b> dans le même repas. Le thé et le café freinent l'absorption : plutôt 1 h avant ou après. La papaye verte apporte peu de fer, mais sa vitamine C aide (meilleure crue que cuite).</p>
+        <ul class="items" id="assocFer"></ul>
+      </div>
+      <div class="card reco">
         <h2>Assiette anti-inflammatoire</h2>
         <p>Les sources convergent vers un modèle proche du régime méditerranéen : beaucoup de légumes, des fruits, des poissons gras, des légumineuses, de l'huile d'olive, des céréales complètes, et peu de produits ultra-transformés et de sucres. Les régimes pauvres en glucides ou cétogènes donnent des résultats prometteurs mais les études restent petites.</p>
         <div class="foodcols">
@@ -570,7 +577,7 @@ const CATS=[
   {id:"sod",n:"Sodas, jus sucrés, alcool",c:"r"}
 ];
 const CATMAP=Object.fromEntries(CATS.map(c=>[c.id,c]));
-const SUGG={"brocolis":"leg","épinards":"leg","salade verte":"leg","chou":"leg","courgette":"leg","tomates":"leg","carottes":"leg","fruits rouges":"fru","pomme":"fru","papaye":"fru","ananas":"fru","orange":"fru","banane":"fru","sardines":"poi","thon":"poi","saumon":"poi","maquereau":"poi","crevettes":"poi","lentilles":"lgm","pois chiches":"lgm","haricots rouges":"lgm","huile d'olive":"gra","noix":"gra","amandes":"gra","graines de chia":"gra","graines de lin":"gra","avocat":"gra","curcuma":"epi","gingembre":"epi","thé vert":"epi","eau":"boi","tisane":"boi","café":"boi","flocons d'avoine":"cer","riz complet":"cer","pain complet":"cer","patate douce":"cer","igname":"cer","taro":"cer","quinoa":"cer","poulet":"vol","œufs":"vol","yaourt nature":"lai","fromage":"lai","lait":"lai","bœuf":"vro","porc":"vro","jambon":"vro","saucisson":"vro","corned-beef":"vro","pain blanc":"raf","baguette":"raf","riz blanc":"raf","pâtes":"raf","gâteau":"suc","biscuits":"suc","chips":"suc","confiture":"suc","chocolat noir 70 %":"cho","plat préparé":"suc","soda":"sod","jus de fruit":"sod","vin":"sod","bière":"sod"};
+const SUGG={"brocolis":"leg","épinards":"leg","salade verte":"leg","chou":"leg","courgette":"leg","tomates":"leg","carottes":"leg","fruits rouges":"fru","pomme":"fru","papaye":"fru","ananas":"fru","orange":"fru","banane":"fru","sardines":"poi","thon":"poi","saumon":"poi","maquereau":"poi","crevettes":"poi","lentilles":"lgm","pois chiches":"lgm","haricots rouges":"lgm","huile d'olive":"gra","noix":"gra","amandes":"gra","graines de chia":"gra","graines de lin":"gra","avocat":"gra","curcuma":"epi","gingembre":"epi","thé vert":"epi","eau":"boi","tisane":"boi","café":"boi","flocons d'avoine":"cer","riz complet":"cer","pain complet":"cer","patate douce":"cer","igname":"cer","taro":"cer","quinoa":"cer","poulet":"vol","œufs":"vol","yaourt nature":"lai","fromage":"lai","lait":"lai","bœuf":"vro","porc":"vro","jambon":"vro","saucisson":"vro","corned-beef":"vro","pain blanc":"raf","baguette":"raf","riz blanc":"raf","pâtes":"raf","gâteau":"suc","biscuits":"suc","chips":"suc","confiture":"suc","papaye verte":"fru","chocolat noir 70 %":"cho","plat préparé":"suc","soda":"sod","jus de fruit":"sod","vin":"sod","bière":"sod"};
 const ACTS=[["aquagym","Aquagym / marche dans l'eau",true],["natation","Natation",true],["aquabike","Aquabike",true],["marche","Marche",false],["nordique","Marche nordique",false],["velo","Vélo",false],["yoga","Yoga",false],["pilates","Pilates",false],["renfo","Renforcement (élastiques)",false],["equilibre","Exercices d'équilibre",false],["presso","Bottes de pressothérapie",false],["drainage","Drainage lymphatique",false],["autre","Autre",false]];
 const ACTMAP=Object.fromEntries(ACTS.map(a=>[a[0],{n:a[1],eau:a[2]}]));
 const GOAL_WEEK=150, GLASSES=8;
@@ -584,7 +591,7 @@ const NUTRI=[
  {id:"vb",n:"Vitamines B",b:"B1, B6, B9, B12",src:"B1 : graines de tournesol, noisettes, petit épeautre, levure de bière. B6 : foie, blanc de poulet, saumon, abats, pois chiches, banane. B9 : foie, légumineuses, châtaigne, épinards, laitue. B12 : foie, huîtres et crustacés, poissons gras",kw:["tournesol","noisette","epeautre","levure","foie","poulet","saumon","abat","pois chiche","banane","lentille","haricot","legumineuse","chataigne","epinard","laitue","salade","huitre","crustace","crevette","sardine","maquereau","thon"],cats:["poi","lgm"]},
  {id:"mg",n:"Magnésium",b:"360 mg/j (femmes)",src:"Graines de courge, laitue de mer, haricots blancs (180 g cuits), épinards cuits, tofu (60 g), noix du Brésil (20 g), volaille, riz complet, framboises (200 g), chocolat noir 70 % (10 g)",kw:["graines de courge","laitue de mer","algue","haricots blancs","epinard","tofu","noix du bresil","volaille","poulet","dinde","riz complet","framboise","chocolat noir"]},
  {id:"zn",n:"Zinc",b:"9,3 mg/j (femmes)",src:"Huîtres (100 g = 20 mg), foie de veau, bœuf, œufs, haricots blancs, poulet, fromages à pâte dure, noix de cajou, pécan",kw:["huitre","foie","boeuf","oeuf","haricots blancs","poulet","fromage","emmental","parmesan","gouda","cajou","pecan"]},
- {id:"fe",n:"Fer",b:"",src:"Héminique (animal) : boudin, abats, viande rouge, palourdes et moules, œufs. Non héminique (végétal) : flocons d'avoine, épinards, choux de Bruxelles, lentilles, riz complet",kw:["boudin","abat","boeuf","viande rouge","palourde","moule","oeuf","avoine","epinard","chou de bruxelles","choux de bruxelles","lentille","riz complet"]},
+ {id:"fe",n:"Fer",b:"",src:"Héminique (animal) : boudin, abats, viande rouge, palourdes et moules, œufs. Non héminique (végétal) : flocons d'avoine, épinards, choux de Bruxelles, lentilles, riz complet. Autres sources : sardines, thon, crevettes, huîtres, haricots, pois chiches, graines de courge, cresson, chocolat noir. À associer à de la vitamine C (papaye, citron, kiwi)",kw:["boudin","abat","boeuf","viande rouge","palourde","moule","oeuf","avoine","epinard","chou de bruxelles","choux de bruxelles","lentille","riz complet","sardine","thon","crevette","huitre","haricot","pois chiche","graines de courge","cresson","chocolat noir","tofu"]},
  {id:"se",n:"Sélénium",b:"",src:"Repère général : noix du Brésil, poissons, fruits de mer, œufs",kw:["noix du bresil","oeuf"],cats:["poi"]},
  {id:"mo",n:"Molybdène",b:"",src:"Repère général : légumineuses, céréales complètes",kw:["lentille","pois chiche","haricot","avoine","riz complet","sarrasin","quinoa"],cats:["lgm"]}
 ];
@@ -1215,25 +1222,42 @@ const ADV=[
 ];
 // « D3 : huile de foie de morue (en gélules…), saumon » → « huile de foie de morue, saumon, … »
 const srcIdees=src=>src.replace(/\([^)]*\)/g,"").split(/[,.;]/).map(x=>x.split(":").pop().trim()).filter(x=>x.length>2&&!/^repère/i.test(x)).slice(0,3).join(", ").toLowerCase();
+// Associations pour bien absorber le fer : une source de fer + de la vitamine C dans la même assiette
+const ASSOC_FER=[
+ {n:"Sardines + salade de papaye verte crue",why:"fer héminique + vitamine C",items:[["sardines",90,"g","poi"],["papaye verte crue râpée",100,"g","fru"]]},
+ {n:"Sardines + salade de cresson et tomates",why:"fer héminique + vitamine C",items:[["sardines",90,"g","poi"],["cresson",50,"g","leg"],["tomates",100,"g","leg"]]},
+ {n:"Lentilles au citron et persil + papaye",why:"fer végétal + vitamine C",items:[["lentilles",150,"g","lgm"],["citron",0.5,"pièce","fru"],["persil",5,"g","epi"],["papaye",150,"g","fru"]]},
+ {n:"Flocons d'avoine + graines de courge + kiwi",why:"fer végétal + vitamine C",items:[["flocons d'avoine",40,"g","cer"],["graines de courge",15,"g","gra"],["kiwi",1,"pièce","fru"]]},
+ {n:"Moules + légumes + citron",why:"fer héminique + vitamine C",items:[["moules",150,"g","poi"],["courgette",150,"g","leg"],["citron",0.5,"pièce","fru"]]}
+];
+$("#assocFer").innerHTML=ASSOC_FER.map(a=>`<li style="grid-template-columns:1fr"><span class="what"><b>${esc(a.n)}</b><br><span style="color:var(--vert);font-size:.85rem">${esc(a.why)}</span></span></li>`).join("");
 function nextRepas(){const t=new Date();if(key(cur)!==key(t))return null;const m=t.getHours()*60+t.getMinutes();return m<630?"Petit-déjeuner":m<870?"Déjeuner":m<1080?"Collation":"Dîner"}
 function advHTML(d){
   const cnt=c=>d.meals.filter(m=>c.includes(m.cat)).length;
   const rows=ADV.map(a=>({a,n:cnt(a.cats)}));
   const manque=rows.filter(r=>r.n<r.a.obj);
   const rouge=d.meals.filter(m=>CATMAP[m.cat]?.c==="r").length;
-  const on=nutriOf(d.meals);const nm=NUTRI.filter(n=>!on.has(n.id));
+  const on=nutriOf(d.meals);const nm=NUTRI.filter(n=>!on.has(n.id)&&n.id!=="fe");
   const eau=Math.max(0,GLASSES-(d.eau||0));
   const nr=nextRepas();
   const pts=r=>Array.from({length:r.a.obj},(_,i)=>`<span class="${i<r.n?"ok":"no"}">●</span>`).join("");
   const head=`<h3>🥗 Pour équilibrer ma journée</h3><p class="advnote">${manque.length?`Il manque encore ${manque.length===1?"une famille":manque.length+" familles"} d'aliments à privilégier${nr?` — idées pour le ${nr.toLowerCase()}`:""}. Touchez une idée pour la préparer dans le formulaire des repas.`:"✓ Toutes les familles d'aliments à privilégier sont présentes aujourd'hui. Bravo !"}</p>`;
+  const fer=on.has("fe");
+  const ferRow=`<div class="advrow${fer?" done":""}"><div class="hd"><b>Fer (avec de la vitamine C)</b><span class="pts" aria-label="${fer?1:0} sur 1"><span class="${fer?"ok":"no"}">●</span> <span class="muted" style="font-size:.8rem;letter-spacing:0">${fer?1:0}/1</span></span></div>${fer?"":`<span class="advnote">une source de fer et de la vitamine C dans la même assiette ; thé et café plutôt 1 h avant ou après</span><div class="ideas">${ASSOC_FER.map((a,i)=>`<button type="button" class="idea assoc" data-assoc="${i}" title="${esc(a.why)}">🍽 ${esc(a.n)}</button>`).join("")}</div>`}</div>`;
   const body=rows.map(r=>`<div class="advrow${r.n>=r.a.obj?" done":""}"><div class="hd"><b>${esc(r.a.n)}</b><span class="pts" aria-label="${r.n} sur ${r.a.obj}">${pts(r)} <span class="muted" style="font-size:.8rem;letter-spacing:0">${Math.min(r.n,r.a.obj)}/${r.a.obj}</span></span></div>${r.n>=r.a.obj?"":`<span class="advnote">${esc(r.a.why)}</span><div class="ideas">${r.a.ideas.map(([al,q,u,c])=>`<button type="button" class="idea" data-idea="${esc(al)}|${q}|${esc(u)}|${c||r.a.cat}">+ ${esc(al)}</button>`).join("")}</div>`}</div>`).join("");
   const extra=[
     rouge?`⚠️ ${rouge} aliment${rouge>1?"s":""} à limiter noté${rouge>1?"s":""} : ajoutez une portion de légumes au prochain repas pour compenser.`:"",
     eau?`💧 Eau : encore ${eau} verre${eau>1?"s":""} pour atteindre ${GLASSES*0.25} L.`:"",
     nm.length?`🦋 Thyroïde, pas encore de source aujourd'hui pour : ${nm.slice(0,4).map(n=>`<b>${esc(n.n)}</b> (${esc(srcIdees(n.src))})`).join(" · ")}${nm.length>4?` et ${nm.length-4} autre${nm.length>5?"s":""} (voir le bloc Thyroïde)`:""}.`:""
   ].filter(Boolean).map(x=>`<p class="advnote">${x}</p>`).join("");
-  return`<div class="adv">${head}${body}${extra}</div>`;
+  return`<div class="adv">${head}${body}${ferRow}${extra}</div>`;
 }
+document.addEventListener("click",e=>{const b=e.target.closest("[data-assoc]");if(!b)return;
+  const a=ASSOC_FER[+b.dataset.assoc];if(!a)return;const repas=nextRepas()||$("#mRepas").value;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.dataset.txt=b.textContent;b.textContent=`✓ Ajouter au ${repas.toLowerCase()} ?`;b.classList.add("ask");setTimeout(()=>{if(b.isConnected&&b.dataset.confirm==="1"){b.dataset.confirm="";b.textContent=b.dataset.txt;b.classList.remove("ask")}},5000);return}
+  mutate(d=>a.items.forEach(([al,q,u,c])=>d.meals.push({id:uid(),repas,aliment:al,qte:q,unite:u,cat:c})));
+  pMsg(a.items.length+" aliments ajoutés au "+repas.toLowerCase()+" : "+a.n.toLowerCase()+".");
+});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-idea]");if(!b)return;
   const [al,q,u,c]=b.dataset.idea.split("|");
   $("#mAliment").value=al;$("#mQte").value=q;$("#mUnite").value=u;$("#mCat").value=c;$("#mKcal").value="";
