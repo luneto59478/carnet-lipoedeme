@@ -5,7 +5,7 @@
 //   CARNET_CODE       = le code d'accès personnel choisi par Catherine
 //   CARNET_MODELE     = (facultatif) modèle à utiliser, par défaut claude-haiku-5-5
 
-const UNITES = ["g", "ml", "portion", "c. à soupe", "pièce", "bol"];
+const UNITES = ["g", "ml", "portion", "c. à soupe", "pièce", "bol", "carré"];
 
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
     `Tu es diététicien. Voici la photo d'un repas (${repas.toLowerCase()}) pris en Nouvelle-Calédonie. ` +
     `Liste chaque aliment visible séparément (pas le plat entier quand ses composants sont distincts), ` +
     `avec la quantité estimée pour UNE personne (grammes pour les solides, ml pour les boissons et soupes, ` +
-    `« pièce » pour un fruit ou un œuf entier). Estime les kcal à partir des tables Ciqual. ` +
+    `« pièce » pour un fruit ou un œuf entier, « carré » pour des carrés de chocolat). Estime les kcal à partir des tables Ciqual. ` +
     `Choisis pour chaque aliment la catégorie la plus juste parmi : ` +
     cats.map(c => `${c.id} = ${c.n}`).join(" ; ") + ". " +
     `N'invente pas d'aliment invisible. Si la photo ne montre pas de nourriture, renvoie une liste vide avec une remarque.`;
