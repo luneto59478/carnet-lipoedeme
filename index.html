@@ -829,7 +829,7 @@ async function iaAnalyse(pid){
     if(!iaState||iaState.pid!==pid)return;
     if(r.status===401){try{localStorage.removeItem(IA_CODE)}catch(e){}iaShow({pid,repas:p.repas,etat:"code",msg:"Code incorrect."});return}
     if(r.status===404||r.status===405&&!j)return fail("Le service d'analyse n'est pas encore installé sur Vercel (fichier api/analyse-repas.js).");
-    if(!r.ok){const e=j&&j.erreur;return fail(e==="config"?"Le service n'est pas configuré : vérifiez ANTHROPIC_API_KEY et CARNET_CODE dans Vercel.":e==="cle"?"La clé API est refusée : vérifiez-la dans Vercel.":e==="credit"?"Le crédit du compte Anthropic est épuisé : rechargez-le sur console.anthropic.com.":e==="occupe"?"Le service est très demandé : réessayez dans une minute.":"L'analyse n'a pas abouti. Réessayez.")}
+    if(!r.ok){const e=j&&j.erreur;return fail(e==="config"?"Le service n'est pas configuré : vérifiez GEMINI_API_KEY et CARNET_CODE dans Vercel, puis « Redeploy ».":e==="cle"?"La clé Gemini est refusée : vérifiez-la dans Vercel (aistudio.google.com → API keys).":e==="quota"?"La limite gratuite de Gemini est atteinte pour le moment : réessayez dans une minute, ou demain.":e==="region"?"La formule gratuite de Gemini n'est pas disponible pour ce compte Google.":e==="occupe"?"Le service est très demandé : réessayez dans une minute.":"L'analyse n'a pas abouti. Réessayez.")}
     const items=(j.aliments||[]).map(a=>({...a,on:true,unite0:a.unite,kpu:a.qte>0?a.kcal/a.qte:null}));
     if(!items.length)return fail(j.remarque||"Aucun aliment reconnu sur cette photo.");
     iaShow({pid,repas:p.repas,etat:"ok",items,msg:j.remarque||""});
