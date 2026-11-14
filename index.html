@@ -168,6 +168,17 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 @media (max-width:620px){.eq{grid-template-columns:1fr}}
 .gauge{display:grid;justify-items:center;gap:4px;text-align:center}
 .pillars{display:grid;gap:10px}
+.adv{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:12px}
+.adv h3{margin:0;font-size:1.02rem}
+.advrow{display:grid;gap:5px}
+.advrow .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.advrow .pts{letter-spacing:2px;font-size:.9rem;white-space:nowrap}
+.advrow .pts .ok{color:var(--vert)}.advrow .pts .no{color:var(--line)}
+.advrow.done .hd b{color:var(--vert)}
+.ideas{display:flex;flex-wrap:wrap;gap:6px}
+.idea{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:5px 11px;font-size:.84rem;cursor:pointer}
+.idea:hover,.idea:focus-visible{border-color:var(--vert);color:var(--vert)}
+.advnote{margin:0;font-size:.85rem;color:var(--muted)}
 .pil{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center}
 .pil .nm{font-weight:700}
 .pil .bar{grid-column:1/-1;height:9px;border-radius:5px;background:var(--line);overflow:hidden}
@@ -1191,7 +1202,44 @@ function eqHTML(res,label){
   const scaleViz=en&&en.inA!=null?`<div class="scale-viz"><div class="ln"><span>Apports</span><span class="tr"><i style="width:${en.inA/mx*100}%;background:var(--orange)"></i></span><b class="qty">${en.inA} kcal</b></div><div class="ln"><span>Dépenses</span><span class="tr"><i style="width:${en.outA/mx*100}%;background:var(--lagon)"></i></span><b class="qty">${en.outA} kcal</b></div><div class="muted" style="font-size:.8rem">${label} · dépenses = métabolisme de base × 1,2 + activité</div></div>`:"";
   return`<div class="eq"><div class="gauge">${gaugeSVG(res.g)}<span class="pill" style="background:${tone(res.g)};color:var(--surface)">${toneTxt(res.g)}</span></div><div style="display:grid;gap:12px;min-width:0">${scaleViz}<div class="pillars">${res.P.map(x=>`<div class="pil"><span class="nm">${esc(x.n)}</span><span class="qty">${esc(x.val)}</span><span class="bar"><i style="width:${x.score??0}%;background:${tone(x.score)}"></i></span><span class="tip">${esc(x.tip)}</span></div>`).join("")}</div></div></div>`;
 }
-function renderEqDay(){$("#eqDay").innerHTML=eqHTML(balance([cur]),"Moyenne du jour")}
+function renderEqDay(){$("#eqDay").innerHTML=eqHTML(balance([cur]),"Moyenne du jour")+advHTML(getDay(key(cur)))}
+
+/* ---------- Aliments à privilégier pour équilibrer la journée ---------- */
+// cats : catégories qui comptent ; obj : nombre de prises visé dans la journée ; ideas : [aliment, quantité, unité]
+const ADV=[
+ {id:"leg",n:"Légumes",cats:["leg"],obj:3,cat:"leg",why:"fibres et polyphénols anti-inflammatoires",ideas:[["brocolis",150,"g"],["salade verte",80,"g"],["chou",120,"g"],["courgette",150,"g"],["épinards",100,"g"],["tomates",150,"g"],["carottes",100,"g"],["cresson",50,"g"],["champignons",100,"g"]]},
+ {id:"fru",n:"Fruits",cats:["fru"],obj:2,cat:"fru",why:"antioxydants et vitamine C",ideas:[["papaye",150,"g"],["fruits rouges",125,"g"],["kiwi",1,"pièce"],["ananas",120,"g"],["orange",1,"pièce"],["pomme",1,"pièce"]]},
+ {id:"pro",n:"Poisson gras, fruits de mer ou légumineuses",cats:["poi","lgm"],obj:1,cat:"poi",why:"oméga 3 et protéines de qualité",ideas:[["sardines",90,"g","poi"],["maquereau",120,"g","poi"],["saumon",120,"g","poi"],["crevettes",120,"g","poi"],["lentilles",150,"g","lgm"],["pois chiches",150,"g","lgm"]]},
+ {id:"gra",n:"Bonnes graisses (huile d'olive, noix, graines)",cats:["gra"],obj:1,cat:"gra",why:"acides gras protecteurs",ideas:[["huile d'olive",1,"c. à soupe"],["noix",20,"g"],["amandes",20,"g"],["noix du Brésil",2,"pièce"],["graines de lin",10,"g"],["avocat",0.5,"pièce"]]},
+ {id:"epi",n:"Épices, herbes, thé vert",cats:["epi"],obj:1,cat:"epi",why:"composés anti-inflammatoires",ideas:[["curcuma",2,"g"],["gingembre",5,"g"],["thé vert",250,"ml"],["cannelle",2,"g"]]}
+];
+// « D3 : huile de foie de morue (en gélules…), saumon » → « huile de foie de morue, saumon, … »
+const srcIdees=src=>src.replace(/\([^)]*\)/g,"").split(/[,.;]/).map(x=>x.split(":").pop().trim()).filter(x=>x.length>2&&!/^repère/i.test(x)).slice(0,3).join(", ").toLowerCase();
+function nextRepas(){const t=new Date();if(key(cur)!==key(t))return null;const m=t.getHours()*60+t.getMinutes();return m<630?"Petit-déjeuner":m<870?"Déjeuner":m<1080?"Collation":"Dîner"}
+function advHTML(d){
+  const cnt=c=>d.meals.filter(m=>c.includes(m.cat)).length;
+  const rows=ADV.map(a=>({a,n:cnt(a.cats)}));
+  const manque=rows.filter(r=>r.n<r.a.obj);
+  const rouge=d.meals.filter(m=>CATMAP[m.cat]?.c==="r").length;
+  const on=nutriOf(d.meals);const nm=NUTRI.filter(n=>!on.has(n.id));
+  const eau=Math.max(0,GLASSES-(d.eau||0));
+  const nr=nextRepas();
+  const pts=r=>Array.from({length:r.a.obj},(_,i)=>`<span class="${i<r.n?"ok":"no"}">●</span>`).join("");
+  const head=`<h3>🥗 Pour équilibrer ma journée</h3><p class="advnote">${manque.length?`Il manque encore ${manque.length===1?"une famille":manque.length+" familles"} d'aliments à privilégier${nr?` — idées pour le ${nr.toLowerCase()}`:""}. Touchez une idée pour la préparer dans le formulaire des repas.`:"✓ Toutes les familles d'aliments à privilégier sont présentes aujourd'hui. Bravo !"}</p>`;
+  const body=rows.map(r=>`<div class="advrow${r.n>=r.a.obj?" done":""}"><div class="hd"><b>${esc(r.a.n)}</b><span class="pts" aria-label="${r.n} sur ${r.a.obj}">${pts(r)} <span class="muted" style="font-size:.8rem;letter-spacing:0">${Math.min(r.n,r.a.obj)}/${r.a.obj}</span></span></div>${r.n>=r.a.obj?"":`<span class="advnote">${esc(r.a.why)}</span><div class="ideas">${r.a.ideas.map(([al,q,u,c])=>`<button type="button" class="idea" data-idea="${esc(al)}|${q}|${esc(u)}|${c||r.a.cat}">+ ${esc(al)}</button>`).join("")}</div>`}</div>`).join("");
+  const extra=[
+    rouge?`⚠️ ${rouge} aliment${rouge>1?"s":""} à limiter noté${rouge>1?"s":""} : ajoutez une portion de légumes au prochain repas pour compenser.`:"",
+    eau?`💧 Eau : encore ${eau} verre${eau>1?"s":""} pour atteindre ${GLASSES*0.25} L.`:"",
+    nm.length?`🦋 Thyroïde, pas encore de source aujourd'hui pour : ${nm.slice(0,4).map(n=>`<b>${esc(n.n)}</b> (${esc(srcIdees(n.src))})`).join(" · ")}${nm.length>4?` et ${nm.length-4} autre${nm.length>5?"s":""} (voir le bloc Thyroïde)`:""}.`:""
+  ].filter(Boolean).map(x=>`<p class="advnote">${x}</p>`).join("");
+  return`<div class="adv">${head}${body}${extra}</div>`;
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-idea]");if(!b)return;
+  const [al,q,u,c]=b.dataset.idea.split("|");
+  $("#mAliment").value=al;$("#mQte").value=q;$("#mUnite").value=u;$("#mCat").value=c;$("#mKcal").value="";
+  const nr=nextRepas();if(nr)$("#mRepas").value=nr;$("#pRepas").value=$("#mRepas").value;
+  $("#mealForm").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>$("#mQte").focus({preventScroll:true}),400);
+});
 function renderEqWeek(){$("#eqWeek").innerHTML=eqHTML(balance(Array.from({length:7},(_,i)=>addDays(weekStart,i))),"Moyenne par jour avec repas notés")+'<p class="muted" style="margin:6px 0 0;font-size:.8rem">Estimations (formule de Mifflin-St Jeor pour le métabolisme de base). Le lipœdème ne répond pas aux régimes très restrictifs : l\'objectif est un équilibre durable, à valider avec votre médecin ou votre diététicienne.</p>'}
 let tailleT,ageT;
 $("#taille").addEventListener("input",e=>{clearTimeout(tailleT);const v=parseFloat(e.target.value);tailleT=setTimeout(()=>{profil.taille=v>0?v:null;persistProfil();renderAll()},700)});
