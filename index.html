@@ -462,8 +462,8 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
         <h2>Assiette anti-inflammatoire</h2>
         <p>Les sources convergent vers un modèle proche du régime méditerranéen : beaucoup de légumes, des fruits, des poissons gras, des légumineuses, de l'huile d'olive, des céréales complètes, et peu de produits ultra-transformés et de sucres. Les régimes pauvres en glucides ou cétogènes donnent des résultats prometteurs mais les études restent petites.</p>
         <div class="foodcols">
-          <div class="foodcol v"><h3>À privilégier</h3><ul><li>Légumes verts, crucifères (brocoli, chou, épinards)</li><li>Fruits rouges, agrumes, ananas, pomme</li><li>Poissons gras : sardine, thon, saumon, maquereau</li><li>Légumineuses : lentilles, pois chiches</li><li>Riz complet</li><li>Huile d'olive, noix, graines de lin ou chia</li><li>Curcuma, gingembre, ail, herbes, thé vert</li><li>Eau, tisanes</li></ul></div>
-          <div class="foodcol o"><h3>Avec modération</h3><ul><li>Autres céréales complètes, patate douce, igname, taro</li><li>Volaille, œufs</li><li>Laitages nature, fromage</li><li>Fruits très sucrés, chocolat noir</li></ul></div>
+          <div class="foodcol v"><h3>À privilégier</h3><ul><li>Légumes verts, crucifères (brocoli, chou, épinards)</li><li>Fruits rouges, agrumes, ananas, pomme</li><li>Poissons gras : sardine, thon, saumon, maquereau</li><li>Légumineuses : lentilles, pois chiches</li><li>Riz complet, riz noir, quinoa, sarrasin, avoine</li><li>Huile d'olive, noix, graines de lin ou chia</li><li>Curcuma, gingembre, ail, herbes, thé vert</li><li>Eau, tisanes</li></ul></div>
+          <div class="foodcol o"><h3>Avec modération</h3><ul><li>Pain complet, patate douce, igname, taro</li><li>Volaille, œufs</li><li>Laitages nature, fromage</li><li>Fruits très sucrés, chocolat noir</li></ul></div>
           <div class="foodcol r"><h3>À limiter</h3><ul><li>Viande rouge, charcuterie</li><li>Pain blanc, riz blanc, pâtes blanches</li><li>Sucreries, biscuits, plats industriels</li><li>Sodas, jus sucrés, alcool</li><li>Sel en excès (favorise la rétention d'eau)</li></ul></div>
         </div>
       </div>
@@ -571,18 +571,18 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 const CATS=[
   {id:"leg",n:"Légumes",c:"v"},{id:"fru",n:"Fruits",c:"v"},{id:"poi",n:"Poisson gras / fruits de mer",c:"v"},
   {id:"lgm",n:"Légumineuses",c:"v"},{id:"gra",n:"Huile d'olive, noix, graines",c:"v"},{id:"epi",n:"Épices, herbes, thé vert",c:"v"},
-  {id:"boi",n:"Eau, tisane, café nature",c:"v"},{id:"rco",n:"Riz complet",c:"v"},
+  {id:"boi",n:"Eau, tisane, café nature",c:"v"},{id:"rco",n:"Riz complet, riz noir, quinoa, sarrasin, avoine",c:"v"},
   {id:"cer",n:"Céréales complètes, tubercules",c:"o"},{id:"vol",n:"Volaille, œufs",c:"o"},{id:"lai",n:"Laitages, fromage",c:"o"},{id:"cho",n:"Chocolat noir 70 % et plus",c:"o"},
   {id:"vro",n:"Viande rouge, charcuterie",c:"r"},{id:"raf",n:"Pain, riz, pâtes blancs",c:"r"},{id:"suc",n:"Sucré, biscuits, plats industriels",c:"r"},
   {id:"sod",n:"Sodas, jus sucrés, alcool",c:"r"}
 ];
 const CATMAP=Object.fromEntries(CATS.map(c=>[c.id,c]));
-const SUGG={"brocolis":"leg","épinards":"leg","salade verte":"leg","chou":"leg","courgette":"leg","tomates":"leg","carottes":"leg","fruits rouges":"fru","pomme":"fru","papaye":"fru","ananas":"fru","orange":"fru","banane":"fru","sardines":"poi","thon":"poi","saumon":"poi","maquereau":"poi","crevettes":"poi","lentilles":"lgm","pois chiches":"lgm","haricots rouges":"lgm","huile d'olive":"gra","noix":"gra","amandes":"gra","graines de chia":"gra","graines de lin":"gra","avocat":"gra","curcuma":"epi","gingembre":"epi","thé vert":"epi","eau":"boi","tisane":"boi","café":"boi","flocons d'avoine":"cer","riz complet":"rco","pain complet":"cer","patate douce":"cer","igname":"cer","taro":"cer","quinoa":"cer","poulet":"vol","œufs":"vol","yaourt nature":"lai","fromage":"lai","lait":"lai","bœuf":"vro","porc":"vro","jambon":"vro","saucisson":"vro","corned-beef":"vro","pain blanc":"raf","baguette":"raf","riz blanc":"raf","pâtes":"raf","gâteau":"suc","biscuits":"suc","chips":"suc","confiture":"suc","papaye verte":"fru","chocolat noir 70 %":"cho","plat préparé":"suc","soda":"sod","jus de fruit":"sod","vin":"sod","bière":"sod"};
+const SUGG={"brocolis":"leg","épinards":"leg","salade verte":"leg","chou":"leg","courgette":"leg","tomates":"leg","carottes":"leg","fruits rouges":"fru","pomme":"fru","papaye":"fru","ananas":"fru","orange":"fru","banane":"fru","sardines":"poi","thon":"poi","saumon":"poi","maquereau":"poi","crevettes":"poi","lentilles":"lgm","pois chiches":"lgm","haricots rouges":"lgm","huile d'olive":"gra","noix":"gra","amandes":"gra","graines de chia":"gra","graines de lin":"gra","avocat":"gra","curcuma":"epi","gingembre":"epi","thé vert":"epi","eau":"boi","tisane":"boi","café":"boi","flocons d'avoine":"rco","riz complet":"rco","pain complet":"cer","patate douce":"cer","igname":"cer","taro":"cer","quinoa":"rco","poulet":"vol","œufs":"vol","yaourt nature":"lai","fromage":"lai","lait":"lai","bœuf":"vro","porc":"vro","jambon":"vro","saucisson":"vro","corned-beef":"vro","pain blanc":"raf","baguette":"raf","riz blanc":"raf","pâtes":"raf","gâteau":"suc","biscuits":"suc","chips":"suc","confiture":"suc","papaye verte":"fru","chocolat noir 70 %":"cho","plat préparé":"suc","soda":"sod","jus de fruit":"sod","vin":"sod","bière":"sod"};
 const ACTS=[["aquagym","Aquagym / marche dans l'eau",true],["natation","Natation",true],["aquabike","Aquabike",true],["marche","Marche",false],["nordique","Marche nordique",false],["velo","Vélo",false],["yoga","Yoga",false],["pilates","Pilates",false],["renfo","Renforcement (élastiques)",false],["equilibre","Exercices d'équilibre",false],["presso","Bottes de pressothérapie",false],["drainage","Drainage lymphatique",false],["autre","Autre",false]];
 const ACTMAP=Object.fromEntries(ACTS.map(a=>[a[0],{n:a[1],eau:a[2]}]));
 const GOAL_WEEK=150, GLASSES=8;
 const norm=s=>String(s||"").toLowerCase().replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[̀-ͯ]/g,"");
-Object.assign(SUGG,{"myrtilles":"fru","mûres":"fru","framboises":"fru","fraises":"fru","kiwi":"fru","mangue":"fru","noisettes":"gra","graines de sésame":"gra","graines de courge":"gra","noix du brésil":"gra","noix de cajou":"gra","huile de colza":"gra","huile de noix":"gra","huile de coco":"gra","lait de coco":"gra","riz noir":"cer","sarrasin":"cer","flocons de sarrasin":"cer","pommes de terre":"cer","tofu":"lgm","haricots mungo":"lgm","haricots blancs":"lgm","dinde":"vol","fromage blanc":"lai","champignons":"leg","cresson":"leg","algues":"leg","potiron":"leg","haricots verts":"leg","oignon":"leg","ail":"leg","piment de cayenne":"epi","persil":"epi","thym":"epi","basilic":"epi","cannelle":"epi","thé blanc":"epi","thé noir":"epi","mélange boulgour-quinoa (sec)":"cer","mélange boulgour-quinoa cuit":"cer","cabillaud":"poi","poisson du lagon":"poi","huîtres":"poi","moules":"poi","palourdes":"poi","foie":"vro","boudin":"vro"});
+Object.assign(SUGG,{"myrtilles":"fru","mûres":"fru","framboises":"fru","fraises":"fru","kiwi":"fru","mangue":"fru","noisettes":"gra","graines de sésame":"gra","graines de courge":"gra","noix du brésil":"gra","noix de cajou":"gra","huile de colza":"gra","huile de noix":"gra","huile de coco":"gra","lait de coco":"gra","riz noir":"rco","sarrasin":"rco","flocons de sarrasin":"rco","pommes de terre":"cer","tofu":"lgm","haricots mungo":"lgm","haricots blancs":"lgm","dinde":"vol","fromage blanc":"lai","champignons":"leg","cresson":"leg","algues":"leg","potiron":"leg","haricots verts":"leg","oignon":"leg","ail":"leg","piment de cayenne":"epi","persil":"epi","thym":"epi","basilic":"epi","cannelle":"epi","thé blanc":"epi","thé noir":"epi","mélange boulgour-quinoa (sec)":"cer","mélange boulgour-quinoa cuit":"cer","cabillaud":"poi","poisson du lagon":"poi","huîtres":"poi","moules":"poi","palourdes":"poi","foie":"vro","boudin":"vro"});
 const NUTRI=[
  {id:"iode",n:"Iode",b:"≈ 150 µg/j",src:"Algues, cabillaud, huîtres, sel marin iodé, pomme de terre, yaourt nature entier, œufs, haricots blancs, crevettes ; épinards, cresson, oignon, navet, radis, carotte ; fraises, ananas, kiwi, agrumes ; noix du Brésil",kw:["algue","cabillaud","huitre","sel iode","pomme de terre","pommes de terre","yaourt","oeuf","haricots blancs","crevette","epinard","cresson","oignon","navet","radis","carotte","fraise","ananas","kiwi","orange","citron","pamplemousse","mandarine","agrume","noix du bresil"]},
  {id:"tyr",n:"Tyrosine",b:"1 à 2 g/j",src:"Œufs, volaille, crustacés, parmesan, emmental, edam, gouda, bacon, foies, flocons d'avoine trempés, lentilles, graines de courge, amandes, noix de pécan",kw:["oeuf","volaille","poulet","dinde","crevette","crabe","langouste","crustace","parmesan","emmental","edam","gouda","bacon","foie","avoine","lentille","graines de courge","amande","pecan"]},
@@ -600,7 +600,7 @@ const SENS=["Bien","Ballonnements","Somnolence","Lourdeur","Reflux","Faim vite r
 const RKEYS={pd:"Petit-déjeuner",de:"Déjeuner",co:"Collation",di:"Dîner"};
 const M=(n,ings)=>({n,ings:ings.map(([a,q,u,c])=>({aliment:a,qte:q,unite:u,cat:c}))});
 const MENUS=[
- {j:"Lundi",pd:M("Porridge d'avoine, fruits rouges et noix",[["Flocons d'avoine",40,"g","cer"],["Lait de coco",100,"ml","gra"],["Fruits rouges",100,"g","fru"],["Noix",15,"g","gra"]]),
+ {j:"Lundi",pd:M("Porridge d'avoine, fruits rouges et noix",[["Flocons d'avoine",40,"g","rco"],["Lait de coco",100,"ml","gra"],["Fruits rouges",100,"g","fru"],["Noix",15,"g","gra"]]),
   de:M("Salade de lentilles, sardines et carottes râpées",[["Lentilles cuites",150,"g","lgm"],["Sardines",90,"g","poi"],["Carottes",100,"g","leg"],["Huile d'olive",1,"c. à soupe","gra"]]),
   co:M("Yaourt nature et graines de courge",[["Yaourt nature",125,"g","lai"],["Graines de courge",10,"g","gra"]]),
   di:M("Poisson du lagon au curcuma, haricots verts, patate douce",[["Poisson du lagon",130,"g","poi"],["Haricots verts",200,"g","leg"],["Patate douce",150,"g","cer"],["Curcuma",1,"pincée","epi"]])},
@@ -609,22 +609,22 @@ const MENUS=[
   co:M("Papaye et amandes",[["Papaye",150,"g","fru"],["Amandes",15,"g","gra"]]),
   di:M("Soupe potiron, lentilles et champignons",[["Lentilles cuites",120,"g","lgm"],["Potiron",150,"g","leg"],["Champignons",100,"g","leg"],["Oignon",50,"g","leg"]])},
  {j:"Mercredi",pd:M("Fromage blanc, kiwi et graines de lin",[["Fromage blanc",150,"g","lai"],["Kiwi",2,"pièce","fru"],["Graines de lin",10,"g","gra"]]),
-  de:M("Saumon, quinoa, avocat et salade",[["Saumon",120,"g","poi"],["Quinoa cuit",150,"g","cer"],["Avocat",0.5,"pièce","gra"],["Salade verte",80,"g","leg"]]),
+  de:M("Saumon, quinoa, avocat et salade",[["Saumon",120,"g","poi"],["Quinoa cuit",150,"g","rco"],["Avocat",0.5,"pièce","gra"],["Salade verte",80,"g","leg"]]),
   co:M("Ananas et noix du Brésil",[["Ananas",120,"g","fru"],["Noix du Brésil",2,"pièce","gra"]]),
   di:M("Omelette champignons-cresson, igname",[["Œufs",2,"pièce","vol"],["Champignons",100,"g","leg"],["Cresson",50,"g","leg"],["Igname",150,"g","cer"]])},
- {j:"Jeudi",pd:M("Porridge de sarrasin, banane et cannelle",[["Flocons de sarrasin",40,"g","cer"],["Lait de coco",100,"ml","gra"],["Banane",1,"pièce","fru"],["Cannelle",1,"pincée","epi"]]),
+ {j:"Jeudi",pd:M("Porridge de sarrasin, banane et cannelle",[["Flocons de sarrasin",40,"g","rco"],["Lait de coco",100,"ml","gra"],["Banane",1,"pièce","fru"],["Cannelle",1,"pincée","epi"]]),
   de:M("Crevettes ail-persil, haricots mungo, courgettes",[["Crevettes",120,"g","poi"],["Haricots mungo cuits",150,"g","lgm"],["Courgette",150,"g","leg"],["Ail",1,"pièce","leg"]]),
   co:M("Framboises et noisettes",[["Framboises",150,"g","fru"],["Noisettes",15,"g","gra"]]),
   di:M("Dinde, taro et chou sauté au gingembre",[["Dinde",120,"g","vol"],["Taro",150,"g","cer"],["Chou",200,"g","leg"],["Gingembre",5,"g","epi"]])},
- {j:"Vendredi",pd:M("Yaourt, fraises et flocons d'avoine",[["Yaourt nature",125,"g","lai"],["Fraises",120,"g","fru"],["Flocons d'avoine",30,"g","cer"]]),
+ {j:"Vendredi",pd:M("Yaourt, fraises et flocons d'avoine",[["Yaourt nature",125,"g","lai"],["Fraises",120,"g","fru"],["Flocons d'avoine",30,"g","rco"]]),
   de:M("Maquereau, pommes de terre vapeur, salade de chou",[["Maquereau",120,"g","poi"],["Pommes de terre",150,"g","cer"],["Chou",120,"g","leg"],["Huile de colza",1,"c. à soupe","gra"]]),
   co:M("Pomme et amandes",[["Pomme",1,"pièce","fru"],["Amandes",15,"g","gra"]]),
   di:M("Curry de pois chiches aux épinards, riz complet",[["Pois chiches cuits",120,"g","lgm"],["Épinards",120,"g","leg"],["Lait de coco",80,"ml","gra"],["Curcuma",1,"pincée","epi"],["Riz complet cuit",130,"g","rco"]])},
  {j:"Samedi",pd:M("Œufs à la coque, avocat, pain complet",[["Œufs",2,"pièce","vol"],["Avocat",0.5,"pièce","gra"],["Pain complet",40,"g","cer"]]),
-  de:M("Thon grillé, tomates au basilic, sarrasin",[["Thon",120,"g","poi"],["Tomates",150,"g","leg"],["Basilic",1,"pincée","epi"],["Sarrasin cuit",150,"g","cer"]]),
+  de:M("Thon grillé, tomates au basilic, sarrasin",[["Thon",120,"g","poi"],["Tomates",150,"g","leg"],["Basilic",1,"pincée","epi"],["Sarrasin cuit",150,"g","rco"]]),
   co:M("Mangue et graines de courge",[["Mangue",120,"g","fru"],["Graines de courge",10,"g","gra"]]),
-  di:M("Tofu sauté aux légumes et algues, riz noir",[["Tofu",120,"g","lgm"],["Légumes sautés",200,"g","leg"],["Algues",5,"g","leg"],["Riz noir cuit",130,"g","cer"]])},
- {j:"Dimanche",pd:M("Pancakes avoine-banane, fruits rouges",[["Flocons d'avoine",40,"g","cer"],["Œufs",1,"pièce","vol"],["Banane",1,"pièce","fru"],["Fruits rouges",80,"g","fru"]]),
+  di:M("Tofu sauté aux légumes et algues, riz noir",[["Tofu",120,"g","lgm"],["Légumes sautés",200,"g","leg"],["Algues",5,"g","leg"],["Riz noir cuit",130,"g","rco"]])},
+ {j:"Dimanche",pd:M("Pancakes avoine-banane, fruits rouges",[["Flocons d'avoine",40,"g","rco"],["Œufs",1,"pièce","vol"],["Banane",1,"pièce","fru"],["Fruits rouges",80,"g","fru"]]),
   de:M("Poulet rôti aux herbes, légumes du four, patate douce",[["Poulet",130,"g","vol"],["Carottes",150,"g","leg"],["Courgette",100,"g","leg"],["Patate douce",150,"g","cer"],["Huile d'olive",1,"c. à soupe","gra"]]),
   co:M("Fromage blanc et kiwi",[["Fromage blanc",120,"g","lai"],["Kiwi",1,"pièce","fru"]]),
   di:M("Cabillaud vapeur, brocolis, boulgour-quinoa",[["Cabillaud",130,"g","poi"],["Brocolis",150,"g","leg"],["Mélange boulgour-quinoa cuit",130,"g","cer"]])}
@@ -650,7 +650,7 @@ let cMode="semaine";
 const blank=()=>({meals:[],acts:[],eau:0,douleur:null,note:"",sens:{}});
 let obs={};
 const getDay=k=>days[k]||blank();
-const fixCat=d=>{(d&&d.meals||[]).forEach(m=>{if(m.cat==="cer"&&/^riz complet/.test(norm(m.aliment)))m.cat="rco"});return d};
+const fixCat=d=>{(d&&d.meals||[]).forEach(m=>{if(m.cat==="cer"&&/^(riz complet|riz noir|quinoa|sarrasin|flocons de sarrasin|flocons d'avoine|avoine)/.test(norm(m.aliment)))m.cat="rco"});return d};
 
 /* ---------- Persistance ---------- */
 const queues={};
@@ -1115,7 +1115,7 @@ let profil={poids:null,plan:[{dow:1,start:"12:15",end:"13:00",type:"aquabike"},{
 function actKcal(a){if(a.calories&&!isNaN(parseFloat(String(a.calories).replace(/\s/g,"").replace(",","."))))return Math.round(parseFloat(String(a.calories).replace(/\s/g,"").replace(",",".")));
   if(!profil.poids)return null;return Math.round((MET[a.type]||3.5)*(INTF[a.intensite]||1)*profil.poids*a.min/60)}
 const ACTBEN={aquagym:"La pression de l'eau draine les jambes, cardio doux, articulations portées",aquabike:"La pression de l'eau draine les jambes pendant le pédalage, cardio doux, sans compression",natation:"Drainage par l'eau, tout le corps travaille sans impact",marche:"Active la pompe du mollet et la circulation lymphatique",nordique:"Bras et jambes travaillent, doux pour les articulations",velo:"Muscle les jambes et stimule le retour veineux",yoga:"Respiration profonde qui aide la lymphe, souplesse, détente",pilates:"Gainage, posture et mobilité",renfo:"Garde la masse musculaire et protège les articulations",equilibre:"Prévient les chutes",drainage:"Aide à évacuer la lymphe, soulage la lourdeur",presso:"Compression progressive qui pousse la lymphe vers le haut, jambes plus légères le soir",autre:"Bouger aide la circulation"};
-const CATBEN={rco:"fibres, magnésium, fer, énergie durable",leg:"fibres, vitamines, minéraux, polyphénols",fru:"antioxydants, polyphénols, vitamine C",poi:"oméga 3 anti-inflammatoires, iode, vitamine D",lgm:"protéines végétales, fibres, minéraux",gra:"bons acides gras, fibres, minéraux",epi:"composés anti-inflammatoires",boi:"hydratation",cer:"fibres, énergie durable",vol:"protéines, tyrosine",lai:"calcium, protéines",cho:"magnésium, polyphénols antioxydants (avec modération)",vro:"à limiter : pro-inflammatoire en excès",raf:"à limiter : sucres rapides",suc:"à limiter : sucres et graisses industriels",sod:"à limiter : sucres, alcool"};
+const CATBEN={rco:"fibres, minéraux, vitamines, énergie durable",leg:"fibres, vitamines, minéraux, polyphénols",fru:"antioxydants, polyphénols, vitamine C",poi:"oméga 3 anti-inflammatoires, iode, vitamine D",lgm:"protéines végétales, fibres, minéraux",gra:"bons acides gras, fibres, minéraux",epi:"composés anti-inflammatoires",boi:"hydratation",cer:"fibres, énergie durable",vol:"protéines, tyrosine",lai:"calcium, protéines",cho:"magnésium, polyphénols antioxydants (avec modération)",vro:"à limiter : pro-inflammatoire en excès",raf:"à limiter : sucres rapides",suc:"à limiter : sucres et graisses industriels",sod:"à limiter : sucres, alcool"};
 const DOWN=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
 const hm=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
 const fmtH=t=>t.replace(":","h");
@@ -1229,7 +1229,7 @@ const ASSOC_FER=[
  {n:"Sardines + salade de papaye verte crue",why:"fer héminique + vitamine C",items:[["sardines",90,"g","poi"],["papaye verte crue râpée",100,"g","fru"]]},
  {n:"Sardines + salade de cresson et tomates",why:"fer héminique + vitamine C",items:[["sardines",90,"g","poi"],["cresson",50,"g","leg"],["tomates",100,"g","leg"]]},
  {n:"Lentilles au citron et persil + papaye",why:"fer végétal + vitamine C",items:[["lentilles",150,"g","lgm"],["citron",0.5,"pièce","fru"],["persil",5,"g","epi"],["papaye",150,"g","fru"]]},
- {n:"Flocons d'avoine + graines de courge + kiwi",why:"fer végétal + vitamine C",items:[["flocons d'avoine",40,"g","cer"],["graines de courge",15,"g","gra"],["kiwi",1,"pièce","fru"]]},
+ {n:"Flocons d'avoine + graines de courge + kiwi",why:"fer végétal + vitamine C",items:[["flocons d'avoine",40,"g","rco"],["graines de courge",15,"g","gra"],["kiwi",1,"pièce","fru"]]},
  {n:"Moules + légumes + citron",why:"fer héminique + vitamine C",items:[["moules",150,"g","poi"],["courgette",150,"g","leg"],["citron",0.5,"pièce","fru"]]}
 ];
 $("#assocFer").innerHTML=ASSOC_FER.map(a=>`<li style="grid-template-columns:1fr"><span class="what"><b>${esc(a.n)}</b><br><span style="color:var(--vert);font-size:.85rem">${esc(a.why)}</span></span></li>`).join("");
